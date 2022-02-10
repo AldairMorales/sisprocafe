@@ -22,9 +22,9 @@ class AppFixtures extends Fixture
         $manager->persist($role);
 
         $user = new Usuario();
-        $user->setUsername('admin')->setFullname('Carlos Chininin');
+        $user->setUsername('admin')->setFullname('SisproCafe');
         $user->setPassword($this->passwordHasher->hashPassword($user, '123456'));
-        $user->setEmail('cio@pidia.pe');
+        $user->setEmail('SisproCafe@gmail.pe');
         $user->addUsuarioRole($role);
         $manager->persist($user);
 
