@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+{% import 'macro/breadcrumb.html.twig' as breadcrumb %}
+{% import 'macro/action.html.twig' as action %}
+{% import 'macro/pagination.html.twig' as pagination %}
+
+{% set _title = 'Reporte Stock' %}
+{% set _main_title = 'Listado' %}
+{% set _section =  'almacen_reporteStock' %}
+
+{% block _breadcrumb %}
+    {{ breadcrumb.show(_title) }}
+{% endblock %}
+
+{% block _main %}
+    <div class="table-responsive">
+        {{ action.tbl_start() }}
+        {{ action.thead_start() }}
+        <tr>
+            {{ action.th('Almacen', true) }}
+            {{ action.th('Productos', true) }}
+            {{ action.th('Stock', true) }}
+            <th></th>
+        </tr>
+        {{ action.thead_end() }}
+        {{ action.tbody_start() }}
+        {% for almacen in almacen %}
+            <tr>
+                <td>{{ almacen.almacen}}</td>
+                <td>{{ almacen.producto }}</td>
+                <td>{{ almacen.stock }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">No hay registros</td>
+            </tr>
+        {% endfor %}
+        {{ action.tbody_end() }}
+        {{ action.tbl_end() }}
+    </div>
+{% endblock %}
+
+{% block _main_footer %}
+    {% include 'crud/_index_links.html.twig' with {'route_base': 'almacen'} %}
+{% endblock%}
+
+{% block _main_options %}
+    {% include 'crud/_index_filter.html.twig' %}
+{% endblock %}
+
+{% block _main_tools %}
+    {% include 'crud/_tools_ico.html.twig' %}
+{% endblock %}
+
+{% block _body_tools_ico %}
+    {% include 'crud/_index_links_tool.html.twig' with {'route_base': 'almacen'}  %}
+{% endblock %}
+
+{% block _body_tools %}
+    {% include 'crud/_index_links_ico.html.twig' with {'route_base': 'almacen'}  %}
+{% endblock %}
+
+{% block _stylesheets %}
+{% endblock %}
