@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+{% import 'macro/breadcrumb.html.twig' as breadcrumb %}
+{% import 'macro/action.html.twig' as action %}
+
+{% set _title = 'Analisis Fisico' %}
+{% set _main_title = 'Mostrar' %}
+{% set _section =  'certificacion_index'%}
+
+{% block _breadcrumb %}
+    {{ breadcrumb.show2(_title, _section, 'Mostrar') }}
+{% endblock %}
+
+{% block _main %}
+    {{ action.tbl_start() }}
+            {{ action.tbl_tr('fecha', certificacion.fecha) }}
+            {{ action.tbl_tr('dertificacion', certificacion.certificacion) }}
+            {{ action.tbl_tr('muestra', certificacion.muestra) }}
+            {{ action.tbl_tr('exportable', certificacion.exportable) }}
+            {{ action.tbl_tr('bola', certificacion.bola) }}
+            {{ action.tbl_tr('segunda', certificacion.segunda) }}
+            {{ action.tbl_tr('casara', certificacion.casara) }}
+            {{ action.tbl_tr('descripcion', certificacion.descripcion) }}
+            {{ action.tbl_tr('Activo', certificacion.padre, 'text-center') }}
+        
+        {% include 'crud/_show_info.html.twig' with {'entity': certificacion} %}
+    {{ action.tbl_end() }}
+
+{% endblock %}
+
+{% block _main_footer %}
+    {% include 'crud/_show_links.html.twig' with {'route_base':'certificacion','entity': certificacion} %}
+{% endblock %}
+
+{% block _main_tools %}
+    {% include 'crud/_tools_ico.html.twig' %}
+{% endblock %}
+
+{% block _body_tools %}
+    {% include 'crud/_show_links_ico.html.twig' with {'route_base':'certificacion','entity': certificacion} %}
+{% endblock %}
+
+{% block _body_tools_ico %}
+    {% include 'crud/_show_links_tool.html.twig' with {'route_base':'certificacion','entity': certificacion} %}
+{% endblock %}

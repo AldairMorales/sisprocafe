@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+{% import 'macro/breadcrumb.html.twig' as breadcrumb %}
+{% import 'macro/action.html.twig' as action %}
+{% import 'macro/pagination.html.twig' as pagination %}
+
+{% set _title = 'Unidad Medida Categoria' %}
+{% set _main_title = 'Listado' %}
+{% set _section =  'unidadMedidaCategoria_index' %}
+
+{% block _breadcrumb %}
+    {{ breadcrumb.show(_title) }}
+{% endblock %}
+
+{% block _main %}
+    <div class="table-responsive">
+        {{ action.tbl_start() }}
+        {{ action.thead_start() }}
+        <tr>
+            {{ action.th('Nombre', true) }}
+            {{ action.th('alias', true) }}
+            {{ action.th('Activo', true, 'text-center') }}
+            <th></th>
+        </tr>
+        {{ action.thead_end() }}
+        {{ action.tbody_start() }}
+        {% for unidadMedidaCategoria in paginator.results %}
+            <tr>
+                <td>{{ unidadMedidaCategoria.nombre}}</td>
+                <td>{{ unidadMedidaCategoria.alias }}</td>
+                <td class="text-center">{{ unidadMedidaCategoria.activo | yesnocustom | raw }}</td>
+                <td>
+                    {% if access.has('view') %}
+                        {{ action.btn_show_link2_ico(path('unidadMedidaCategoria_show', {'id': unidadMedidaCategoria.id})) }}
+                    {% endif %}
+                    {% if access.has('edit', unidadMedidaCategoria) %}
+                        {{ action.btn_edit_link2_ico(path('unidadMedidaCategoria_edit', {'id': unidadMedidaCategoria.id})) }}
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">No hay registros</td>
+            </tr>
+        {% endfor %}
+        {{ action.tbody_end() }}
+        {{ action.tbl_end() }}
+    </div>
+
+    {{ pagination.show(paginator, _section) }}
+{% endblock %}
+
+{% block _main_footer %}
+    {% include 'crud/_index_links.html.twig' with {'route_base': 'unidadMedidaCategoria'} %}
+{% endblock%}
+
+{% block _main_options %}
+    {% include 'crud/_index_filter.html.twig' %}
+{% endblock %}
+
+{% block _main_tools %}
+    {% include 'crud/_tools_ico.html.twig' %}
+{% endblock %}
+
+{% block _body_tools_ico %}
+    {% include 'crud/_index_links_tool.html.twig' with {'route_base': 'unidadMedidaCategoria'}  %}
+{% endblock %}
+
+{% block _body_tools %}
+    {% include 'crud/_index_links_ico.html.twig' with {'route_base': 'unidadMedidaCategoria'}  %}
+{% endblock %}
+
+{% block _stylesheets %}
+{% endblock %}
+
+{% block _javascripts %}
+    <script>
+        jQuery(document).ready(function () {
+            $(document).on('change', '#filter_size', function () {
+                let route = '{{ path('unidadMedidaCategoria_index') }}';
+                route = route + "?" + 'n=' + $('#filter_size option:selected').val();
+                route = route + "&" + 'b=' + $('#filter_text').val();
+                window.location = route;
+            });
+
+            $(document).on('click', '.btn-send', function () {
+                window.location = '{{ path('unidadMedidaCategoria_index') }}';
+            });
+
+            $(document).on('click', '.btn-clean', function () {
+                window.location.href = '{{ path('unidadMedidaCategoria_index') }}';
+            });
+        });
+    </script>
+{% endblock %}

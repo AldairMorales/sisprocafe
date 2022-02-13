@@ -1,0 +1,44 @@
+{% import 'macro/action.html.twig' as action %}
+
+{{ action.frm_start(form) }}
+    <i class="fa fa-calendar"></i>
+    {{ action.frm_column(
+        action.frm_column_field_date(form.fecha)
+    ) }}
+    {{ action.frm_column(
+        action.frm_column_field_select(form.certificacion),
+        action.frm_column_field_select(form.muestra)
+    ) }}
+    {{ action.frm_column(
+        action.frm_column_field_gramos(form.exportable,'','',4),
+        null,
+        null,
+        null,
+        2  
+    ) }}
+    {{ action.frm_column(
+        action.frm_column_field_gramos(form.bola,'','',4),
+        null,
+        null,
+        null,
+        2  
+    ) }}
+    {{ action.frm_column(
+        action.frm_column_field_gramos(form.segunda),
+        action.frm_column_field(form.cascara)
+    ) }}
+    {{ action.frm_column(
+        action.frm_column_field_number(form.humedad)
+    ) }}
+    {{ action.frm_column(
+        action.frm_column_field(form.descripcion)
+    ) }}
+    
+    {{ action.frm_column(
+        action.frm_column_btn(button_label|default('Guardar')),
+        null,
+        null,
+        null,
+        2
+    )}}
+{{ action.frm_end(form) }}
