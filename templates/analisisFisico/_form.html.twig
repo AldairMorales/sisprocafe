@@ -1,36 +1,37 @@
 {% import 'macro/action.html.twig' as action %}
 
 {{ action.frm_start(form) }}
-    <i class="fa fa-calendar"></i>
     {{ action.frm_column(
-        action.frm_column_field_date(form.fecha)
+        action.frm_column_field_date(form.fecha),
+        action.frm_column_field_select(form.certificacion)
     ) }}
     {{ action.frm_column(
-        action.frm_column_field_select(form.certificacion),
-        action.frm_column_field_select(form.muestra)
+        action.frm_column_field_select(form.tikect),
+        action.frm_column_field_add_select(form.muestra)
+        
     ) }}
     {{ action.frm_column(
-        action.frm_column_field_gramos(form.exportable,'','',4),
-        null,
-        null,
-        null,
-        2  
+        action.frm_column_line()
+    )}}
+    
+    {{ action.frm_column(
+        action.frm_column_field_and_select(form.exportable,form.unidadMedida),
+        action.frm_column_field(form.exportable_)
+    )}}
+    {{ action.frm_column(
+        action.frm_column_field_add_select(form.bola),
+        action.frm_column_field(form.bola_)
     ) }}
     {{ action.frm_column(
-        action.frm_column_field_gramos(form.bola,'','',4),
-        null,
-        null,
-        null,
-        2  
+        action.frm_column_field_add_select(form.segunda),
+        action.frm_column_field(form.segunda_)
     ) }}
     {{ action.frm_column(
-        action.frm_column_field_gramos(form.segunda),
-        action.frm_column_field(form.cascara)
+        action.frm_column_field_add_select(form.cascara),
+        action.frm_column_field(form.cascara_)
     ) }}
     {{ action.frm_column(
-        action.frm_column_field_number(form.humedad)
-    ) }}
-    {{ action.frm_column(
+        action.frm_column_field_number(form.humedad),
         action.frm_column_field(form.descripcion)
     ) }}
     
