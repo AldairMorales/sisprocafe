@@ -8,7 +8,6 @@ declare(strict_types=1);
  */
 
 namespace Pidia\Apps\Demo\Manager;
-
 use Pidia\Apps\Demo\Entity\Menu;
 use Pidia\Apps\Demo\Repository\BaseRepository;
 

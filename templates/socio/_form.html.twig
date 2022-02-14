@@ -1,0 +1,43 @@
+{% import 'macro/action.html.twig' as action %}
+
+{{ action.frm_start(form) }}
+    {{ action.frm_column(
+        action.frm_column_field(form.fechaIngreso),
+        null, null, null, 2
+    ) }}
+    {{ action.frm_column(
+        action.frm_column_field(form.codigo),
+        action.frm_column_field_select(form.tipo)
+    ) }}
+    {{ action.frm_column(
+        action.frm_column_field(form.nombres),
+        action.frm_column_field(form.apellidoPaterno)
+    ) }}
+    {{ action.frm_column(
+        action.frm_column_field(form.apellidoMaterno),
+        action.frm_column_field_select(form.sexo)
+    ) }}
+    {{ action.frm_column(
+        action.frm_column_field(form.numeroDocumento),
+        action.frm_column_field(form.telefono)
+    ) }}
+    {{ action.frm_column(
+        action.frm_column_field(form.fechaNacimiento),
+        action.frm_column_field(form.conyugueNombre)
+    ) }}
+    {{ action.frm_column(
+        action.frm_column_field(form.conyugueDocumento),
+        action.frm_column_field(form.ruc)
+    ) }}
+    {{ action.frm_column(
+        action.frm_column_field_select(form.estadoRuc),
+        action.frm_column_field_select(form.estado)
+    ) }}
+    {{ action.frm_column(
+        action.frm_column_btn(button_label|default('Guardar')),
+        null,
+        null,
+        null,
+        2
+    ) }}
+{{ action.frm_end(form) }}
