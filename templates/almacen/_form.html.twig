@@ -1,0 +1,27 @@
+{% import 'macro/action.html.twig' as action %}
+
+{{ action.frm_start(form) }}
+    {{ action.frm_column(
+        action.frm_column_field_select(form.tipoAlmacen),
+        action.frm_column_field(form.nombre)
+    ) }}
+    {{ action.frm_column(
+        action.frm_column_field(form.direccion),
+        action.frm_column_field_select(form.ubicacion)
+    ) }}
+    {{ action.frm_column(
+        action.frm_column_field_select(form.empresa, '', '',4 ),
+        null,
+        null,
+        null,
+        2
+    ) }}
+    
+    {{ action.frm_column(
+        action.frm_column_btn(button_label|default('Guardar')),
+        null,
+        null,
+        null,
+        2
+    ) }}
+{{ action.frm_end(form) }}

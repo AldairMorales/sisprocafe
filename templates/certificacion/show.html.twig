@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+{% import 'macro/breadcrumb.html.twig' as breadcrumb %}
+{% import 'macro/action.html.twig' as action %}
+
+{% set _title = 'Certificacion' %}
+{% set _main_title = 'Mostrar' %}
+{% set _section =  'certificacion_index'%}
+
+{% block _breadcrumb %}
+    {{ breadcrumb.show2(_title, _section, 'Mostrar') }}
+{% endblock %}
+
+{% block _main %}
+    {{ action.tbl_start() }}
+        {{ action.tbl_tr('Padre',certificacion.padre) }}
+        {{ action.tbl_tr('Nombre',certificacion.nombre) }}
+        {{ action.tbl_tr('Nombre',certificacion.alias) }}
+        
+        {% include 'crud/_show_info.html.twig' with {'entity': certificacion} %}
+    {{ action.tbl_end() }}
+
+{% endblock %}
+
+{% block _main_footer %}
+    {% include 'crud/_show_links.html.twig' with {'route_base':'certificacion','entity': certificacion} %}
+{% endblock %}
+
+{% block _main_tools %}
+    {% include 'crud/_tools_ico.html.twig' %}
+{% endblock %}
+
+{% block _body_tools %}
+    {% include 'crud/_show_links_ico.html.twig' with {'route_base':'certificacion','entity': certificacion} %}
+{% endblock %}
+
+{% block _body_tools_ico %}
+    {% include 'crud/_show_links_tool.html.twig' with {'route_base':'certificacion','entity': certificacion} %}
+{% endblock %}

@@ -1,0 +1,20 @@
+{% import 'macro/action.html.twig' as action %}
+
+{{ action.frm_start(form) }}
+    {{ action.frm_column(
+        action.frm_column_field_select(form.categoria),
+        action.frm_column_field(form.nombre)
+    ) }}
+    {{ action.frm_column(
+        action.frm_column_field(form.simbolo),
+        action.frm_column_field(form.alias)
+    ) }}
+    
+    {{ action.frm_column(
+        action.frm_column_btn(button_label|default('Guardar')),
+        null,
+        null,
+        null,
+        2
+    )}}
+{{ action.frm_end(form) }}

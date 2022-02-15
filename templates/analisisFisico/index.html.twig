@@ -1,0 +1,106 @@
+{% extends 'base.html.twig' %}
+{% import 'macro/breadcrumb.html.twig' as breadcrumb %}
+{% import 'macro/action.html.twig' as action %}
+{% import 'macro/pagination.html.twig' as pagination %}
+
+{% set _title = 'Analisis Fisico' %}
+{% set _main_title = 'Listado' %}
+{% set _section =  'analisisFisico_index' %}
+
+{% block _breadcrumb %}
+    {{ breadcrumb.show(_title) }}
+{% endblock %}
+
+{% block _main %}
+    <div class="table-responsive">
+        {{ action.tbl_start() }}
+        {{ action.thead_start() }}
+        <tr>
+            {{ action.th('fecha', true) }}
+            {{ action.th('dertificacion', true) }}
+            {{ action.th('muestra', true) }}
+            {{ action.th('exportable', true) }}
+            {{ action.th('bola', true) }}
+            {{ action.th('segunda', true) }}
+            {{ action.th('cascara', true) }}
+            {{ action.th('descripcion', true) }}
+            {{ action.th('Activo', true, 'text-center') }}
+            <th></th>
+        </tr>
+        {{ action.thead_end() }}
+        {{ action.tbody_start() }}
+        {% for analisisFisico in paginator.results %}
+            <tr>
+                <td>{{ analisisFisico.fecha}}</td>
+                <td>{{ analisisFisico.certificacion }}</td>
+                <td>{{ analisisFisico.muestra}}</td>
+                <td>{{ analisisFisico.exportable}}</td>
+                <td>{{ analisisFisico.bola }}</td>
+                <td>{{ analisisFisico.segunda}}</td>
+                <td>{{ analisisFisico.cascara}}</td>
+                <td>{{ analisisFisico.descripcion }}</td>
+                <td class="text-center">{{ analisisFisico.activo | yesnocustom | raw }}</td>
+                <td>
+                    {% if access.has('view') %}
+                        {{ action.btn_show_link2_ico(path('analisisFisico_show', {'id': analisisFisico.id})) }}
+                    {% endif %}
+                    {% if access.has('edit', analisisFisico) %}
+                        {{ action.btn_edit_link2_ico(path('analisisFisico_edit', {'id': analisisFisico.id})) }}
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">No hay registros</td>
+            </tr>
+        {% endfor %}
+        {{ action.tbody_end() }}
+        {{ action.tbl_end() }}
+    </div>
+
+    {{ pagination.show(paginator, _section) }}
+{% endblock %}
+
+{% block _main_footer %}
+    {% include 'crud/_index_links.html.twig' with {'route_base': 'analisisFisico'} %}
+{% endblock%}
+
+{% block _main_options %}
+    {% include 'crud/_index_filter.html.twig' %}
+{% endblock %}
+
+{% block _main_tools %}
+    {% include 'crud/_tools_ico.html.twig' %}
+{% endblock %}
+
+{% block _body_tools_ico %}
+    {% include 'crud/_index_links_tool.html.twig' with {'route_base': 'analisisFisico'}  %}
+{% endblock %}
+
+{% block _body_tools %}
+    {% include 'crud/_index_links_ico.html.twig' with {'route_base': 'analisisFisico'}  %}
+{% endblock %}
+
+{% block _stylesheets %}
+{% endblock %}
+
+{% block _javascripts %}
+    <script>
+        jQuery(document).ready(function () {
+            $(document).on('change', '#filter_size', function () {
+                let route = '{{ path('analisisFisico_index') }}';
+                route = route + "?" + 'n=' + $('#filter_size option:selected').val();
+                route = route + "&" + 'b=' + $('#filter_text').val();
+                window.location = route;
+            });
+
+            $(document).on('click', '.btn-send', function () {
+                window.location = '{{ path('analisisFisico_index') }}';
+            });
+
+            $(document).on('click', '.btn-clean', function () {
+                window.location.href = '{{ path('analisisFisico_index') }}';
+            });
+        });
+    </script>
+{% endblock %}

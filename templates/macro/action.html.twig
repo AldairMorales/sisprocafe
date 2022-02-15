@@ -242,7 +242,7 @@
 
 {% macro btn_delete_form_tool(link, token) %}
     <form method="post" action="{{ link }}" onsubmit="return confirm('Seguro de eliminar este registro?');"
-          style="display: inline">
+        style="display: inline">
         <input type="hidden" name="_method" value="DELETE">
         <input type="hidden" name="_token" value="{{ token }}">
         <button class="dropdown-item">
@@ -715,20 +715,73 @@
         <div class="col-sm-{{ 12-col }} col-8">
             <div class="input-group">
                 {{ form_widget(value, {attr: {class: 'js-flatpickr form-control bg-white ' ~ class_widget ~ actions.frm_errors_class(value)} }) }}
-                <div class="input-group-append">
-                    <span class="input-group-text">
-                        <i class="fa fa-calendar"></i>
-                    </span>
-                </div>
+                
             </div>
             {{ actions.frm_help(value) }}
             {{ actions.frm_errors(value) }}
         </div>
     </div>
 {% endmacro %}
+{# hecho por walmer #}
+{% macro frm_column_field_and_select(value,value2, class='', class_widget='') %}
+    {% import _self as actions %}
+    <div class="form-group row mb-1 p-1 border border-white {{ class }} {{ _self.frm_errors_class(value) }}">
+        {{ _self.frm_label(value,'col-sm-4 col-4 border border-2') }}
+        <div class="col-sm-8 col-8 border border-2">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <i class="fa fa-balance-scale"></i>
+                    </span>
+                </div>
+                {{ form_widget(value, {attr: {class: 'form-control ' ~ class_widget ~ _self.frm_errors_class(value)} }) }}
+                <div class="col-sm-4 col-4">
+                    {{ form_widget(value2, {attr: {class: 'js-select2 form-control ' ~ class_widget ~ actions.frm_errors_class(value2)} }) }}
+                    {{ actions.frm_help(value2) }}
+                    {{ actions.frm_errors(value2) }}
+                </div>
+            </div>
+            
+            {{ _self.frm_help(value) }}
+            {{ _self.frm_errors(value) }}
+        </div>
+    </div>
+{% endmacro %}
+{% macro frm_column_field_add_select(value, class='', class_widget='') %}
+    {% import _self as actions %}
+    <div class="form-group row mb-1 p-1 {{ class }} {{ _self.frm_errors_class(value) }}">
+        {{ _self.frm_label(value,'col-sm-4 col-4 border border-2') }}
+        <div class="col-sm-8 col-8 border border-2">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <i class="fa fa-balance-scale"></i>
+                    </span>
+                </div>
+                {{ form_widget(value, {attr: {class: 'form-control ' ~ class_widget ~ _self.frm_errors_class(value)} }) }}
+                <div class="col-sm-4 col-4">
+                    <select name="" class="js-select2 form-control">
+                        <option value="1">Kilogramos</option>
+                        <option value="2" selected>gramos</option>
+                        <option value="3">Quintal</option>
+                    </select>
+                </div>
+            </div>
+            
+            {{ _self.frm_help(value) }}
+            {{ _self.frm_errors(value) }}
+        </div>
+    </div>
+{% endmacro %}
+{% macro frm_column_line() %}
+    <div class="v-line">
+        <hr>
+    </div>
+{% endmacro %}
+
 
 {% macro frm_column_field_number(value, class='', class_widget='') %}
-    <div class="form-group row mb-1 p-1 {{ class }} {{ _self.frm_errors_class(value) }}">
+    <div class="form-group row mb-1 p-1  {{ class }} {{ _self.frm_errors_class(value) }}">
         {{ _self.frm_label(value,'col-sm-4 col-4') }}
         <div class="col-sm-8 col-8">
             <div class="input-group">
