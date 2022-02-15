@@ -34,6 +34,11 @@
         action.frm_column_field_number(form.humedad),
         action.frm_column_field(form.descripcion)
     ) }}
+
+    {{ action.frm_column(
+        action.frm_column_field(form.exportableDemo),
+        action.frm_column_field(form.segundaDemo)
+    ) }}
     
     {{ action.frm_column(
         action.frm_column_btn(button_label|default('Guardar')),
