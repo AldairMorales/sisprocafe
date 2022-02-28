@@ -1,27 +1,32 @@
 <?php
 
+/*
+ * This file is part of the PIDIA.
+ * (c) Carlos Chininin <cio@pidia.pe>
+ */
+
 namespace Pidia\Apps\Demo\Repository;
 
-use Doctrine\ORM\QueryBuilder;
-use Pidia\Apps\Demo\Entity\Periodo;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use Pidia\Apps\Demo\Entity\AtributosCatacion;
 use Pidia\Apps\Demo\Security\Security;
 use Pidia\Apps\Demo\Util\Paginator;
 
 /**
- * @method Periodo|null find($id, $lockMode = null, $lockVersion = null)
- * @method Periodo|null findOneBy(array $criteria, array $orderBy = null)
- * @method Periodo[]    findAll()
- * @method Periodo[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method AtributosCatacion|null find($id, $lockMode = null, $lockVersion = null)
+ * @method AtributosCatacion|null findOneBy(array $criteria, array $orderBy = null)
+ * @method AtributosCatacion[]    findAll()
+ * @method AtributosCatacion[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class PeriodoRepository extends ServiceEntityRepository implements BaseRepository
+class AtributosCatacionRepository extends ServiceEntityRepository implements BaseRepository
 {
     private $security;
 
     public function __construct(ManagerRegistry $registry, Security $security)
     {
-        parent::__construct($registry, Periodo::class);
+        parent::__construct($registry, AtributosCatacion::class);
         $this->security = $security;
     }
 
@@ -45,13 +50,13 @@ class PeriodoRepository extends ServiceEntityRepository implements BaseRepositor
 
     private function filterQuery(array $params): QueryBuilder
     {
-        $queryBuilder = $this->createQueryBuilder('periodo')
-            ->select(['periodo', 'config'])
-            ->join('periodo.config', 'config');
+        $queryBuilder = $this->createQueryBuilder('atributosCatacion')
+            ->select(['atributosCatacion', 'config'])
+            ->join('atributosCatacion.config', 'config');
 
         $this->security->configQuery($queryBuilder, true);
 
-        Paginator::queryTexts($queryBuilder, $params, ['periodo.nombre', 'padre.nombre']);
+        Paginator::queryTexts($queryBuilder, $params, ['atributosCatacion.nombre']);
 
         return $queryBuilder;
     }

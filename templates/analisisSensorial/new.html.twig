@@ -1,0 +1,173 @@
+{% extends 'base.html.twig' %}
+{% import 'macro/breadcrumb.html.twig' as breadcrumb %}
+{% import 'macro/action.html.twig' as action %}
+
+{% set _title = 'Analisis Sensorial' %}
+{% set _main_title = 'Nuevo' %}
+{% set _section =  'analisisSensorial_index'%}
+
+{% block _breadcrumb %}
+    {{ breadcrumb.show2(_title,_section,'Nuevo') }}
+{% endblock %}
+
+{% block _main %}
+    {{ include('analisisSensorial/_form.html.twig') }}
+{% endblock %}
+
+{% form_theme form _self %}
+
+{% block _analisis_sensorial_sensorialDetalle1_label %}
+{% endblock %}
+
+{% block _analisis_sensorial_sensorialDetalle1 %}
+    {% import 'macro/action.html.twig' as actions %}
+
+    {{ actions.frm_column(
+        actions.frm_column_field(form.fragrancia),
+        null,
+        null,
+        null,
+        2
+    )}}
+    {{ actions.frm_column(
+        actions.frm_column_field_select(form.categorias),
+        null,
+        null,
+        null,
+        2
+    )}}
+    
+{% endblock %}
+
+{% block _main_tools %}
+    {% include 'crud/_tools_ico.html.twig' %}
+{% endblock %}
+
+{% block _body_tools %}
+    {% include 'crud/_new_links_ico.html.twig' with {'route_base':'analisisSensorial'} %}
+{% endblock %}
+
+{% block _body_tools_ico %}
+    {% include 'crud/_new_links_tool.html.twig' with {'route_base': 'analisisSensorial'}  %}
+{% endblock %}
+
+{% block _main_footer %}
+    {% include 'crud/_new_links.html.twig' with {'route_base':'analisisSensorial'} %}
+{% endblock %}
+
+{% block _stylesheets %}
+{% endblock %}
+
+{% block _javascripts %}
+    <script src="{{ asset('js/select2.js') }}"></script>
+    <script src="{{ asset('js/collection.js') }} "></script>
+    <script>
+        jQuery(document).ready(function() {
+            
+            Select2();
+            
+            let slider = document.querySelector("#sensorial_fragrancia");
+            var slider1 = document.querySelector("#sensorial_sabor");
+            var slider2 = document.querySelector("#sensorial_saborResidual");
+            var slider3 = document.querySelector("#sensorial_acidez");
+            var slider4 = document.querySelector("#sensorial_cuerpo");
+            $('#analisis_sensorial_fragrancia').hide();
+            $('#analisis_sensorial_sabor').hide();
+            $('#analisis_sensorial_saborResidual').hide();
+            $('#analisis_sensorial_acidez').hide();
+            $('#analisis_sensorial_cuerpo').hide();
+
+            noUiSlider.create(slider,{
+                start: [0],
+                connect: true,
+                tooltips: [wNumb({decimals: 2})],
+                range: {
+                    min: 6,
+                    max: 10
+                },
+                pips: {
+                    mode: "values",
+                    values: [6,7,8,9,10],
+                    density: 4
+                }
+            });
+            noUiSlider.create(slider1,{
+                start: [0],
+                connect: true,
+                tooltips: [wNumb({decimals: 2})],
+                range: {
+                    min: 6,
+                    max: 10
+                },
+                pips: {
+                    mode: "values",
+                    values: [6,7,8,9,10],
+                    density: 4
+                }
+            });
+            noUiSlider.create(slider2,{
+                start: [0],
+                connect: true,
+                tooltips: [wNumb({decimals: 2})],
+                range: {
+                    min: 6,
+                    max: 10
+                },
+                pips: {
+                    mode: "values",
+                    values: [6,7,8,9,10],
+                    density: 4
+                }
+            });
+            noUiSlider.create(slider3,{
+                start: [0],
+                connect: true,
+                tooltips: [wNumb({decimals: 2})],
+                range: {
+                    min: 6,
+                    max: 10
+                },
+                pips: {
+                    mode: "values",
+                    values: [6,7,8,9,10],
+                    density: 4
+                }
+            });
+            noUiSlider.create(slider4,{
+                start: [0],
+                connect: true,
+                tooltips: [wNumb({decimals: 2})],
+                range: {
+                    min: 6,
+                    max: 10
+                },
+                pips: {
+                    mode: "values",
+                    values: [6,7,8,9,10],
+                    density: 4
+                }
+            });
+            slider.noUiSlider.on("update", function (values, handle) {
+                $('#analisis_sensorial_fragrancia').val(values[handle]);
+                
+            });
+            slider1.noUiSlider.on("update", function (values, handle1) {
+                $('#analisis_sensorial_sabor').val(values[handle1]);
+                
+            });
+            slider2.noUiSlider.on("update", function (values, handle2) {
+                $('#analisis_sensorial_saborResidual').val(values[handle2]);
+                
+            });
+            slider3.noUiSlider.on("update", function (values, handle3) {
+                $('#analisis_sensorial_acidez').val(values[handle3]);
+                
+            });
+            slider4.noUiSlider.on("update", function (values, handle4) {
+                $('#analisis_sensorial_cuerpo').val(values[handle4]);
+                
+            });
+        });
+    </script>
+    
+{% endblock %}

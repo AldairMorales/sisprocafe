@@ -8,16 +8,13 @@
 namespace Pidia\Apps\Demo\Form;
 
 use Pidia\Apps\Demo\Entity\AnalisisFisico;
-use Pidia\Apps\Demo\Entity\UnidadMedida;
 use Pidia\Apps\Demo\Security\Security;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Doctrine\ORM\EntityRepository;
-use App\Form\Type\ShippingType;
+
 
 class AnalisisFisicoType extends AbstractType
 {
@@ -41,21 +38,21 @@ class AnalisisFisicoType extends AbstractType
             ])
             ->add('muestra', ChoiceType::class, [
                 'choices' => [
-                    '100' => 1,
-                    '300' => 2,
-                    '400' => 3
+                    '100' => 100,
+                    '200' => 200,
+                    '300' => 300
                 ]
             ])
 
-            ->add('unidadMedida', EntityType::class, [
-                'mapped' => false,
-                'class' => UnidadMedida::class,
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('u')
-                        ->orderBy('u.nombre', 'ASC');
-                },
-                'choice_label' => 'nombre',
-            ])
+            // ->add('unidadMedida', EntityType::class, [
+            //     'mapped' => false,
+            //     'class' => UnidadMedida::class,
+            //     'query_builder' => function (EntityRepository $er) {
+            //         return $er->createQueryBuilder('u')
+            //             ->orderBy('u.nombre', 'ASC');
+            //     },
+            //     'choice_label' => 'nombre',
+            // ])
             ->add('exportable')
             ->add('exportable_', null, [
                 'mapped' => false,

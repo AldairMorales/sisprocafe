@@ -21,7 +21,7 @@ class SocioType extends AbstractType
             ->add('codigo')
             ->add('tipo', ChoiceType::class, [
                 'choices' => [
-                  'Natural' => true,
+                    'Natural' => true,
                     'Juridico' => false,
                 ],
             ])
@@ -48,8 +48,7 @@ class SocioType extends AbstractType
                     'Inactivo' => false,
                 ],
             ])
-            ->add('estado')
-        ;
+            ->add('estado');
     }
 
     public function configureOptions(OptionsResolver $resolver): void

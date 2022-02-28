@@ -53,7 +53,7 @@ var Collection = function () {
     };
 
     var addBlockFormDeleteLink = function($formLi) {
-        var $removeFormA = $('<a href="#" class="btn btn-sm btn-light-danger btn-icon"><i class="fa fa-times"></i></a>');
+        var $removeFormA = $('<a href="#" class="btn btn-sm btn-light-danger btn-icon" style= "position: absolute; top: 0; right: 0;"><i class="fa fa-times"></i></a>');
         //var $auxForm = $('<div class="col-sm-1"></div>').append($removeFormA);
         //$tagFormLi.children('.row').append($auxForm);
         $formLi.append($removeFormA);

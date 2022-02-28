@@ -3,9 +3,9 @@
 {% import 'macro/action.html.twig' as action %}
 {% import 'macro/pagination.html.twig' as pagination %}
 
-{% set _title = 'Analisis Fisico' %}
+{% set _title = 'Analisis Sensorial' %}
 {% set _main_title = 'Listado' %}
-{% set _section =  'analisisFisico_index' %}
+{% set _section =  'analisisSensorial_index' %}
 
 {% block _breadcrumb %}
     {{ breadcrumb.show(_title) }}
@@ -16,36 +16,28 @@
         {{ action.tbl_start() }}
         {{ action.thead_start() }}
         <tr>
-            {{ action.th('fecha', true) }}
-            {{ action.th('dertificacion', true) }}
-            {{ action.th('muestra', true) }}
-            {{ action.th('exportable', true) }}
-            {{ action.th('bola', true) }}
-            {{ action.th('segunda', true) }}
-            {{ action.th('cascara', true) }}
-            {{ action.th('descripcion', true) }}
+            {{ action.th('Periodo', true) }}
+            {{ action.th('Fecha', true) }}
+            {{ action.th('Certificacion', true) }}
+            {{ action.th('Puntaje', true) }} 
             {{ action.th('Activo', true, 'text-center') }}
             <th></th>
         </tr>
         {{ action.thead_end() }}
         {{ action.tbody_start() }}
-        {% for analisisFisico in paginator.results %}
+        {% for analisisSensorial in paginator.results %}
             <tr>
-                <td>{{ analisisFisico.fecha ? analisisFisico.fecha|date('Y-m-d') : ''}}</td>
-                <td>{{ analisisFisico.certificacion }}</td>
-                <td>{{ analisisFisico.muestra}}</td>
-                <td>{{ analisisFisico.exportable}}</td>
-                <td>{{ analisisFisico.bola }}</td>
-                <td>{{ analisisFisico.segunda}}</td>
-                <td>{{ analisisFisico.cascara}}</td>
-                <td>{{ analisisFisico.descripcion }}</td>
-                <td class="text-center">{{ analisisFisico.activo | yesnocustom | raw }}</td>
+                <td>{{ analisisSensorial.periodo}}</td>
+                <td>{{ analisisSensorial.fecha ? analisisSensocial.fecha|date('Y-m-d') : ''}}</td>
+                <td>{{ analisisSensorial.certificacion }}</td>
+                <td>{{ analisisSensorial.puntaje }}</td>
+                <td class="text-center">{{ analisisSensorial.activo | yesnocustom | raw }}</td>
                 <td>
                     {% if access.has('view') %}
-                        {{ action.btn_show_link2_ico(path('analisisFisico_show', {'id': analisisFisico.id})) }}
+                        {{ action.btn_show_link2_ico(path('analisisSensorial_show', {'id': analisisSensorial.id})) }}
                     {% endif %}
-                    {% if access.has('edit', analisisFisico) %}
-                        {{ action.btn_edit_link2_ico(path('analisisFisico_edit', {'id': analisisFisico.id})) }}
+                    {% if access.has('edit', analisisSensorial) %}
+                        {{ action.btn_edit_link2_ico(path('analisisSensorial_edit', {'id': analisisSensorial.id})) }}
                     {% endif %}
                 </td>
             </tr>
@@ -62,7 +54,7 @@
 {% endblock %}
 
 {% block _main_footer %}
-    {% include 'crud/_index_links.html.twig' with {'route_base': 'analisisFisico'} %}
+    {% include 'crud/_index_links.html.twig' with {'route_base': 'analisisSensorial'} %}
 {% endblock%}
 
 {% block _main_options %}
@@ -74,11 +66,11 @@
 {% endblock %}
 
 {% block _body_tools_ico %}
-    {% include 'crud/_index_links_tool.html.twig' with {'route_base': 'analisisFisico'}  %}
+    {% include 'crud/_index_links_tool.html.twig' with {'route_base': 'analisisSensorial'}  %}
 {% endblock %}
 
 {% block _body_tools %}
-    {% include 'crud/_index_links_ico.html.twig' with {'route_base': 'analisisFisico'}  %}
+    {% include 'crud/_index_links_ico.html.twig' with {'route_base': 'analisisSensorial'}  %}
 {% endblock %}
 
 {% block _stylesheets %}
@@ -88,18 +80,18 @@
     <script>
         jQuery(document).ready(function () {
             $(document).on('change', '#filter_size', function () {
-                let route = '{{ path('analisisFisico_index') }}';
+                let route = '{{ path('analisisSensorial_index') }}';
                 route = route + "?" + 'n=' + $('#filter_size option:selected').val();
                 route = route + "&" + 'b=' + $('#filter_text').val();
                 window.location = route;
             });
 
             $(document).on('click', '.btn-send', function () {
-                window.location = '{{ path('analisisFisico_index') }}';
+                window.location = '{{ path('analisisSensorial_index') }}';
             });
 
             $(document).on('click', '.btn-clean', function () {
-                window.location.href = '{{ path('analisisFisico_index') }}';
+                window.location.href = '{{ path('analisisSensorial_index') }}';
             });
         });
     </script>

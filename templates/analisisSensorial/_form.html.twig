@@ -1,0 +1,194 @@
+{% import 'macro/action.html.twig' as action %}
+
+{{ action.frm_start(form) }}
+    {{ action.frm_deploy(
+        action.frm_add_section(
+            action.frm_deploy_add_labels(
+                action.frm_add_section(
+                    action.frm_column(
+                        action.frm_column_field_select(form.periodo, '', '',4),
+                        null,
+                        null,
+                        null,
+                        2
+                    ),
+                    action.frm_column(
+                        action.frm_column_field_date(form.fecha),
+                        action.frm_column_field_select(form.certificacion)
+                    ),
+                    action.frm_column(
+                        action.frm_column_field_select(form.tikect, '', '',4 ),
+                        null,
+                        null,
+                        null,
+                        2
+                    ),
+                    action.frm_column(
+                        action.frm_column_field(form.puntaje, '', '',4 ),
+                        null,
+                        null,
+                        null,
+                        2
+                    ),
+                    null,
+                    null
+                ),
+                'General',
+                1
+            ),
+            action.frm_deploy_add_labels(
+                action.frm_add_section(
+                    action.frm_column(
+                        action.frm_column_field_div(form.fragrancia,'sensorial_fragrancia', '', '',2),
+                        null,
+                        null,
+                        null,
+                        1
+                    ),
+                    null,
+                    null,
+                    null,
+                    null
+                ),
+                '1 Etapa :',
+                2
+            ),
+            action.frm_deploy_add_labels(
+                action.frm_add_section(
+                    action.frm_column(
+                        action.frm_column_field_div(form.sabor,'sensorial_sabor', '', '',2),
+                        null,
+                        null,
+                        null,
+                        1
+                    ),
+                    action.frm_column(
+                        action.frm_column_field_div(form.saborResidual,'sensorial_saborResidual', '', '',2),
+                        null,
+                        null,
+                        null,
+                        1
+                    ),
+                    action.frm_column(
+                        action.frm_column_field_div(form.acidez,'sensorial_acidez', '', '',2),
+                        null,
+                        null,
+                        null,
+                        1
+                    ),
+                    action.frm_column(
+                        action.frm_column_field_div(form.cuerpo,'sensorial_cuerpo', '', '',2),
+                        null,
+                        null,
+                        null,
+                        1
+                    ),
+                    null
+                ),
+                '2 Etapa :',
+                3
+            ),
+            action.frm_deploy_add_labels(
+                action.frm_add_section(
+                    action.frm_column(
+                        action.frm_column_field(form.balance, '', '',2),
+                        null,
+                        null,
+                        null,
+                        1
+                    ),
+                    action.frm_column(
+                        action.frm_column_field(form.uniformidad, '', '',5),
+                        null,
+                        null,
+                        null,
+                        2
+                    ),
+                    action.frm_column(
+                        action.frm_column_field(form.tasaLimpia, '', '',5),
+                        null,
+                        null,
+                        null,
+                        2
+                    ),
+                    action.frm_column(
+                        action.frm_column_field(form.dulzor, '', '',5),
+                        null,
+                        null,
+                        null,
+                        2
+                    ),
+                    action.frm_add_section(
+                        action.frm_column(
+                            action.frm_column_field(form.puntajeCatador, '', '',2),
+                            null,
+                            null,
+                            null,
+                            1
+                        ),
+                        action.frm_column(
+                            action.frm_column_field(form.descripcion, '', '',2),
+                            null,
+                            null,
+                            null,
+                            1
+                        ),
+                        null,
+                        null,
+                        null
+                    )
+                ),
+                '3 Etapa :',
+                4
+            ),
+            null
+        )
+    )}}
+    {{ action.frm_column(
+        action.frm_column_btn(button_label|default('Guardar')),
+        null,
+        null,
+        null,
+        2
+    )}}
+{{ action.frm_end(form) }}
+
+
+{# {{ action.frm_start(form) }}
+    {{ action.frm_column(
+        action.frm_column_field_select(form.periodo, '', '',4),
+        null,
+        null,
+        null,
+        2
+    ) }}
+    {{ action.frm_column(
+        action.frm_column_field_date(form.fecha),
+        action.frm_column_field_select(form.certificacion)
+    ) }}
+    {{ action.frm_column(
+        action.frm_column_field_select(form.tikect, '', '',4 ),
+        null,
+        null,
+        null,
+        2
+    ) }}
+    {{ action.frm_column(
+        action.frm_column_field(form.puntaje, '', '',4 ),
+        null,
+        null,
+        null,
+        2
+    ) }}
+    {{ action.frm_column(
+        action.frm_column_field_collection_display(form.sensorialDetalle1)
+    ) }}
+    
+    {{ action.frm_column(
+        action.frm_column_btn(button_label|default('Guardar')),
+        null,
+        null,
+        null,
+        2
+    ) }}
+{{ action.frm_end(form) }} #}
