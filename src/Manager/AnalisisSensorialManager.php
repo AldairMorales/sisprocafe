@@ -14,6 +14,7 @@ use Pidia\Apps\Demo\Repository\BaseRepository;
 
 final class AnalisisSensorialManager extends BaseManager
 {
+
     public function repositorio(): BaseRepository
     {
         return $this->manager()->getRepository(AnalisisSensorial::class);

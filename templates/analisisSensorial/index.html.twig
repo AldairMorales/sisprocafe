@@ -28,13 +28,13 @@
         {% for analisisSensorial in paginator.results %}
             <tr>
                 <td>{{ analisisSensorial.periodo}}</td>
-                <td>{{ analisisSensorial.fecha ? analisisSensocial.fecha|date('Y-m-d') : ''}}</td>
+                <td>{{ analisisSensorial.fecha ? analisisSensorial.fecha|date('Y-m-d') : ''}}</td>
                 <td>{{ analisisSensorial.certificacion }}</td>
                 <td>{{ analisisSensorial.puntaje }}</td>
                 <td class="text-center">{{ analisisSensorial.activo | yesnocustom | raw }}</td>
                 <td>
                     {% if access.has('view') %}
-                        {{ action.btn_show_link2_ico(path('analisisSensorial_show', {'id': analisisSensorial.id})) }}
+                        {{ action.btn_print_link2_ico(path('analisisSensorial_show', {'id': analisisSensorial.id})) }}
                     {% endif %}
                     {% if access.has('edit', analisisSensorial) %}
                         {{ action.btn_edit_link2_ico(path('analisisSensorial_edit', {'id': analisisSensorial.id})) }}

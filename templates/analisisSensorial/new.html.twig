@@ -14,31 +14,6 @@
     {{ include('analisisSensorial/_form.html.twig') }}
 {% endblock %}
 
-{% form_theme form _self %}
-
-{% block _analisis_sensorial_sensorialDetalle1_label %}
-{% endblock %}
-
-{% block _analisis_sensorial_sensorialDetalle1 %}
-    {% import 'macro/action.html.twig' as actions %}
-
-    {{ actions.frm_column(
-        actions.frm_column_field(form.fragrancia),
-        null,
-        null,
-        null,
-        2
-    )}}
-    {{ actions.frm_column(
-        actions.frm_column_field_select(form.categorias),
-        null,
-        null,
-        null,
-        2
-    )}}
-    
-{% endblock %}
-
 {% block _main_tools %}
     {% include 'crud/_tools_ico.html.twig' %}
 {% endblock %}

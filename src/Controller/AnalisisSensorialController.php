@@ -5,6 +5,8 @@ namespace Pidia\Apps\Demo\Controller;
 use Pidia\Apps\Demo\Entity\AnalisisSensorial;
 use Pidia\Apps\Demo\Form\AnalisisSensorialType;
 use Pidia\Apps\Demo\Manager\AnalisisSensorialManager;
+
+use Pidia\Apps\Demo\Manager\Busqueda_Id_Sensorial_Manager;
 use Pidia\Apps\Demo\Security\Access;
 use Pidia\Apps\Demo\Util\Paginator;
 use Symfony\Component\HttpFoundation\Request;
@@ -149,5 +151,16 @@ class AnalisisSensorialController extends BaseController
         }
 
         return $this->redirectToRoute('analisisSensorial_index');
+    }
+    #[Route('/busqueda/id', name: 'analisisSensorial_id')]
+
+    public function id(Request $request, Busqueda_Id_Sensorial_Manager $manager): Response
+    {
+
+        $id = $request->request->get('id');
+
+        $result = $manager->por_ID($id);
+
+        return $this->json($result);
     }
 }

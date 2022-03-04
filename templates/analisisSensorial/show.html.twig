@@ -11,29 +11,87 @@
 {% endblock %}
 
 {% block _main %}
-    {{ action.tbl_start() }}
-        {{ action.tbl_tr('Periodo',analisisSensorial.periodo) }}
-        {{ action.tbl_tr('Fecha',analisisSensorial.fecha) }}
-        {{ action.tbl_tr('certificacion',analisisSensorial.certificacion) }}
-        {{ action.tbl_tr('puntaje',analisisSensorial.puntaje) }}
+<div class="row">
+    <div class="col">
+            {{ action.tbl_start() }}
+            {{ action.tbl_tr('Periodo',analisisSensorial.periodo) }}
+            {{ action.tbl_tr('Fecha',analisisSensorial.fecha) }}
+            {{ action.tbl_tr('certificacion',analisisSensorial.certificacion) }}
+            {{ action.tbl_tr('puntaje',analisisSensorial.puntaje) }}
+            {{ action.tbl_tr('Fragrancia',analisisSensorial.fragrancia) }}
+            {{ action.tbl_tr('Sabor',analisisSensorial.sabor) }}
+            {{ action.tbl_tr('Sabor Residual',analisisSensorial.saborResidual) }}
+            {{ action.tbl_tr('acidez',analisisSensorial.acidez) }}
+            {{ action.tbl_tr('cuerpo',analisisSensorial.cuerpo) }}
+            {{ action.tbl_tr('Balance',analisisSensorial.balance) }}
+            {{ action.tbl_tr('Uniformidad',analisisSensorial.uniformidad) }}
+            {{ action.tbl_tr('tasaLimpia',analisisSensorial.tasaLimpia) }}
+            {{ action.tbl_tr('dulzor',analisisSensorial.dulzor) }}
+            {{ action.tbl_tr('Puntaje Catador',analisisSensorial.puntajeCatador) }}
+            {{ action.tbl_tr('Descripcion',analisisSensorial.descripcion) }}
+            {% include 'crud/_show_info.html.twig' with {'entity': analisisSensorial} %}
+        {{ action.tbl_end() }}
+    </div>
+    <div class="col">
+        <canvas id="myChart" class="mh-400px"></canvas>
+    </div>
+</div>
+{% endblock %}
+
+{% block _javascripts %}
+    <script src="{{ asset('js/notify.js') }}"></script>
+    <script>
+        const ctx = document.getElementById('myChart').getContext('2d');
         
-        {% include 'crud/_show_info.html.twig' with {'entity': analisisSensorial} %}
-    {{ action.tbl_end() }}
+        const data = {
+        labels: [
+            'Fragrancia',
+            'Sabor',
+            'SaborResidual',
+            'Acidez',
+            'Cuerpo',
+            'Balance',
+            'Uniformidad'
+        ],
+        datasets: [{
+            label: 'Conjunto de datos',
+            data: [6.65, 7.25, 8.23, 7.2, 8.6, 7.5, 1],
+            fill: true,
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            borderColor: 'rgb(255, 99, 132)',
+            pointBackgroundColor: 'rgb(255, 99, 132)',
+            pointBorderColor: '#fff',
+            pointHoverBackgroundColor: '#fff',
+            pointHoverBorderColor: 'rgb(255, 99, 132)'
+        }]
+        };
+        // </block:setup>
 
-{% endblock %}
-
-{% block _main_footer %}
-    {% include 'crud/_show_links.html.twig' with {'route_base':'analisisSensorial','entity': analisisSensorial} %}
-{% endblock %}
-
-{% block _main_tools %}
-    {% include 'crud/_tools_ico.html.twig' %}
-{% endblock %}
-
-{% block _body_tools %}
-    {% include 'crud/_show_links_ico.html.twig' with {'route_base':'analisisSensorial','entity': analisisSensorial} %}
-{% endblock %}
-
-{% block _body_tools_ico %}
-    {% include 'crud/_show_links_tool.html.twig' with {'route_base':'analisisSensorial','entity': analisisSensorial} %}
+        // <block:config:0>
+        const config = {
+        type: 'radar',
+        data: data,
+        options: {
+            elements: {
+            line: {
+                borderWidth: 3
+            }
+            }
+        },
+        };
+        const myChart = new Chart(ctx,config);
+        $.ajax({
+                        type: 'POST',
+                        url: '{{ path('analisisSensorial_id') }}',
+                        
+                        success: function (result) {
+                            if (result) {
+                                alert("hola");
+                            } else {
+                                
+                                Notify.warning('No se encontro nombre para documento')
+                            }
+                        }
+        })
+    </script>
 {% endblock %}
