@@ -13,7 +13,7 @@
 {% block _main %}
 <div class="row">
     <div class="col">
-            {{ action.tbl_start() }}
+        {{ action.tbl_start() }}
             {{ action.tbl_tr('Periodo',analisisSensorial.periodo) }}
             {{ action.tbl_tr('Fecha',analisisSensorial.fecha) }}
             {{ action.tbl_tr('certificacion',analisisSensorial.certificacion) }}
@@ -41,8 +41,33 @@
 {% block _javascripts %}
     <script src="{{ asset('js/notify.js') }}"></script>
     <script>
-        const ctx = document.getElementById('myChart').getContext('2d');
         
+        let paths = window.location.pathname.split('/');
+        let id = paths[paths.length-1];
+        var dataElement=[];
+        $.ajax({
+            type: 'POST',
+            url: '{{ path('analisisSensorial_busqueda_id') }}',
+            data: {
+                id: id,
+            },
+            success: function (result) {
+                if (result) {
+                    dataElement.push(result[0].fragrancia)
+                    dataElement.push(result[0].sabor)
+                    dataElement.push(result[0].saborResidual)
+                    dataElement.push(result[0].acidez)
+                    dataElement.push(result[0].cuerpo)
+                    dataElement.push(result[0].balance)
+                    dataElement.push(result[0].uniformidad)                   
+                } else {
+                    Notify.warning('No se encontro nombre para documento')
+                }
+            }
+        });
+        const ctx = document.getElementById('myChart').getContext('2d');
+        console.log(dataElement);
+
         const data = {
         labels: [
             'Fragrancia',
@@ -55,7 +80,7 @@
         ],
         datasets: [{
             label: 'Conjunto de datos',
-            data: [6.65, 7.25, 8.23, 7.2, 8.6, 7.5, 1],
+            data: dataElement,//parseFloat(dataElement[0]), parseFloat(dataElement[1]), parseFloat(dataElement[2]), parseFloat(dataElement[3]),parseFloat(dataElement[4]),parseFloat(dataElement[5]), parseFloat(dataElement[6])],
             fill: true,
             backgroundColor: 'rgba(255, 99, 132, 0.2)',
             borderColor: 'rgb(255, 99, 132)',
@@ -65,33 +90,19 @@
             pointHoverBorderColor: 'rgb(255, 99, 132)'
         }]
         };
-        // </block:setup>
-
         // <block:config:0>
         const config = {
         type: 'radar',
         data: data,
         options: {
             elements: {
-            line: {
-                borderWidth: 3
-            }
+                line: {
+                    borderWidth: 3
+                }
             }
         },
         };
         const myChart = new Chart(ctx,config);
-        $.ajax({
-                        type: 'POST',
-                        url: '{{ path('analisisSensorial_id') }}',
-                        
-                        success: function (result) {
-                            if (result) {
-                                alert("hola");
-                            } else {
-                                
-                                Notify.warning('No se encontro nombre para documento')
-                            }
-                        }
-        })
+
     </script>
 {% endblock %}
