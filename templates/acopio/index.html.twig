@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Acopio index{% endblock %}
+
+{% block body %}
+    <h1>Acopio index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Fecha</th>
+                <th>Tikect</th>
+                <th>PesoBruto</th>
+                <th>Cantidad</th>
+                <th>TaraPorSaco</th>
+                <th>TaraDeSacos</th>
+                <th>PesoQuintales</th>
+                <th>PesoNeto</th>
+                <th>Observaciones</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for acopio in acopios %}
+            <tr>
+                <td>{{ acopio.id }}</td>
+                <td>{{ acopio.fecha ? acopio.fecha|date('Y-m-d') : '' }}</td>
+                <td>{{ acopio.tikect }}</td>
+                <td>{{ acopio.pesoBruto }}</td>
+                <td>{{ acopio.cantidad }}</td>
+                <td>{{ acopio.taraPorSaco }}</td>
+                <td>{{ acopio.taraDeSacos }}</td>
+                <td>{{ acopio.pesoQuintales }}</td>
+                <td>{{ acopio.pesoNeto }}</td>
+                <td>{{ acopio.observaciones }}</td>
+                <td>
+                    <a href="{{ path('acopio_show', {'id': acopio.id}) }}">show</a>
+                    <a href="{{ path('acopio_edit', {'id': acopio.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="11">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('acopio_new') }}">Create new</a>
+{% endblock %}

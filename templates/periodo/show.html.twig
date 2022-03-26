@@ -1,42 +1,76 @@
 {% extends 'base.html.twig' %}
+{% import 'macro/breadcrumb.html.twig' as breadcrumb %}
+{% import 'macro/action.html.twig' as action %}
 
-{% block title %}Periodo{% endblock %}
+{% set _title = 'Periodo' %}
+{% set _main_title = 'Mostrar' %}
+{% set _section =  'periodo_index'%}
 
-{% block body %}
-    <h1>Periodo</h1>
+{% block _breadcrumb %}
+    {{ breadcrumb.show2(_title, _section, 'Mostrar') }}
+{% endblock %}
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ periodo.id }}</td>
-            </tr>
-            <tr>
-                <th>Nombre</th>
-                <td>{{ periodo.nombre }}</td>
-            </tr>
-            <tr>
-                <th>Alias</th>
-                <td>{{ periodo.alias }}</td>
-            </tr>
-            <tr>
-                <th>Descripcion</th>
-                <td>{{ periodo.descripcion }}</td>
-            </tr>
-            <tr>
-                <th>FechaInicio</th>
-                <td>{{ periodo.fechaInicio ? periodo.fechaInicio|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>FechaFinal</th>
-                <td>{{ periodo.fechaFinal ? periodo.fechaFinal|date('Y-m-d') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+{% block _main %}
+    {{ action.tbl_start() }}
+    {{ action.tbl_tr('Nombre',periodo.nombre) }}
+    {{ action.tbl_tr('Alias',periodo.ruta) }}
+    {{ action.tbl_tr('Fecha Inicio',periodo.icono) }}
+    {{ action.tbl_tr('Fecha Final',periodo.orden) }}
+    {% include 'crud/_show_info.html.twig' with {'entity': periodo} %}
+    {{ action.tbl_end() }}
 
-    <a href="{{ path('periodo_index') }}">back to list</a>
+{% endblock %}
 
-    <a href="{{ path('periodo_edit', {'id': periodo.id}) }}">edit</a>
+{% block _main_footer %}
+    {% include 'crud/_show_links.html.twig' with {'route_base':'periodo','entity': periodo} %}
+{% endblock %}
 
-    {{ include('periodo/_delete_form.html.twig') }}
+{% block _main_tools %}
+    {% include 'crud/_tools_ico.html.twig' %}
+{% endblock %}
+
+{% block _body_tools %}
+    {% include 'crud/_show_links_ico.html.twig' with {'route_base':'periodo','entity': periodo} %}
+{% endblock %}
+
+{% block _body_tools_ico %}
+    {% include 'crud/_show_links_tool.html.twig' with {'route_base':'periodo','entity': periodo} %}
+{% endblock %}{% extends 'base.html.twig' %}
+{% import 'macro/breadcrumb.html.twig' as breadcrumb %}
+{% import 'macro/action.html.twig' as action %}
+
+{% set _title = 'Menu' %}
+{% set _main_title = 'Mostrar' %}
+{% set _section =  'periodo_index'%}
+
+{% block _breadcrumb %}
+    {{ breadcrumb.show2(_title, _section, 'Mostrar') }}
+{% endblock %}
+
+{% block _main %}
+    {{ action.tbl_start() }}
+    {{ action.tbl_tr('Padre',periodo.padre) }}
+    {{ action.tbl_tr('Nombre',periodo.nombre) }}
+    {{ action.tbl_tr('Ruta',periodo.ruta) }}
+    {{ action.tbl_tr('Icono',periodo.icono) }}
+    {{ action.tbl_tr('Orden',periodo.orden) }}
+    {% include 'crud/_show_info.html.twig' with {'entity': periodo} %}
+    {{ action.tbl_end() }}
+
+{% endblock %}
+
+{% block _main_footer %}
+    {% include 'crud/_show_links.html.twig' with {'route_base':'periodo','entity': periodo} %}
+{% endblock %}
+
+{% block _main_tools %}
+    {% include 'crud/_tools_ico.html.twig' %}
+{% endblock %}
+
+{% block _body_tools %}
+    {% include 'crud/_show_links_ico.html.twig' with {'route_base':'periodo','entity': periodo} %}
+{% endblock %}
+
+{% block _body_tools_ico %}
+    {% include 'crud/_show_links_tool.html.twig' with {'route_base':'periodo','entity': periodo} %}
 {% endblock %}

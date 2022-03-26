@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Acopio{% endblock %}
+
+{% block body %}
+    <h1>Create new Acopio</h1>
+
+    {{ include('acopio/_form.html.twig') }}
+
+    <a href="{{ path('acopio_index') }}">back to list</a>
+{% endblock %}

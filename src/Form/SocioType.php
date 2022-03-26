@@ -7,6 +7,7 @@ use Pidia\Apps\Demo\Entity\Socio;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -18,20 +19,27 @@ class SocioType extends AbstractType
             ->add('fechaIngreso', DateType::class, [
                 'widget' => 'single_text',
             ])
-            ->add('codigo')
             ->add('tipo', ChoiceType::class, [
                 'choices' => [
-                  'Natural' => true,
-                    'Juridico' => false,
+                    'Natural' => 'Natural',
+                    'Juridico' => 'Juridico',
                 ],
             ])
+            ->add('codigo')
             ->add('nombres')
             ->add('apellidoPaterno')
             ->add('apellidoMaterno')
             ->add('sexo', ChoiceType::class, [
                 'choices' => [
-                    'Masculino' => true,
-                    'femenino' => false,
+                    'Masculino' => 'Masculino',
+                    'femenino' => 'Femenino',
+                ],
+            ])
+            ->add('tipoDocumento', ChoiceType::class, [
+                'choices' => [
+                    'DNI' => 'DNI',
+                    'Carné de Extranjería' => 'Carné de Extrangería',
+                    'RUC' => 'RUC',
                 ],
             ])
             ->add('numeroDocumento')
@@ -41,11 +49,12 @@ class SocioType extends AbstractType
             ])
             ->add('conyugueNombre')
             ->add('conyugueDocumento')
+            ->add('foto', FileType::class)
             ->add('ruc')
             ->add('estadoRuc', ChoiceType::class, [
                 'choices' => [
-                    'Activo' => true,
-                    'Inactivo' => false,
+                    'Activo' => 'Activo',
+                    'Inactivo' => 'Inactivo',
                 ],
             ])
             ->add('estado')

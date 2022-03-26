@@ -2,18 +2,16 @@
 {% import 'macro/breadcrumb.html.twig' as breadcrumb %}
 {% import 'macro/action.html.twig' as action %}
 
-{% set _title = 'Periodo' %}
-{% set _main_title = 'Editar' %}
-{% set _section =  'periodo_index'%}
+{% set _title = 'Detalle Periodo' %}
+{% set _main_title = 'Nuevo' %}
+{% set _section =  'detalle_periodo_index'%}
 
 {% block _breadcrumb %}
-    {{ breadcrumb.show2(_title, _section, 'Editar') }}
+    {{ breadcrumb.show2(_title,_section,'Nuevo') }}
 {% endblock %}
 
 {% block _main %}
-
-    {{ include('periodo/_form.html.twig', {'button_label': 'Actualizar'}) }}
-
+    {{ include('detalle_periodo/_form.html.twig') }}
 {% endblock %}
 
 {% block _main_tools %}
@@ -21,21 +19,27 @@
 {% endblock %}
 
 {% block _body_tools %}
-    {% include 'crud/_edit_links_ico.html.twig' with {'route_base':'periodo','entity': periodo} %}
+    {% include 'crud/_new_links_ico.html.twig' with {'route_base':'detalle_periodo'} %}
 {% endblock %}
 
 {% block _body_tools_ico %}
-    {% include 'crud/_edit_links_tool.html.twig' with {'route_base':'periodo','entity': periodo} %}
+    {% include 'crud/_new_links_tool.html.twig' with {'route_base': 'detalle_periodo'}  %}
 {% endblock %}
 
 {% block _main_footer %}
-    {% include 'crud/_edit_links.html.twig' with {'route_base':'periodo','entity': periodo} %}
+    {% include 'crud/_new_links.html.twig' with {'route_base':'detalle_periodo'} %}
 {% endblock %}
 
 {% block _stylesheets %}
 {% endblock %}
 
 {% block _javascripts %}
+    <script src="{{ asset('js/collection.js') }}"></script>
+    <script>
+        jQuery(document).ready(function() {
+            Collection.init('#');
+        });
+    </script>
     <script src="{{ asset('js/select2.js') }}"></script>
     <script>
         jQuery(document).ready(function() {

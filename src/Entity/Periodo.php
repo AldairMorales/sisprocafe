@@ -37,9 +37,16 @@ class Periodo
     #[ORM\ManyToMany(targetEntity: Producto::class)]
     private $productos;
 
+    #[ORM\OneToMany(mappedBy: 'periodo', targetEntity: DetallePeriodo::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
+    private $detalles;
+
+    #[ORM\Column(type: 'string', length: 10)]
+    private $estado;
+
     public function __construct()
     {
         $this->productos = new ArrayCollection();
+        $this->detalles = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -129,5 +136,52 @@ class Periodo
         $this->productos->removeElement($producto);
 
         return $this;
+    }
+
+    /**
+     * @return Collection|DetallePeriodo[]
+     */
+    public function getDetalles(): Collection
+    {
+        return $this->detalles;
+    }
+
+    public function addDetalle(DetallePeriodo $detalle): self
+    {
+        if (!$this->detalles->contains($detalle)) {
+            $this->detalles[] = $detalle;
+            $detalle->setPeriodo($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDetalle(DetallePeriodo $detalle): self
+    {
+        if ($this->detalles->removeElement($detalle)) {
+            // set the owning side to null (unless already changed)
+            if ($detalle->getPeriodo() === $this) {
+                $detalle->setPeriodo(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getEstado(): ?string
+    {
+        return $this->estado;
+    }
+
+    public function setEstado(string $estado): self
+    {
+        $this->estado = $estado;
+
+        return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getNombre() ?? '';
     }
 }

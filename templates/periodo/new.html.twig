@@ -1,11 +1,50 @@
 {% extends 'base.html.twig' %}
+{% import 'macro/breadcrumb.html.twig' as breadcrumb %}
+{% import 'macro/action.html.twig' as action %}
 
-{% block title %}New Periodo{% endblock %}
+{% set _title = 'Periodo' %}
+{% set _main_title = 'Nuevo' %}
+{% set _section =  'periodo_index'%}
 
-{% block body %}
-    <h1>Create new Periodo</h1>
+{% block _breadcrumb %}
+    {{ breadcrumb.show2(_title,_section,'Nuevo') }}
+{% endblock %}
 
+{% block _main %}
     {{ include('periodo/_form.html.twig') }}
+{% endblock %}
 
-    <a href="{{ path('periodo_index') }}">back to list</a>
+{% block _main_tools %}
+    {% include 'crud/_tools_ico.html.twig' %}
+{% endblock %}
+
+{% block _body_tools %}
+    {% include 'crud/_new_links_ico.html.twig' with {'route_base':'periodo'} %}
+{% endblock %}
+
+{% block _body_tools_ico %}
+    {% include 'crud/_new_links_tool.html.twig' with {'route_base': 'periodo'}  %}
+{% endblock %}
+
+{% block _main_footer %}
+    {% include 'crud/_new_links.html.twig' with {'route_base':'periodo'} %}
+{% endblock %}
+
+{% block _stylesheets %}
+{% endblock %}
+
+{% block _javascripts %}
+    <script src="{{ asset('js/collection.js') }}"></script>
+    <script>
+        jQuery(document).ready(function() {
+            Collection.init('#periodo_detalles');
+        });
+    </script>
+    <script src="{{ asset('js/select2.js') }}"></script>
+    <script>
+        jQuery(document).ready(function() {
+            Select2();
+        });
+    </script>
+
 {% endblock %}

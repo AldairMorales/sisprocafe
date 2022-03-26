@@ -30,7 +30,6 @@ class AlmacenType extends AbstractType
             ->add('ubicacion')
             ->add('direccion')
             ->add('empresa')
-            
         ;
     }
 

@@ -18,20 +18,28 @@
         action.frm_column_field_select(form.sexo)
     ) }}
     {{ action.frm_column(
-        action.frm_column_field(form.numeroDocumento),
-        action.frm_column_field(form.telefono)
+        action.frm_column_field_select(form.tipoDocumento),
+        action.frm_column_field(form.numeroDocumento)
     ) }}
     {{ action.frm_column(
-        action.frm_column_field(form.fechaNacimiento),
-        action.frm_column_field(form.conyugueNombre)
+        action.frm_column_field(form.telefono),
+        action.frm_column_field(form.fechaNacimiento)
     ) }}
     {{ action.frm_column(
-        action.frm_column_field(form.conyugueDocumento),
-        action.frm_column_field(form.ruc)
+        action.frm_column_field(form.conyugueNombre),
+        action.frm_column_field(form.conyugueDocumento)
     ) }}
     {{ action.frm_column(
-        action.frm_column_field_select(form.estadoRuc),
-        action.frm_column_field_select(form.estado)
+        action.frm_column_field(form.foto),
+        null, null, null, 2
+    ) }}
+    {{ action.frm_column(
+        action.frm_column_field(form.ruc),
+        action.frm_column_field_select(form.estadoRuc)
+    ) }}
+    {{ action.frm_column(
+        action.frm_column_field(form.estado),
+        null, null, null, 2
     ) }}
     {{ action.frm_column(
         action.frm_column_btn(button_label|default('Guardar')),

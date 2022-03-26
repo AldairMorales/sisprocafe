@@ -26,6 +26,10 @@ class Certificacion
     #[ORM\JoinColumn(nullable: true)]
     private $padre;
 
+    #[ORM\ManyToOne(targetEntity: DetallePeriodo::class, inversedBy: 'certificaciones')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $detallePeriodo;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,5 +73,17 @@ class Certificacion
     public function __toString(): string
     {
         return $this->getNombre() ?? '';
+    }
+
+    public function getDetallePeriodo(): ?DetallePeriodo
+    {
+        return $this->detallePeriodo;
+    }
+
+    public function setDetallePeriodo(?DetallePeriodo $detallePeriodo): self
+    {
+        $this->detallePeriodo = $detallePeriodo;
+
+        return $this;
     }
 }

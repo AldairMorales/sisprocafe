@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Acopio{% endblock %}
+
+{% block body %}
+    <h1>Acopio</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ acopio.id }}</td>
+            </tr>
+            <tr>
+                <th>Fecha</th>
+                <td>{{ acopio.fecha ? acopio.fecha|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Tikect</th>
+                <td>{{ acopio.tikect }}</td>
+            </tr>
+            <tr>
+                <th>PesoBruto</th>
+                <td>{{ acopio.pesoBruto }}</td>
+            </tr>
+            <tr>
+                <th>Cantidad</th>
+                <td>{{ acopio.cantidad }}</td>
+            </tr>
+            <tr>
+                <th>TaraPorSaco</th>
+                <td>{{ acopio.taraPorSaco }}</td>
+            </tr>
+            <tr>
+                <th>TaraDeSacos</th>
+                <td>{{ acopio.taraDeSacos }}</td>
+            </tr>
+            <tr>
+                <th>PesoQuintales</th>
+                <td>{{ acopio.pesoQuintales }}</td>
+            </tr>
+            <tr>
+                <th>PesoNeto</th>
+                <td>{{ acopio.pesoNeto }}</td>
+            </tr>
+            <tr>
+                <th>Observaciones</th>
+                <td>{{ acopio.observaciones }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('acopio_index') }}">back to list</a>
+
+    <a href="{{ path('acopio_edit', {'id': acopio.id}) }}">edit</a>
+
+    {{ include('acopio/_delete_form.html.twig') }}
+{% endblock %}

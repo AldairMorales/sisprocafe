@@ -23,9 +23,6 @@ class Socio
     #[ORM\Column(type: 'string', length: 16)]
     private $codigo;
 
-    #[ORM\Column(type: 'boolean')]
-    private $tipo;
-
     #[ORM\Column(type: 'string', length: 50)]
     private $nombres;
 
@@ -34,9 +31,6 @@ class Socio
 
     #[ORM\Column(type: 'string', length: 30)]
     private $apellidoMaterno;
-
-    #[ORM\Column(type: 'boolean')]
-    private $sexo;
 
     #[ORM\Column(type: 'string', length: 15)]
     private $numeroDocumento;
@@ -56,12 +50,24 @@ class Socio
     #[ORM\Column(type: 'string', length: 11)]
     private $ruc;
 
-    #[ORM\Column(type: 'boolean')]
-    private $estadoRuc;
-
     #[ORM\ManyToOne(targetEntity: EstadoSocio::class)]
     #[ORM\JoinColumn(nullable: false)]
     private $estado;
+
+    #[ORM\Column(type: 'string', length: 15)]
+    private $tipo;
+
+    #[ORM\Column(type: 'string', length: 15)]
+    private $sexo;
+
+    #[ORM\Column(type: 'string', length: 10)]
+    private $estadoRuc;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $foto;
+
+    #[ORM\Column(type: 'string', length: 30)]
+    private $tipoDocumento;
 
     public function getId(): ?int
     {
@@ -88,18 +94,6 @@ class Socio
     public function setCodigo(string $codigo): self
     {
         $this->codigo = $codigo;
-
-        return $this;
-    }
-
-    public function getTipo(): ?bool
-    {
-        return $this->tipo;
-    }
-
-    public function setTipo(bool $tipo): self
-    {
-        $this->tipo = $tipo;
 
         return $this;
     }
@@ -136,18 +130,6 @@ class Socio
     public function setApellidoMaterno(string $apellidoMaterno): self
     {
         $this->apellidoMaterno = $apellidoMaterno;
-
-        return $this;
-    }
-
-    public function getSexo(): ?bool
-    {
-        return $this->sexo;
-    }
-
-    public function setSexo(bool $sexo): self
-    {
-        $this->sexo = $sexo;
 
         return $this;
     }
@@ -224,18 +206,6 @@ class Socio
         return $this;
     }
 
-    public function getEstadoRuc(): ?bool
-    {
-        return $this->estadoRuc;
-    }
-
-    public function setEstadoRuc(bool $estadoRuc): self
-    {
-        $this->estadoRuc = $estadoRuc;
-
-        return $this;
-    }
-
     public function getEstado(): ?EstadoSocio
     {
         return $this->estado;
@@ -251,5 +221,65 @@ class Socio
     public function __toString(): string
     {
         return $this->getNombres();
+    }
+
+    public function getTipo(): ?string
+    {
+        return $this->tipo;
+    }
+
+    public function setTipo(string $tipo): self
+    {
+        $this->tipo = $tipo;
+
+        return $this;
+    }
+
+    public function getSexo(): ?string
+    {
+        return $this->sexo;
+    }
+
+    public function setSexo(string $sexo): self
+    {
+        $this->sexo = $sexo;
+
+        return $this;
+    }
+
+    public function getEstadoRuc(): ?string
+    {
+        return $this->estadoRuc;
+    }
+
+    public function setEstadoRuc(string $estadoRuc): self
+    {
+        $this->estadoRuc = $estadoRuc;
+
+        return $this;
+    }
+
+    public function getFoto(): ?string
+    {
+        return $this->foto;
+    }
+
+    public function setFoto(?string $foto): self
+    {
+        $this->foto = $foto;
+
+        return $this;
+    }
+
+    public function getTipoDocumento(): ?string
+    {
+        return $this->tipoDocumento;
+    }
+
+    public function setTipoDocumento(string $tipoDocumento): self
+    {
+        $this->tipoDocumento = $tipoDocumento;
+
+        return $this;
     }
 }

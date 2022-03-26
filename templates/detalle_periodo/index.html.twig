@@ -3,9 +3,9 @@
 {% import 'macro/action.html.twig' as action %}
 {% import 'macro/pagination.html.twig' as pagination %}
 
-{% set _title = 'Periodo' %}
+{% set _title = 'Detalle Periodo' %}
 {% set _main_title = 'Listado' %}
-{% set _section =  'periodo_index' %}
+{% set _section =  'detalle_periodo_index' %}
 
 {% block _breadcrumb %}
     {{ breadcrumb.show(_title) }}
@@ -16,28 +16,34 @@
         {{ action.tbl_start() }}
         {{ action.thead_start() }}
         <tr>
-            {{ action.th('Nombre', true) }}
-            {{ action.th('Alias', true) }}
-            {{ action.th('Fecha Inicio', true) }}
-            {{ action.th('Fecha Final', true) }}
+            {{ action.th('Acciones', true) }}
+            {{ action.th('Tara', true) }}
+            {{ action.th('Humedad Inicial', true) }}
+            {{ action.th('Muestra', true) }}
+            {{ action.th('Unidad Medida', true) }}
+            {{ action.th('Envase', true) }}
+            {{ action.th('Moneda', true) }}
             {{ action.th('Activo', true, 'text-center') }}
             <th></th>
         </tr>
         {{ action.thead_end() }}
         {{ action.tbody_start() }}
-        {% for periodo in paginator.results %}
+        {% for detalle_periodo in paginator.results %}
             <tr>
-                <td>{{ periodo.nombre}}</td>
-                <td>{{ periodo.alias }}</td>
-                <td>{{ periodo.fechaInicio }}</td>
-                <td>{{ periodo.fechaFinal }}</td>
-                <td class="text-center">{{ periodo.activo | yesnocustom | raw }}</td>
+                <td>{{ detalle_periodo.acciones}}</td>
+                <td>{{ detalle_periodo.tara }}</td>
+                <td>{{ detalle_periodo.humedadInicial }}</td>
+                <td>{{ detalle_periodo.muestra }}</td>
+                <td>{{ detalle_periodo.unidadMedida }}</td>
+                <td>{{ detalle_periodo.envase }}</td>
+                <td>{{ detalle_periodo.moneda }}</td>
+                <td class="text-center">{{ detalle_periodo.activo | yesnocustom | raw }}</td>
                 <td>
                     {% if access.has('view') %}
-                        {{ action.btn_show_link2_ico(path('periodo_show', {'id': periodo.id})) }}
+                        {{ action.btn_show_link2_ico(path('detalle_periodo_show', {'id': detalle_periodo.id})) }}
                     {% endif %}
-                    {% if access.has('edit', periodo) %}
-                        {{ action.btn_edit_link2_ico(path('periodo_edit', {'id': periodo.id})) }}
+                    {% if access.has('edit', detalle_periodo) %}
+                        {{ action.btn_edit_link2_ico(path('detalle_periodo_edit', {'id': detalle_periodo.id})) }}
                     {% endif %}
                 </td>
             </tr>
@@ -54,7 +60,7 @@
 {% endblock %}
 
 {% block _main_footer %}
-    {% include 'crud/_index_links.html.twig' with {'route_base': 'periodo'} %}
+    {% include 'crud/_index_links.html.twig' with {'route_base': 'detalle_periodo'} %}
 {% endblock%}
 
 {% block _main_options %}
@@ -66,11 +72,11 @@
 {% endblock %}
 
 {% block _body_tools_ico %}
-    {% include 'crud/_index_links_tool.html.twig' with {'route_base': 'periodo'}  %}
+    {% include 'crud/_index_links_tool.html.twig' with {'route_base': 'detalle_periodo'}  %}
 {% endblock %}
 
 {% block _body_tools %}
-    {% include 'crud/_index_links_ico.html.twig' with {'route_base': 'periodo'}  %}
+    {% include 'crud/_index_links_ico.html.twig' with {'route_base': 'detalle_periodo'}  %}
 {% endblock %}
 
 {% block _stylesheets %}
@@ -80,18 +86,18 @@
     <script>
         jQuery(document).ready(function () {
             $(document).on('change', '#filter_size', function () {
-                let route = '{{ path('periodo_index') }}';
+                let route = '{{ path('detalle_periodo_index') }}';
                 route = route + "?" + 'n=' + $('#filter_size option:selected').val();
                 route = route + "&" + 'b=' + $('#filter_text').val();
                 window.location = route;
             });
 
             $(document).on('click', '.btn-send', function () {
-                window.location = '{{ path('periodo_index') }}';
+                window.location = '{{ path('detalle_periodo_index') }}';
             });
 
             $(document).on('click', '.btn-clean', function () {
-                window.location.href = '{{ path('periodo_index') }}';
+                window.location.href = '{{ path('detalle_periodo_index') }}';
             });
         });
     </script>

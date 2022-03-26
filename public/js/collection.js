@@ -7,9 +7,7 @@ var Collection = function () {
     var createChild = function (child,child_class) {
         // creamos el contenedor
         child = typeof child !== 'undefined' ? child : 'li';
-        var custom_child = '<' + child + ' class="' + child_class + ' list-group-item"></' + child + '>' ;
-
-        return custom_child;
+        return '<' + child + ' class="' + child_class + ' list-group-item"></' + child + '>';
     };
 
     // Handle Entity
