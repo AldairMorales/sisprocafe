@@ -7,13 +7,12 @@ use Pidia\Apps\Demo\Form\AcopioType;
 use Pidia\Apps\Demo\Manager\AcopioManager;
 use Pidia\Apps\Demo\Security\Access;
 use Pidia\Apps\Demo\Util\Paginator;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/admin/acopio')]
-class AcopioController extends AbstractController
+class AcopioController extends BaseController
 {
     #[Route(path: '/', name: 'acopio_index', defaults: ['page' => '1'], methods: ['GET'])]
     #[Route(path: '/page/{page<[1-9]\d*>}', name: 'acopio_index_paginated', methods: ['GET'])]
@@ -54,7 +53,7 @@ class AcopioController extends AbstractController
             unset($item);
         }
 
-        return $manager->export($data, $headers, 'Reporte', 'acopio');
+        return $manager->export($data, $headers, 'Reporte');
     }
 
     #[Route(path: '/new', name: 'acopio_new', methods: ['GET', 'POST'])]

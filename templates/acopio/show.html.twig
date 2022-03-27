@@ -1,58 +1,39 @@
 {% extends 'base.html.twig' %}
+{% import 'macro/breadcrumb.html.twig' as breadcrumb %}
+{% import 'macro/action.html.twig' as action %}
 
-{% block title %}Acopio{% endblock %}
+{% set _title = 'Acopio' %}
+{% set _main_title = 'Mostrar' %}
+{% set _section =  'acopio_index'%}
 
-{% block body %}
-    <h1>Acopio</h1>
+{% block _breadcrumb %}
+    {{ breadcrumb.show2(_title, _section, 'Mostrar') }}
+{% endblock %}
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ acopio.id }}</td>
-            </tr>
-            <tr>
-                <th>Fecha</th>
-                <td>{{ acopio.fecha ? acopio.fecha|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Tikect</th>
-                <td>{{ acopio.tikect }}</td>
-            </tr>
-            <tr>
-                <th>PesoBruto</th>
-                <td>{{ acopio.pesoBruto }}</td>
-            </tr>
-            <tr>
-                <th>Cantidad</th>
-                <td>{{ acopio.cantidad }}</td>
-            </tr>
-            <tr>
-                <th>TaraPorSaco</th>
-                <td>{{ acopio.taraPorSaco }}</td>
-            </tr>
-            <tr>
-                <th>TaraDeSacos</th>
-                <td>{{ acopio.taraDeSacos }}</td>
-            </tr>
-            <tr>
-                <th>PesoQuintales</th>
-                <td>{{ acopio.pesoQuintales }}</td>
-            </tr>
-            <tr>
-                <th>PesoNeto</th>
-                <td>{{ acopio.pesoNeto }}</td>
-            </tr>
-            <tr>
-                <th>Observaciones</th>
-                <td>{{ acopio.observaciones }}</td>
-            </tr>
-        </tbody>
-    </table>
+{% block _main %}
+    {{ action.tbl_start() }}
+    {{ action.tbl_tr('Fecha',acopio.fecha) }}
+    {{ action.tbl_tr('Ticket',acopio.ticket) }}
+    {{ action.tbl_tr('Socio',acopio.socio) }}
+    {{ action.tbl_tr('Certificacion',acopio.certificacion) }}
+    {{ action.tbl_tr('Almacen',acopio.almacen) }}
+    {% include 'crud/_show_info.html.twig' with {'entity': acopio} %}
+    {{ action.tbl_end() }}
 
-    <a href="{{ path('acopio_index') }}">back to list</a>
+{% endblock %}
 
-    <a href="{{ path('acopio_edit', {'id': acopio.id}) }}">edit</a>
+{% block _main_footer %}
+    {% include 'crud/_show_links.html.twig' with {'route_base':'acopio','entity': acopio} %}
+{% endblock %}
 
-    {{ include('acopio/_delete_form.html.twig') }}
+{% block _main_tools %}
+    {% include 'crud/_tools_ico.html.twig' %}
+{% endblock %}
+
+{% block _body_tools %}
+    {% include 'crud/_show_links_ico.html.twig' with {'route_base':'acopio','entity': acopio} %}
+{% endblock %}
+
+{% block _body_tools_ico %}
+    {% include 'crud/_show_links_tool.html.twig' with {'route_base':'acopio','entity': acopio} %}
 {% endblock %}

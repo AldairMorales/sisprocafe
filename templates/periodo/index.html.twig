@@ -29,8 +29,8 @@
             <tr>
                 <td>{{ periodo.nombre}}</td>
                 <td>{{ periodo.alias }}</td>
-                <td>{{ periodo.fechaInicio }}</td>
-                <td>{{ periodo.fechaFinal }}</td>
+                <td>{{ periodo.fechaInicio.format('d/m/Y') }}</td>
+                <td>{{ periodo.fechaFinal.format('d/m/Y') }}</td>
                 <td class="text-center">{{ periodo.activo | yesnocustom | raw }}</td>
                 <td>
                     {% if access.has('view') %}

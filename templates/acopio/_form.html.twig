@@ -2,15 +2,15 @@
 {{ action.frm_start(form) }}
     {{ action.frm_column(
         action.frm_column_field_select(form.periodo),
-        action.frm_column_field_select(form.fecha)
+        action.frm_column_field_date(form.fecha)
     ) }}
     {{ action.frm_column(
         action.frm_column_field_select(form.socio),
         action.frm_column_field_select(form.certificacion)
     ) }}
     {{ action.frm_column(
-        action.frm_column_field(form.almacen),
-        action.frm_column_field(form.ticket)
+        action.frm_column_field_select(form.almacen),
+        action.frm_column_field(form.tikect)
     ) }}
     {{ action.frm_column(
         action.frm_column_field(form.pesoBruto),
@@ -18,7 +18,7 @@
     ) }}
     {{ action.frm_column(
         action.frm_column_field(form.taraPorSaco),
-        action.frm_column_field(form.taraDeSaco)
+        action.frm_column_field(form.taraDeSacos)
     ) }}
     {{ action.frm_column(
         action.frm_column_field(form.pesoQuintales),

@@ -9,6 +9,8 @@ use Pidia\Apps\Demo\Entity\Periodo;
 use Pidia\Apps\Demo\Entity\Socio;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -21,7 +23,10 @@ class AcopioType extends AbstractType
                 'class' => Periodo::class,
             ],
             )
-            ->add('fecha')
+            ->add('fecha', DateType::class, [
+                'widget' => 'single_text',
+                'required' => false,
+            ])
             ->add('socio', EntityType::class, [
                 'class' => Socio::class,
             ],

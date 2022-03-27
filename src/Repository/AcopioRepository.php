@@ -48,7 +48,6 @@ class AcopioRepository extends ServiceEntityRepository
         $queryBuilder = $this->createQueryBuilder('acopio')
             ->select(['acopio', 'config'])
             ->join('acopio.config', 'config')
-            ->leftJoin('acopio.padre', 'padre')
         ;
 
         $this->security->configQuery($queryBuilder, true);
@@ -56,25 +55,5 @@ class AcopioRepository extends ServiceEntityRepository
         Paginator::queryTexts($queryBuilder, $params, ['acopio.tara']);
 
         return $queryBuilder;
-    }
-
-    public function findAllActivo(): array
-    {
-        $queryBuilder = $this->createQueryBuilder('acopio')
-            ->select('padre.nombre as padre_nombre')
-            ->addSelect('acopio.nombre as nombre')
-            ->addSelect('acopio.ruta as ruta')
-            ->addSelect('acopio.icono as icono')
-            ->join('acopio.config', 'config')
-            ->leftJoin('acopio.padre', 'padre')
-            ->where('acopio.activo = TRUE')
-            ->orderBy('padre.orden', 'ASC')
-            ->addOrderBy('acopio.orden', 'ASC')
-            ->addOrderBy('acopio.nombre', 'ASC')
-        ;
-
-        $this->security->configQuery($queryBuilder, true);
-
-        return $queryBuilder->getQuery()->getArrayResult();
     }
 }

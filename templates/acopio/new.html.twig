@@ -1,11 +1,49 @@
 {% extends 'base.html.twig' %}
+{% import 'macro/breadcrumb.html.twig' as breadcrumb %}
+{% import 'macro/action.html.twig' as action %}
 
-{% block title %}New Acopio{% endblock %}
+{% set _title = 'Acopio' %}
+{% set _main_title = 'Nuevo' %}
+{% set _section =  'acopio_index'%}
 
-{% block body %}
-    <h1>Create new Acopio</h1>
+{% block _breadcrumb %}
+    {{ breadcrumb.show2(_title,_section,'Nuevo') }}
+{% endblock %}
 
+{% block _main %}
     {{ include('acopio/_form.html.twig') }}
+{% endblock %}
 
-    <a href="{{ path('acopio_index') }}">back to list</a>
+{% block _main_tools %}
+    {% include 'crud/_tools_ico.html.twig' %}
+{% endblock %}
+
+{% block _body_tools %}
+    {% include 'crud/_new_links_ico.html.twig' with {'route_base':'acopio'} %}
+{% endblock %}
+
+{% block _body_tools_ico %}
+    {% include 'crud/_new_links_tool.html.twig' with {'route_base': 'acopio'}  %}
+{% endblock %}
+
+{% block _main_footer %}
+    {% include 'crud/_new_links.html.twig' with {'route_base':'acopio'} %}
+{% endblock %}
+
+{% block _stylesheets %}
+{% endblock %}
+
+{% block _javascripts %}
+    <script src="{{ asset('js/collection.js') }}"></script>
+    <script>
+        jQuery(document).ready(function() {
+            Collection.init('#');
+        });
+    </script>
+    <script src="{{ asset('js/select2.js') }}"></script>
+    <script>
+        jQuery(document).ready(function() {
+            Select2();
+        });
+    </script>
 {% endblock %}

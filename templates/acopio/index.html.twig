@@ -1,51 +1,86 @@
 {% extends 'base.html.twig' %}
+{% import 'macro/breadcrumb.html.twig' as breadcrumb %}
+{% import 'macro/action.html.twig' as action %}
+{% import 'macro/pagination.html.twig' as pagination %}
 
-{% block title %}Acopio index{% endblock %}
+{% set _title = 'Acopio' %}
+{% set _main_title = 'Listado' %}
+{% set _section =  'acopio_index' %}
 
-{% block body %}
-    <h1>Acopio index</h1>
+{% block _breadcrumb %}
+    {{ breadcrumb.show(_title) }}
+{% endblock %}
 
-    <table class="table">
-        <thead>
+{% block _main %}
+    <div class="table-responsive">
+        {{ action.tbl_start() }}
+        {{ action.thead_start() }}
+        <tr>
+            {{ action.th('Fecha', true) }}
+            {{ action.th('Ticket', true) }}
+            {{ action.th('Socio', true) }}
+            {{ action.th('Certificacion', true) }}
+            {{ action.th('Almacen', true) }}
+            {{ action.th('Peso Neto', true) }}
+            {{ action.th('Peso Quintales', true) }}
+            {{ action.th('Activo', true, 'text-center') }}
+            <th></th>
+        </tr>
+        {{ action.thead_end() }}
+        {{ action.tbody_start() }}
+        {% for acopio in paginator.results %}
             <tr>
-                <th>Id</th>
-                <th>Fecha</th>
-                <th>Tikect</th>
-                <th>PesoBruto</th>
-                <th>Cantidad</th>
-                <th>TaraPorSaco</th>
-                <th>TaraDeSacos</th>
-                <th>PesoQuintales</th>
-                <th>PesoNeto</th>
-                <th>Observaciones</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for acopio in acopios %}
-            <tr>
-                <td>{{ acopio.id }}</td>
-                <td>{{ acopio.fecha ? acopio.fecha|date('Y-m-d') : '' }}</td>
+                <td>{{ acopio.fecha}}</td>
                 <td>{{ acopio.tikect }}</td>
-                <td>{{ acopio.pesoBruto }}</td>
-                <td>{{ acopio.cantidad }}</td>
-                <td>{{ acopio.taraPorSaco }}</td>
-                <td>{{ acopio.taraDeSacos }}</td>
-                <td>{{ acopio.pesoQuintales }}</td>
-                <td>{{ acopio.pesoNeto }}</td>
-                <td>{{ acopio.observaciones }}</td>
+                <td>{{ acopio.socio}}</td>
+                <td>{{ acopio.certificacion}}</td>
+                <td>{{ acopio.almacen }}</td>
+                <td>{{ acopio.pesoNeto}}</td>
+                <td>{{ acopio.PesoQuintales}}</td>
+                <td class="text-center">{{ acopio.activo | yesnocustom | raw }}</td>
                 <td>
-                    <a href="{{ path('acopio_show', {'id': acopio.id}) }}">show</a>
-                    <a href="{{ path('acopio_edit', {'id': acopio.id}) }}">edit</a>
+                    {% if access.has('view') %}
+                        {{ action.btn_show_link2_ico(path('acopio_show', {'id': acopio.id})) }}
+                    {% endif %}
+                    {% if access.has('edit', acopio) %}
+                        {{ action.btn_edit_link2_ico(path('acopio_edit', {'id': acopio.id})) }}
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="11">no records found</td>
+                <td colspan="4">No hay registros</td>
             </tr>
         {% endfor %}
-        </tbody>
-    </table>
+        {{ action.tbody_end() }}
+        {{ action.tbl_end() }}
+    </div>
 
-    <a href="{{ path('acopio_new') }}">Create new</a>
+    {{ pagination.show(paginator, _section) }}
+{% endblock %}
+
+{% block _main_footer %}
+    {% include 'crud/_index_links.html.twig' with {'route_base': 'acopio'} %}
+{% endblock%}
+
+{% block _main_options %}
+    {% include 'crud/_index_filter.html.twig' %}
+{% endblock %}
+
+{% block _main_tools %}
+    {% include 'crud/_tools_ico.html.twig' %}
+{% endblock %}
+
+{% block _body_tools_ico %}
+    {% include 'crud/_index_links_tool.html.twig' with {'route_base': 'acopio'}  %}
+{% endblock %}
+
+{% block _body_tools %}
+    {% include 'crud/_index_links_ico.html.twig' with {'route_base': 'acopio'}  %}
+{% endblock %}
+
+{% block _stylesheets %}
+{% endblock %}
+
+{% block _javascripts %}
 {% endblock %}

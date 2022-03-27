@@ -26,13 +26,12 @@ class PeriodoType extends AbstractType
             ->add('descripcion')
             ->add('fechaInicio', DateType::class, [
                 'widget' => 'single_text',
+                'required' => false,
             ])
             ->add('fechaFinal', DateType::class, [
                 'widget' => 'single_text',
+                'required' => false,
             ])
-            //->add('detalles', DetallePeriodoType::class, [
-            //    'mapped' => false,
-            //]);
             ->add('detalles', CollectionType::class, [
                 'entry_type' => DetallePeriodoType::class,
                 'entry_options' => ['label' => false],
