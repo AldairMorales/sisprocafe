@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reporte de socios{% endblock %}
+
+{% block body %}
+    <h1>REPORTE DE SOCIOS</h1>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Cliente</th>
+            <th>Total</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for cliente in clientes %}
+                <tr>
+                    <td>{{ cliente.clienteNombre }} {{ cliente.clienteApellidos }}</td>
+                    <td>{{ cliente.totalPrecio }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+ 

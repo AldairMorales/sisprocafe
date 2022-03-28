@@ -664,6 +664,71 @@
         {% endif %}
     </div>
 {% endmacro %}
+{# from_deploy sirve para desplegar contenido y mostrarlo #}
+{# hecho por walmer #}
+
+{% macro frm_deploy(section1) %}
+    {% import _self as actions %}
+    <div class="accordion" id="accordionExample">
+        {% if section1 %}
+            {{ section1 }}
+        {% endif %}
+        
+    </div>
+{% endmacro %}
+
+{% macro frm_add_section(section1, section2=null, section3=null, section4=null,section5=null) %}
+    {% import _self as actions %}
+        {% if section1  %}
+            {{ section1 }}
+        {% endif %}
+        {% if section2  %}
+            {{ section2 }}
+        {% endif %}
+        {% if section3  %}
+            {{ section3 }}
+        {% endif %}
+        {% if section4  %}
+            {{ section4 }}
+        {% endif %}
+        {% if section5 %}
+            {{ section5 }}
+        {% endif %}
+{% endmacro %}
+
+{% macro frm_column_field_div(value, id='',class='', class_widget='', col=4) %}
+    {% import _self as actions %}
+    <div class="form-group row mb-1 p-1 {{ class }} {{ actions.frm_errors_class(value) }}">
+        {{ actions.frm_label(value,'col-sm-' ~ col ~ ' col-4') }}
+        <div class="col-sm-{{ 12-col }} col-8">
+            <div id="{{id}}">
+                {{ form_widget(value, {attr: {class: 'form-control ' ~ class_widget ~ actions.frm_errors_class(value)} }) }}
+                {{ actions.frm_help(value) }}
+                {{ actions.frm_errors(value) }}
+            </div>
+            
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro frm_deploy_add_labels(section1,nombre,num=1) %}
+    {% import _self as actions %}
+    <div class="accordion-item">
+        <h1 class="accordion-header bg-secondary" id="heading{{num}}">
+            <button class="accordion-button h1" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{num}}" aria-expanded="true" aria-controls="collapse{{num}}">
+                {{ nombre }}
+            </button>
+        </h1>
+        <div id="collapse{{num}}" class="accordion-collapse collapse show" aria-labelledby="heading{{num}}" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                {% if section1 %}
+                    {{ section1 }}
+                {% endif %}
+            </div>
+        </div>
+    </div>   
+{% endmacro %}
+{#  #}
 
 {% macro frm_column_field(value, class='', class_widget='', col=4) %}
     {% import _self as actions %}
@@ -750,19 +815,19 @@
 {% macro frm_column_field_add_select(value, class='', class_widget='') %}
     {% import _self as actions %}
     <div class="form-group row mb-1 p-1 {{ class }} {{ _self.frm_errors_class(value) }}">
-        {{ _self.frm_label(value,'col-sm-4 col-4 border border-2') }}
-        <div class="col-sm-8 col-8 border border-2">
+        {{ _self.frm_label(value,'col-sm-4 col-4') }}
+        <div class="col-sm-8 col-8">
             <div class="input-group">
                 <div class="input-group-prepend">
-                    <span class="input-group-text">
-                        <i class="fa fa-balance-scale"></i>
+                    <span class="input-group-text ">
+                        <i class="fa fa-balance-scale mb-3"></i>
                     </span>
                 </div>
-                {{ form_widget(value, {attr: {class: 'form-control ' ~ class_widget ~ _self.frm_errors_class(value)} }) }}
-                <div class="col-sm-4 col-4">
-                    <select name="" class="js-select2 form-control">
+                {{ form_widget(value, {attr: {class: 'form-control mb-4' ~ class_widget ~ _self.frm_errors_class(value)} }) }}
+                <div class="col-sm-4 col-4 ">
+                    <select name="" class="form-control mb-4">
                         <option value="1">Kilogramos</option>
-                        <option value="2" selected>gramos</option>
+                        <option value="2" selected>Gramos</option>
                         <option value="3">Quintal</option>
                     </select>
                 </div>
@@ -787,7 +852,7 @@
             <div class="input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text">
-                        <i class="fa fa-calculator"></i>
+                        <i class="fa fa-calculator mb-4"></i>
                     </span>
                 </div>
                 {{ form_widget(value, {attr: {class: 'form-control ' ~ class_widget ~ _self.frm_errors_class(value)} }) }}
@@ -1016,6 +1081,42 @@
         </div>
     </div>
 {% endmacro %}
+{% macro frm_column_field_collection_display(value, class='', class_widget='', style='', num=12) %}
+    {% import _self as actions %}
+    <div class="form-group row {{ class }}">
+    <div id="accordion">
+        <div class="card">
+            <div class="card-header">
+                <a class="card-link" data-toggle="collapse" href="#collapseOne">
+                    {% if num > 0 %}
+                        {{ actions.frm_label(value,'col-sm-' ~ num ) }}
+                    {% endif %}
+                </a>
+            </div>
+            <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                <div class="card-body">
+                    <div class="col-sm-{{ 12-num }}">
+                        <ul id="{{ value.vars.id }}" class="list-group list-unstyled"
+                            data-prototype="{{ form_widget(value.vars.prototype)|e('html_attr') }}"
+                                {% if value.vars.prototype.vars.name %} data-prototype-name="{{ value.vars.prototype.vars.name | e }}" {% endif %}
+                            data-widget-tags="{{ '<li class="list-group-item"></li>'|e }}">
+                            {% for item in value %}
+                                <li class="list-group-item collection-item pb-1 pt-0" style="position: relative;">
+                                    {{ form_errors(item) }}
+                                    {{ form_widget(item, {attr: {class: '' ~ class_widget} }) }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        {{ actions.frm_help(value) }}
+                        {{ actions.frm_errors(value) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>   
+    </div>
+{% endmacro %}
+
 
 {% macro frm_column_field_collection_files(value, class='', class_widget='', style='', num=4) %}
     {% import _self as actions %}

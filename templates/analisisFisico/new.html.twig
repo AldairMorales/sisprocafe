@@ -38,6 +38,174 @@
     <script>
         jQuery(document).ready(function() {
             Select2();
+            
+            //let $acopio = $('#analisis_fisico_acopio_acopio');
+            let muestraQuantity = $('#analisis_fisico_muestra');
+            let exportableQuantity = $('#analisis_fisico_exportable');
+            let segundaQuantity = $('#analisis_fisico_segunda');
+            let bolaQuantity = $('#analisis_fisico_bola');
+            let cascaraQuantity = $('#analisis_fisico_cascara');
+
+            // temporales
+            let exportablePorcentaje = $('#analisis_fisico_exportable_');
+            let segundaPorcentaje = $('#analisis_fisico_segunda_');
+            let bolaPorcentaje = $('#analisis_fisico_bola_');
+            let cascaraPorcentaje = $('#analisis_fisico_cascara_');
+
+            function calculaCascara()
+            {
+                cascara = muestraQuantity.val() - exportableQuantity.val() - segundaQuantity.val() - bolaQuantity.val();
+                cascaraQuantity.val(cascara);
+            }
+
+            function calculaPorcentaje()
+            {
+                if (muestraQuantity.val() === 0.00) {
+                    return;
+                }
+
+                let result = exportableQuantity.val() * 100 / muestraQuantity.val();
+                exportablePorcentaje.val(result.toFixed(2)+'%')
+
+                result = segundaQuantity.val() * 100 / muestraQuantity.val();
+                segundaPorcentaje.val(result.toFixed(2)+'%')
+
+                result = bolaQuantity.val() * 100 / muestraQuantity.val();
+                bolaPorcentaje.val(result.toFixed(2)+'%')
+
+                result = cascaraQuantity.val() * 100 / muestraQuantity.val();
+                cascaraPorcentaje.val(result.toFixed(2)+'%')
+            }
+            $(document).on('change', '#analisis_fisico_muestra', function () {
+                    let $this = $(this);
+                    muestraQuantity.val($this.val());
+                    calculaCascara();
+                    calculaPorcentaje();
+                });
+                $('#analisis_fisico_muestra').trigger('change');
+
+                $(document).on('keyup', '#analisis_fisico_exportable, #analisis_fisico_segunda, #analisis_fisico_bola', function () {
+                    calculaCascara();
+                    calculaPorcentaje();
+                });
+
+            /*$(document).ready(function() {
+                Select2();
+                Flatpickr();
+                $acopio.prop('disabled', true);
+                let $socioInfo = $('#socio_info').find('tbody');
+
+                let $acopio_selector = $('#analisis_fisico_acopio_acopio');
+                let $formButton = $('#analisis_fisico_acopio button');
+                // $formButton.prop('disabled', true);
+                $(document).on('change', '#analisis_fisico_acopio_acopio', function () {
+                    let $this = $(this);
+
+                    if (!$this.val()) {
+                        $formButton.prop('disabled', true);
+                        return false;
+                    }
+
+                    let data = {
+                        acopio_id: $this.val(),
+                        periodo_id: $('#analisis_fisico_acopio_periodo').val()
+                    };
+
+                    let $muestraUnidad = $('#analisis_fisico_acopio_analisisFisico_muestra_unit');
+                    let $exportableUnidad = $('#analisis_fisico_acopio_analisisFisico_exportable_unit');
+                    let $segundaUnidad = $('#analisis_fisico_acopio_analisisFisico_segunda_unit');
+                    let $descarteUnidad = $('#analisis_fisico_acopio_analisisFisico_descarte_unit');
+                    let $mezclaUnidad = $('#analisis_fisico_acopio_analisisFisico_mezcla_unit')
+                    let $humedad = $('#analisis_fisico_acopio_analisisFisico_humedad');
+                    $humedad.html('');
+                    $socioInfo.html('');
+
+                    $.ajax({
+                        type: 'post',
+                        url: '/es/admin/acopio/select/periodo',
+                        data: data,
+                        success: function (data) {
+                            if (data.status) {
+                                let value = data.periodo;
+                                if(value.humedad !== null){
+                                    $humedad.val(value.humedad);
+                                }
+
+                                if(value.muestra !== null){
+                                    // let muestraString = value.muestra + '.00'
+                                    // $muestra.val(value.muestra.toFixed(2));
+                                    let optionUnidad = '<option value="' + value.muestraUnidadAlias + '">' + value.muestraUnidadNombre + '</option>';
+                                    // $muestraUnidad.html('');
+                                    $exportableUnidad.html('');
+                                    $segundaUnidad.html('');
+                                    $descarteUnidad.html('');
+                                    $mezclaUnidad.html('');
+                                    $muestraUnidad.append(optionUnidad);
+                                    $exportableUnidad.append(optionUnidad);
+                                    $segundaUnidad.append(optionUnidad);
+                                    $descarteUnidad.append(optionUnidad);
+                                    $mezclaUnidad.append(optionUnidad);
+                                }
+
+                                let acopio = data.acopio;
+                                let productoNombre = acopio.productoNombre.toUpperCase();
+                                var row;
+                                row = `
+                                        <tr>
+                                            <td>PROVEEDOR :</td>
+                                            <td>${acopio.socioNombre}</td>
+                                            <td>CERTIFICACIÓN :</td>
+                                            <td>${acopio.certificacionNombre}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>${productoNombre} PESO NETO :</td>
+                                            <td>${acopio.pesoNetoValor} Kilogramos</td>
+                                            <td>N°. DE SACOS :</td>
+                                            <td>${acopio.cantidadValor}</td>
+                                        </tr>
+                                        `;
+                                $socioInfo.append(row);
+                                $formButton.prop('disabled', false);
+                            }
+                        }
+                    });
+                });
+
+                $acopio_selector.trigger('change');
+
+
+                $(document).on('change', '#analisis_fisico_acopio_certificacion, #analisis_fisico_acopio_periodo', function () {
+                    let $this = $(this);
+                    $acopio.prop('disabled', true);
+
+                    let data = {
+                        certificacion_id: $this.val(),
+                        periodo_id: $('#analisis_fisico_acopio_periodo').val()
+                    };
+
+                    $.ajax({
+                        type: 'post',
+                        url: '/es/admin/acopio/select/ajax/certificacion_periodo',
+                        data: data,
+                        success: function (result) {
+                            console.log(result)
+                            if (result.status) {
+                                let data = result.data;
+                                $acopio.html('');
+                                let total = data.length;
+                                if (total > 0) {
+                                    $acopio.prop('disabled', false);
+                                    for (let i = 0; i < total; i++) {
+                                        $acopio.append('<option value="' + data[i].acopioId + '">' + data[i].acopioTicket + '</option>');
+                                    }
+                                    $('#analisis_fisico_acopio_acopio').trigger('change');
+                                }
+                            }
+                        }
+                    });
+                });
+                $('#analisis_fisico_acopio_certificacion').trigger('change');
+            });*/
         });
     </script>
 {% endblock %}

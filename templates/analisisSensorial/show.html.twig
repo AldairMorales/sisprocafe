@@ -1,0 +1,108 @@
+{% extends 'base.html.twig' %}
+{% import 'macro/breadcrumb.html.twig' as breadcrumb %}
+{% import 'macro/action.html.twig' as action %}
+
+{% set _title = 'Analisis Sensorial' %}
+{% set _main_title = 'Mostrar' %}
+{% set _section =  'analisisSensorial_index'%}
+
+{% block _breadcrumb %}
+    {{ breadcrumb.show2(_title, _section, 'Mostrar') }}
+{% endblock %}
+
+{% block _main %}
+<div class="row">
+    <div class="col">
+        {{ action.tbl_start() }}
+            {{ action.tbl_tr('Periodo',analisisSensorial.periodo) }}
+            {{ action.tbl_tr('Fecha',analisisSensorial.fecha) }}
+            {{ action.tbl_tr('certificacion',analisisSensorial.certificacion) }}
+            {{ action.tbl_tr('puntaje',analisisSensorial.puntaje) }}
+            {{ action.tbl_tr('Fragrancia',analisisSensorial.fragrancia) }}
+            {{ action.tbl_tr('Sabor',analisisSensorial.sabor) }}
+            {{ action.tbl_tr('Sabor Residual',analisisSensorial.saborResidual) }}
+            {{ action.tbl_tr('acidez',analisisSensorial.acidez) }}
+            {{ action.tbl_tr('cuerpo',analisisSensorial.cuerpo) }}
+            {{ action.tbl_tr('Balance',analisisSensorial.balance) }}
+            {{ action.tbl_tr('Uniformidad',analisisSensorial.uniformidad) }}
+            {{ action.tbl_tr('tasaLimpia',analisisSensorial.tasaLimpia) }}
+            {{ action.tbl_tr('dulzor',analisisSensorial.dulzor) }}
+            {{ action.tbl_tr('Puntaje Catador',analisisSensorial.puntajeCatador) }}
+            {{ action.tbl_tr('Descripcion',analisisSensorial.descripcion) }}
+            {% include 'crud/_show_info.html.twig' with {'entity': analisisSensorial} %}
+        {{ action.tbl_end() }}
+    </div>
+    <div class="col">
+        <canvas id="myChart" class="mh-400px"></canvas>
+    </div>
+</div>
+{% endblock %}
+
+{% block _javascripts %}
+    <script src="{{ asset('js/notify.js') }}"></script>
+    <script>
+        
+        let paths = window.location.pathname.split('/');
+        let id = paths[paths.length-1];
+        var dataElement=[];
+        $.ajax({
+            type: 'POST',
+            url: '{{ path('analisisSensorial_busqueda_id') }}',
+            data: {
+                id: id,
+            },
+            success: function (result) {
+                if (result) {
+                    dataElement.push(result[0].fragrancia)
+                    dataElement.push(result[0].sabor)
+                    dataElement.push(result[0].saborResidual)
+                    dataElement.push(result[0].acidez)
+                    dataElement.push(result[0].cuerpo)
+                    dataElement.push(result[0].balance)
+                    dataElement.push(result[0].uniformidad)                   
+                } else {
+                    Notify.warning('No se encontro nombre para documento')
+                }
+            }
+        });
+        const ctx = document.getElementById('myChart').getContext('2d');
+        console.log(dataElement);
+
+        const data = {
+        labels: [
+            'Fragrancia',
+            'Sabor',
+            'SaborResidual',
+            'Acidez',
+            'Cuerpo',
+            'Balance',
+            'Uniformidad'
+        ],
+        datasets: [{
+            label: 'Conjunto de datos',
+            data: dataElement,//parseFloat(dataElement[0]), parseFloat(dataElement[1]), parseFloat(dataElement[2]), parseFloat(dataElement[3]),parseFloat(dataElement[4]),parseFloat(dataElement[5]), parseFloat(dataElement[6])],
+            fill: true,
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            borderColor: 'rgb(255, 99, 132)',
+            pointBackgroundColor: 'rgb(255, 99, 132)',
+            pointBorderColor: '#fff',
+            pointHoverBackgroundColor: '#fff',
+            pointHoverBorderColor: 'rgb(255, 99, 132)'
+        }]
+        };
+        // <block:config:0>
+        const config = {
+        type: 'radar',
+        data: data,
+        options: {
+            elements: {
+                line: {
+                    borderWidth: 3
+                }
+            }
+        },
+        };
+        const myChart = new Chart(ctx,config);
+
+    </script>
+{% endblock %}

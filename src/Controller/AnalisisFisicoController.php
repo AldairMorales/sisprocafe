@@ -58,7 +58,7 @@ class AnalisisFisicoController extends BaseController
     public function new(Request $request, AnalisisFisicoManager $manager): Response
     {
         $this->denyAccess(Access::NEW, 'analisisFisico_index');
-        $analisisFisico = new analisisFisico();
+        $analisisFisico = new AnalisisFisico();
         $form = $this->createForm(AnalisisFisicoType::class, $analisisFisico);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

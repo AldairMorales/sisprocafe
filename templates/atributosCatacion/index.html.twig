@@ -3,49 +3,41 @@
 {% import 'macro/action.html.twig' as action %}
 {% import 'macro/pagination.html.twig' as pagination %}
 
-{% set _title = 'Analisis Fisico' %}
+{% set _title = 'Atributos Catacion' %}
 {% set _main_title = 'Listado' %}
-{% set _section =  'analisisFisico_index' %}
+{% set _section =  'atributosCatacion_index' %}
 
 {% block _breadcrumb %}
     {{ breadcrumb.show(_title) }}
 {% endblock %}
 
 {% block _main %}
-    <div class="table-responsive">
+    <div class="table-responsive ">
         {{ action.tbl_start() }}
         {{ action.thead_start() }}
         <tr>
-            {{ action.th('fecha', true) }}
-            {{ action.th('dertificacion', true) }}
-            {{ action.th('muestra', true) }}
-            {{ action.th('exportable', true) }}
-            {{ action.th('bola', true) }}
-            {{ action.th('segunda', true) }}
-            {{ action.th('cascara', true) }}
-            {{ action.th('descripcion', true) }}
+            {{ action.th('Nombre', true) }}
+            {{ action.th('Detalles Atributos', true) }}
             {{ action.th('Activo', true, 'text-center') }}
             <th></th>
         </tr>
         {{ action.thead_end() }}
         {{ action.tbody_start() }}
-        {% for analisisFisico in paginator.results %}
+        {% for atributosCatacion in paginator.results %}
             <tr>
-                <td>{{ analisisFisico.fecha ? analisisFisico.fecha|date('Y-m-d') : ''}}</td>
-                <td>{{ analisisFisico.certificacion }}</td>
-                <td>{{ analisisFisico.muestra}}</td>
-                <td>{{ analisisFisico.exportable}}</td>
-                <td>{{ analisisFisico.bola }}</td>
-                <td>{{ analisisFisico.segunda}}</td>
-                <td>{{ analisisFisico.cascara}}</td>
-                <td>{{ analisisFisico.descripcion }}</td>
-                <td class="text-center">{{ analisisFisico.activo | yesnocustom | raw }}</td>
+                <td>{{ atributosCatacion.nombre}}</td>
+                <td>
+                    {% for detalles in atributosCatacion.detalles %}
+                        <span class="badge badge-secondary">{{ detalles }}</span>
+                    {% endfor %}
+                </td>
+                <td class="text-center">{{ atributosCatacion.activo | yesnocustom | raw }}</td>
                 <td>
                     {% if access.has('view') %}
-                        {{ action.btn_show_link2_ico(path('analisisFisico_show', {'id': analisisFisico.id})) }}
+                        {{ action.btn_show_link2_ico(path('atributosCatacion_show', {'id': atributosCatacion.id})) }}
                     {% endif %}
-                    {% if access.has('edit', analisisFisico) %}
-                        {{ action.btn_edit_link2_ico(path('analisisFisico_edit', {'id': analisisFisico.id})) }}
+                    {% if access.has('edit', atributosCatacion) %}
+                        {{ action.btn_edit_link2_ico(path('atributosCatacion_edit', {'id': atributosCatacion.id})) }}
                     {% endif %}
                 </td>
             </tr>
@@ -62,7 +54,7 @@
 {% endblock %}
 
 {% block _main_footer %}
-    {% include 'crud/_index_links.html.twig' with {'route_base': 'analisisFisico'} %}
+    {% include 'crud/_index_links.html.twig' with {'route_base': 'atributosCatacion'} %}
 {% endblock%}
 
 {% block _main_options %}
@@ -73,12 +65,14 @@
     {% include 'crud/_tools_ico.html.twig' %}
 {% endblock %}
 
+
+
 {% block _body_tools_ico %}
-    {% include 'crud/_index_links_tool.html.twig' with {'route_base': 'analisisFisico'}  %}
+    {% include 'crud/_index_links_tool.html.twig' with {'route_base': 'atributosCatacion'}  %}
 {% endblock %}
 
 {% block _body_tools %}
-    {% include 'crud/_index_links_ico.html.twig' with {'route_base': 'analisisFisico'}  %}
+    {% include 'crud/_index_links_ico.html.twig' with {'route_base': 'atributosCatacion'}  %}
 {% endblock %}
 
 {% block _stylesheets %}
@@ -88,18 +82,18 @@
     <script>
         jQuery(document).ready(function () {
             $(document).on('change', '#filter_size', function () {
-                let route = '{{ path('analisisFisico_index') }}';
+                let route = '{{ path('atributosCatacion_index') }}';
                 route = route + "?" + 'n=' + $('#filter_size option:selected').val();
                 route = route + "&" + 'b=' + $('#filter_text').val();
                 window.location = route;
             });
 
             $(document).on('click', '.btn-send', function () {
-                window.location = '{{ path('analisisFisico_index') }}';
+                window.location = '{{ path('atributosCatacion_index') }}';
             });
 
             $(document).on('click', '.btn-clean', function () {
-                window.location.href = '{{ path('analisisFisico_index') }}';
+                window.location.href = '{{ path('atributosCatacion_index') }}';
             });
         });
     </script>
