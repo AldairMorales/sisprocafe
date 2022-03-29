@@ -16,12 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-<<<<<<< HEAD
-=======
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
->>>>>>> 94cd187dc4e5223514658f355b9c0f5640cac217
 
 class AnalisisFisicoType extends AbstractType
 {
@@ -45,17 +40,10 @@ class AnalisisFisicoType extends AbstractType
             ])
             ->add('muestra', ChoiceType::class, [
                 'choices' => [
-<<<<<<< HEAD
                     '100' => 1,
                     '300' => 2,
                     '400' => 3,
                 ],
-=======
-                    '100' => 100,
-                    '200' => 200,
-                    '300' => 300
-                ]
->>>>>>> 94cd187dc4e5223514658f355b9c0f5640cac217
             ])
 
             // ->add('unidadMedida', EntityType::class, [

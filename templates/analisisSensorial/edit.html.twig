@@ -45,8 +45,7 @@
             var slider1 = document.querySelector("#sensorial_sabor");
             var slider2 = document.querySelector("#sensorial_saborResidual");
             var slider3 = document.querySelector("#sensorial_acidez");
-            var slider4 = document.querySelector("#sensorial_cuerpo");
-           
+            var slider4 = document.querySelector("#sensorial_cuerpo"); 
             $('#analisis_sensorial_fragrancia').hide();
             $('#analisis_sensorial_sabor').hide();
             $('#analisis_sensorial_saborResidual').hide();
@@ -68,7 +67,11 @@
             if($('#analisis_sensorial_cuerpo').val()){
                 var n4=$('#analisis_sensorial_cuerpo').val();
             }
-            $('#analisis_sensorial_puntaje').val(parseFloat(n)+parseFloat(n1)+parseFloat(n2)+parseFloat(n3)+parseFloat(n4)));
+            if((n+n1+n2+n3+n4)!= ''){
+                $('#analisis_sensorial_puntaje').val(parseFloat(n)+parseFloat(n1)+parseFloat(n2)+parseFloat(n3)+parseFloat(n4));
+            }else{
+                $('#analisis_sensorial_puntaje').val(0);
+            }
             noUiSlider.create(slider,{
                 start: n,
                 connect: true,

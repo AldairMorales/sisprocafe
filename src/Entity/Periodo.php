@@ -137,7 +137,6 @@ class Periodo
 
         return $this;
     }
-<<<<<<< HEAD
 
     /**
      * @return Collection|DetallePeriodo[]
@@ -184,10 +183,5 @@ class Periodo
     public function __toString(): string
     {
         return $this->getNombre() ?? '';
-=======
-    public function __toString(): string
-    {
-        return $this->getNombre();
->>>>>>> 94cd187dc4e5223514658f355b9c0f5640cac217
     }
 }

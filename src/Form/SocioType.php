@@ -21,13 +21,8 @@ class SocioType extends AbstractType
             ])
             ->add('tipo', ChoiceType::class, [
                 'choices' => [
-<<<<<<< HEAD
                     'Natural' => 'Natural',
                     'Juridico' => 'Juridico',
-=======
-                    'Natural' => true,
-                    'Juridico' => false,
->>>>>>> 94cd187dc4e5223514658f355b9c0f5640cac217
                 ],
             ])
             ->add('codigo')
