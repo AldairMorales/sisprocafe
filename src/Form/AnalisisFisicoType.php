@@ -40,9 +40,8 @@ class AnalisisFisicoType extends AbstractType
             ])
             ->add('muestra', ChoiceType::class, [
                 'choices' => [
-                    '100' => 1,
-                    '300' => 2,
-                    '400' => 3,
+                    '300' => 300,
+                    '400' => 400,
                 ],
             ])
 

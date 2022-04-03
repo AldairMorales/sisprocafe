@@ -39,7 +39,7 @@
             action.frm_deploy_add_labels(
                 action.frm_add_section(
                     action.frm_column(
-                        action.frm_column_field_div(form.fragrancia,'sensorial_fragrancia', '', '',2),
+                        action.frm_column_field_add_Id(form.fragrancia,'sensorial_fragrancia', '', 'js-rangeslider',2),
                         null,
                         null,
                         null,
@@ -56,28 +56,28 @@
             action.frm_deploy_add_labels(
                 action.frm_add_section(
                     action.frm_column(
-                        action.frm_column_field_div(form.sabor,'sensorial_sabor', '', '',2),
+                        action.frm_column_field_add_Id(form.sabor,'sensorial_sabor', '', 'js-rangeslider',2),
                         null,
                         null,
                         null,
                         1
                     ),
                     action.frm_column(
-                        action.frm_column_field_div(form.saborResidual,'sensorial_saborResidual', '', '',2),
+                        action.frm_column_field_add_Id(form.saborResidual,'sensorial_saborResidual', '', 'js-rangeslider',2),
                         null,
                         null,
                         null,
                         1
                     ),
                     action.frm_column(
-                        action.frm_column_field_div(form.acidez,'sensorial_acidez', '', '',2),
+                        action.frm_column_field_add_Id(form.acidez,'sensorial_acidez', '', 'js-rangeslider',2),
                         null,
                         null,
                         null,
                         1
                     ),
                     action.frm_column(
-                        action.frm_column_field_div(form.cuerpo,'sensorial_cuerpo', '', '',2),
+                        action.frm_column_field_add_Id(form.cuerpo,'sensorial_cuerpo', '', 'js-rangeslider',2),
                         null,
                         null,
                         null,
@@ -91,28 +91,29 @@
             action.frm_deploy_add_labels(
                 action.frm_add_section(
                     action.frm_column(
-                        action.frm_column_field(form.balance, '', '',2),
+                        action.frm_column_field_add_Id(form.balance,'sensorial_balance', '', 'js-rangeslider',2),
                         null,
                         null,
                         null,
                         1
                     ),
                     action.frm_column(
-                        action.frm_column_field(form.uniformidad, '', '',5),
+                        action.frm_column_field(form.tasaLimpia, '', 'js-rangeslider',5),
                         null,
                         null,
                         null,
                         2
                     ),
                     action.frm_column(
-                        action.frm_column_field(form.tasaLimpia, '', '',5),
+                        action.frm_column_field(form.uniformidad, '', 'js-rangeslider',5),
                         null,
                         null,
                         null,
                         2
                     ),
+                    
                     action.frm_column(
-                        action.frm_column_field(form.dulzor, '', '',5),
+                        action.frm_column_field(form.dulzor, '', 'js-rangeslider',5),
                         null,
                         null,
                         null,
@@ -120,14 +121,14 @@
                     ),
                     action.frm_add_section(
                         action.frm_column(
-                            action.frm_column_field(form.puntajeCatador, '', '',2),
+                            action.frm_column_field_add_Id(form.puntajeCatador,'sensorial_puntajeCatador', '', 'js-rangeslider',2),
                             null,
                             null,
                             null,
                             1
                         ),
                         action.frm_column(
-                            action.frm_column_field(form.descripcion, '', '',2),
+                            action.frm_column_field(form.descripcion, '', 'js-rangeslider',2),
                             null,
                             null,
                             null,
@@ -153,39 +154,3 @@
     )}}
 {{ action.frm_end(form) }}
 
-
-{# {{ action.frm_start(form) }}
-    {{ action.frm_column(
-        action.frm_column_field_select(form.periodo, '', '',4),
-        null,
-        null,
-        null,
-        2
-    ) }}
-    {{ action.frm_column(
-        action.frm_column_field_date(form.fecha),
-        action.frm_column_field_select(form.certificacion)
-    ) }}
-    {{ action.frm_column(
-        action.frm_column_field_select(form.tikect, '', '',4 ),
-        null,
-        null,
-        null,
-        2
-    ) }}
-    {{ action.frm_column(
-        action.frm_column_field(form.puntaje, '', '',4 ),
-        null,
-        null,
-        null,
-        2
-    ) }}
-    
-    {{ action.frm_column(
-        action.frm_column_btn(button_label|default('Guardar')),
-        null,
-        null,
-        null,
-        2
-    ) }}
-{{ action.frm_end(form) }} #}

@@ -1,4 +1,3 @@
-//== Class definition
 let Notify = function () {
     toastr.options = {
         "closeButton": true,
@@ -19,16 +18,16 @@ let Notify = function () {
         'body-output-type': 'trustedHtml'
     };
     return {
-        info: function(message, title = null) {
+        info: function (message, title = null) {
             toastr.info(message, title);
         },
-        success: function(message, title = null) {
+        success: function (message, title = null) {
             toastr.success(message, title);
         },
-        warning: function(message, title = null) {
+        warning: function (message, title = null) {
             toastr.warning(message, title);
         },
-        danger: function(message, title = null) {
+        danger: function (message, title = null) {
             toastr.error(message, title);
         },
     };
