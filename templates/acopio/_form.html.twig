@@ -13,16 +13,16 @@
         action.frm_column_field(form.tikect)
     ) }}
     {{ action.frm_column(
-        action.frm_column_field(form.pesoBruto),
-        action.frm_column_field(form.cantidad)
+        action.frm_column_field_add_select(form.pesoBruto),
+        action.frm_column_field_add_select(form.cantidad)
     ) }}
     {{ action.frm_column(
         action.frm_column_field(form.taraPorSaco),
-        action.frm_column_field(form.taraDeSacos)
+        action.frm_column_field_add_select(form.taraDeSacos)
     ) }}
     {{ action.frm_column(
-        action.frm_column_field(form.pesoQuintales),
-        action.frm_column_field(form.pesoNeto)
+        action.frm_column_field_add_select(form.pesoQuintales),
+        action.frm_column_field_add_select(form.pesoNeto)
     ) }}
     {{ action.frm_column(
         action.frm_column_field(form.observaciones),
