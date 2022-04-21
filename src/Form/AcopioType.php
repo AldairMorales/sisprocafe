@@ -19,25 +19,37 @@ class AcopioType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('periodo', EntityType::class, [
-                'class' => Periodo::class,
-            ],
+            ->add(
+                'periodo',
+                EntityType::class,
+                [
+                    'class' => Periodo::class,
+                ],
             )
             ->add('fecha', DateType::class, [
                 'widget' => 'single_text',
                 'required' => false,
             ])
-            ->add('socio', EntityType::class, [
-                'class' => Socio::class,
-            ],
+            ->add(
+                'socio',
+                EntityType::class,
+                [
+                    'class' => Socio::class,
+                ],
             )
-            ->add('certificacion', EntityType::class, [
-                'class' => Certificacion::class,
-            ],
+            ->add(
+                'certificacion',
+                EntityType::class,
+                [
+                    'class' => Certificacion::class,
+                ],
             )
-            ->add('almacen', EntityType::class, [
-                'class' => Almacen::class,
-            ],
+            ->add(
+                'almacen',
+                EntityType::class,
+                [
+                    'class' => Almacen::class,
+                ],
             )
             ->add('tikect')
             ->add('pesoBruto')
@@ -46,8 +58,7 @@ class AcopioType extends AbstractType
             ->add('taraDeSacos')
             ->add('pesoQuintales')
             ->add('pesoNeto')
-            ->add('observaciones')
-        ;
+            ->add('observaciones');
     }
 
     public function configureOptions(OptionsResolver $resolver): void

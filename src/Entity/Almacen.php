@@ -26,7 +26,7 @@ class Almacen
     #[ORM\ManyToOne(targetEntity: ReporteTerritorial::class)]
     private $ubicacion;
 
-    #[ORM\ManyToOne(targetEntity: Almacen::class)]
+    #[ORM\ManyToOne(targetEntity: Empresa::class)]
     #[ORM\JoinColumn(nullable: false)]
     private $empresa;
 

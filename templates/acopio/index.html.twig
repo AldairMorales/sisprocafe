@@ -30,7 +30,7 @@
         {{ action.tbody_start() }}
         {% for acopio in paginator.results %}
             <tr>
-                <td>{{ acopio.fecha}}</td>
+                <td>{{ acopio.fecha ? acopio.fecha|date('Y-m-d') : '' }}</td>
                 <td>{{ acopio.tikect }}</td>
                 <td>{{ acopio.socio}}</td>
                 <td>{{ acopio.certificacion}}</td>

@@ -47,13 +47,21 @@ class AcopioRepository extends ServiceEntityRepository
     {
         $queryBuilder = $this->createQueryBuilder('acopio')
             ->select(['acopio', 'config'])
-            ->join('acopio.config', 'config')
-        ;
+            ->join('acopio.config', 'config');
 
         $this->security->configQuery($queryBuilder, true);
 
         Paginator::queryTexts($queryBuilder, $params, ['acopio.tara']);
 
         return $queryBuilder;
+    }
+    public function Acopio_Id(): array
+    {
+        return $this->createQueryBuilder('acopio')
+            ->select(['acopio', 'config'])
+            ->join('acopio.config', 'config')
+            ->orderBy('acopio.id', 'DESC')
+            ->getQuery()
+            ->getResult();
     }
 }

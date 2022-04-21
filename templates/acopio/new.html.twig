@@ -37,45 +37,93 @@
     <script src="{{ asset('js/select2.js') }}"></script>
     <script>
         jQuery(document).ready(function() {
-            Select2();
 
+            Select2();
+            let $tikect = $('#acopio_tikect')
             let $pesoBruto = $('#acopio_pesoBruto')
             let $cantidadTara = $('#acopio_cantidad')
             let $taraPorSaco = $('#acopio_taraPorSaco')
             let $taraDeSacos = $('#acopio_taraDeSacos')
             let $pesoQuintal = $('#acopio_pesoQuintales')
             let $pesoNeto = $('#acopio_pesoNeto')
-            let $btnSave = document.getElementsByClassName('btn btn-warning')
+            let $merma =0.0;
+            $taraPorSaco.prop('readOnly', true);
+            $tikect.prop('readOnly',true);
+            $taraPorSaco.val(0.25);
+            if(!isNaN($cantidadTara.val())){
+                $cantidadTara.val(0);
+            }
+            
 
-            function calcularTara()
+            function pad(n, width, z) { 
+                z = z || '0'; 
+                n = n + ''; 
+                return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+            }
+            $.ajax({
+                type: 'POST',
+                url: '{{ path('acopio_busqueda_id') }}',
+                success: function (result) {
+                    if (result) {
+                        let num=parseInt(result[0].tikect)+1
+                        console.log(result)
+                        if(num){
+                            $tikect.val(pad(num, 9))
+                        }else{
+                            $tikect.val(pad(1, 9))
+                        }
+                        
+                    } else {
+                        
+                    }
+                }
+            });
+            function calculaTara()
             {
-                if($taraDeSacos.val()) {
+                if ($taraPorSaco.val()) {
                     let tara = parseFloat($cantidadTara.val()) * parseFloat($taraPorSaco.val());
                     $taraDeSacos.val(tara.toFixed(2));
-                    console.log(tara);
                 }
-
             }
 
-            function calcularPesoNeto()
+            function calculaPesoNeto()
             {
-                if($pesoBruto.val() && $taraDeSacos.val()) {
-                    let merma = 0.25;
-                    let neto = parseFloat($pesoBruto.val()) - parseFloat($taraDeSacos.val()) - merma;
+                if ($pesoBruto.val() && $taraDeSacos.val()) {
+                    //let merma = $merma.val() ? parseFloat($merma.val()) : 0.00;
+                    let neto = parseFloat($pesoBruto.val()) - parseFloat($taraDeSacos.val()) - $merma;
                     neto = neto.toFixed(2);
                     $pesoNeto.val(neto);
+                    let quintales = neto/55.2;
+                    $pesoQuintal.val(Math.floor(quintales *100)/100);
+                }
+            }
+            let e = Swal.mixin( {
+                buttonsStyling: !1,
+                target: "#page-container",
+                customClass: {
+                    confirmButton: "btn btn-success m-1",
+                    cancelButton: "btn btn-danger m-1",
+                    input: "form-control"
+                }
+            });
+            function validarPeso()
+            {
+                if(!($pesoBruto.val() && $cantidadTara.val())) {
+                    return;
+                }
+
+                if(!($pesoBruto.val() > $cantidadTara.val()) * 80) {
+                    e.fire("Peso bruto excesivo", "El peso no cumple lo estimado de 80 kilos por saco", "error");
                 }
             }
 
-            $(document).ready(function () {
-                $(document).on('change', '#acopio_pesoNeto', function () {
-                    let $this = $(this);
-                    $pesoNeto.val($this.val());
-                    calcularTara();
-                    calcularPesoNeto();
-                });
-                $('#acopio_pesoNeto').trigger('change');
-            })
+            $(document).on('keyup', '#acopio_pesoBruto, #acopio_cantidad', function () {
+                calculaTara();
+                calculaPesoNeto();
+                validarPeso();
+            });
+
+
         });
     </script>
 {% endblock %}
