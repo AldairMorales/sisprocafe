@@ -47,12 +47,7 @@ class PeriodoRepository extends ServiceEntityRepository implements BaseRepositor
     {
         $queryBuilder = $this->createQueryBuilder('periodo')
             ->select(['periodo', 'config'])
-<<<<<<< HEAD
-            ->join('periodo.config', 'config')
-        ;
-=======
             ->join('periodo.config', 'config');
->>>>>>> 94cd187dc4e5223514658f355b9c0f5640cac217
 
         $this->security->configQuery($queryBuilder, true);
 

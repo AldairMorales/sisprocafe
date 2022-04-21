@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
     <!--end::Fonts-->
     <!--begin::Page Vendors Styles -->
-   {% block _stylesheets_vendors %}{% endblock %}
+    {% block _stylesheets_vendors %}{% endblock %}
     <!--end::Page Vendors Styles -->
     <!--begin::Global Stylesheets Bundle(used by all pages)-->
     <link href="{{ asset(_theme ~ 'plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
@@ -351,7 +351,7 @@
     <!--begin::Page Custom Javascript(used by this page)-->
     {% block _javascripts %}
     {% endblock %}
-    {# <script src="{{ asset('js/notify.js') }}" type="text/javascript"></script> #}
+    <script src="{{ asset('js/notify.js') }}" type="text/javascript"></script>
     <!--end::Page Custom Javascript-->
     <script>
         $(document).ready(function () {

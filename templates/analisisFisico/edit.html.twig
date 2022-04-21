@@ -55,8 +55,18 @@
 
             function calculaCascara()
             {
-                cascara = muestraQuantity.val() - exportableQuantity.val() - segundaQuantity.val() - bolaQuantity.val();
-                cascaraQuantity.val(cascara);
+                exportablePorcentaje = $('#analisis_fisico_exportable_');
+                segundaPorcentaje = $('#analisis_fisico_segunda_');
+                bolaPorcentaje = $('#analisis_fisico_bola_');
+                cascaraPorcentaje = $('#analisis_fisico_cascara_');
+                let n=Number(exportableQuantity.val())+Number(segundaQuantity.val())+Number(bolaQuantity.val());
+                if(n < muestraQuantity.val()){
+                    
+                    cascara = muestraQuantity.val() - exportableQuantity.val() - segundaQuantity.val() - bolaQuantity.val();
+                    cascaraQuantity.val(cascara);
+                }else{
+                    Notify.danger("Excedio a la Muestra")
+                }
             }
 
             function calculaPorcentaje()

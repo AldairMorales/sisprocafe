@@ -41,18 +41,23 @@
     <script>
         jQuery(document).ready(function() {
             Select2();
+
+            /*sliders*/
             let slider = document.querySelector("#sensorial_fragrancia");
             var slider1 = document.querySelector("#sensorial_sabor");
             var slider2 = document.querySelector("#sensorial_saborResidual");
             var slider3 = document.querySelector("#sensorial_acidez");
-            var slider4 = document.querySelector("#sensorial_cuerpo");
-           
+            var slider4 = document.querySelector("#sensorial_cuerpo"); 
+            var slider5 = document.querySelector("#sensorial_balance"); 
+            var slider6 = document.querySelector("#sensorial_puntajeCatador"); 
             $('#analisis_sensorial_fragrancia').hide();
             $('#analisis_sensorial_sabor').hide();
             $('#analisis_sensorial_saborResidual').hide();
             $('#analisis_sensorial_acidez').hide();
             $('#analisis_sensorial_cuerpo').hide();
-            var n=0,n1=0,n2=0,n3=0,n4=0;
+            $('#analisis_sensorial_balance').hide();
+            $('#analisis_sensorial_puntajeCatador').hide();
+            var n=7.5,n1=7.5,n2=7.5,n3=7.5,n4=7.5,n5=7.5,n6=7.5;
             if($('#analisis_sensorial_fragrancia').val()){
                 var n=$('#analisis_sensorial_fragrancia').val();
             }
@@ -68,7 +73,18 @@
             if($('#analisis_sensorial_cuerpo').val()){
                 var n4=$('#analisis_sensorial_cuerpo').val();
             }
-            $('#analisis_sensorial_puntaje').val(parseFloat(n)+parseFloat(n1)+parseFloat(n2)+parseFloat(n3)+parseFloat(n4)));
+            if($('#analisis_sensorial_balance').val()){
+                var n5=$('#analisis_sensorial_balance').val();
+            }
+            if($('#analisis_sensorial_puntajeCatador').val()){
+                var n6=$('#analisis_sensorial_puntajeCatador').val();
+            }
+
+            if((n+n1+n2+n3+n4)!= ''){
+                $('#analisis_sensorial_puntaje').val(parseFloat(n)+parseFloat(n1)+parseFloat(n2)+parseFloat(n3)+parseFloat(n4));
+            }else{
+                $('#analisis_sensorial_puntaje').val(0);
+            }
             noUiSlider.create(slider,{
                 start: n,
                 connect: true,
@@ -139,26 +155,90 @@
                     density: 4
                 }
             });
+            noUiSlider.create(slider5,{
+                start: n5,
+                connect: true,
+                tooltips: [wNumb({decimals: 2})],
+                range: {
+                    min: 6,
+                    max: 10
+                },
+                pips: {
+                    mode: "values",
+                    values: [6,7,8,9,10],
+                    density: 4
+                }
+            });
+            noUiSlider.create(slider6,{
+                start: n6,
+                connect: true,
+                tooltips: [wNumb({decimals: 2})],
+                range: {
+                    min: 6,
+                    max: 10
+                },
+                pips: {
+                    mode: "values",
+                    values: [6,7,8,9,10],
+                    density: 4
+                }
+            });
             slider.noUiSlider.on("update", function (values, handle) {
                 $('#analisis_sensorial_fragrancia').val(values[handle]);
-                
+                puntajeTotal();
             });
             slider1.noUiSlider.on("update", function (values, handle1) {
                 $('#analisis_sensorial_sabor').val(values[handle1]);
+                puntajeTotal();
                 
             });
             slider2.noUiSlider.on("update", function (values, handle2) {
                 $('#analisis_sensorial_saborResidual').val(values[handle2]);
+                puntajeTotal();
                 
             });
             slider3.noUiSlider.on("update", function (values, handle3) {
                 $('#analisis_sensorial_acidez').val(values[handle3]);
+                puntajeTotal();
                 
             });
             slider4.noUiSlider.on("update", function (values, handle4) {
                 $('#analisis_sensorial_cuerpo').val(values[handle4]);
+                puntajeTotal();
                 
             });
+            slider5.noUiSlider.on("update", function (values, handle5) {
+                $('#analisis_sensorial_balance').val(values[handle5]);
+                puntajeTotal();
+                
+            });
+            slider6.noUiSlider.on("update", function (values, handle6) {
+                $('#analisis_sensorial_puntajeCatador').val(values[handle6]);
+                puntajeTotal();
+                
+            });
+            
+            /**/
+            
+            function puntajeTotal()
+            {
+                let $puntajeFinal = $('#analisis_sensorial_puntaje');
+                let sum = 0;
+                $(".js-rangeslider").each(function() {
+                    if(!isNaN(this.value) && this.value.length!==0) {
+                        sum += parseFloat(this.value);
+                    }
+                });
+                $puntajeFinal.val(sum.toFixed(2));
+                $('.sumTotal').text(sum.toFixed(2));
+            }
+            $(document).on('change', '.js-rangeslider', function(){
+                puntajeTotal();
+            });
+            $('#analisis_sensorial_puntaje').trigger('change');
+
+            puntajeTotal();
+
         });
     </script>
 {% endblock %}
