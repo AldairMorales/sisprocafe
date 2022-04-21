@@ -40,7 +40,7 @@ class AnalisisSensorialType extends AbstractType
             ->add('tikect', ChoiceType::class, [
                 'mapped' => false,
             ])
-            ->add('puntaje', null, ['disabled' => true])
+            ->add('puntaje')
             ->add('fragrancia')
             ->add('sabor')
             ->add('saborResidual')
