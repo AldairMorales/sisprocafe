@@ -63,6 +63,10 @@ class AnalisisSensorial
     #[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]
     private $dulzor;
 
+    #[ORM\OneToOne(targetEntity: Acopio::class, cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private $acopio;
+
 
     public function getId(): ?int
     {
@@ -245,6 +249,18 @@ class AnalisisSensorial
     public function setDulzor(?string $dulzor): self
     {
         $this->dulzor = $dulzor;
+
+        return $this;
+    }
+
+    public function getAcopio(): ?Acopio
+    {
+        return $this->acopio;
+    }
+
+    public function setAcopio(Acopio $acopio): self
+    {
+        $this->acopio = $acopio;
 
         return $this;
     }

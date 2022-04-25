@@ -65,9 +65,9 @@
                 url: '{{ path('acopio_busqueda_id') }}',
                 success: function (result) {
                     if (result) {
-                        let num=parseInt(result[0].tikect)+1
-                        console.log(result)
-                        if(num){
+                        if (result.length>0){
+                            console.log(result)
+                            let num=parseInt(result[0].tikect)+1
                             $tikect.val(pad(num, 9))
                         }else{
                             $tikect.val(pad(1, 9))

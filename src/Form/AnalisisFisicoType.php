@@ -9,6 +9,7 @@ namespace Pidia\Apps\Demo\Form;
 
 use Doctrine\ORM\EntityRepository;
 use Pidia\Apps\Demo\Entity\AnalisisFisico;
+use Pidia\Apps\Demo\Entity\Acopio;
 use Pidia\Apps\Demo\Security\Security;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -35,8 +36,15 @@ class AnalisisFisicoType extends AbstractType
                 'required' => false,
             ])
             ->add('certificacion')
-            ->add('tikect', ChoiceType::class, [
-                'mapped' => false,
+            ->add('acopio', EntityType::class, [
+                'class' => Acopio::class,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('acopio')
+                        ->where('acopio.analisis_Fisico = false')
+                        ->andWhere('acopio.activo=true')
+                        ->orderBy('acopio.tikect', 'ASC');
+                },
+                'choice_label' => 'tikect',
             ])
             ->add('muestra', ChoiceType::class, [
                 'choices' => [
@@ -45,15 +53,7 @@ class AnalisisFisicoType extends AbstractType
                 ],
             ])
 
-            // ->add('unidadMedida', EntityType::class, [
-            //     'mapped' => false,
-            //     'class' => UnidadMedida::class,
-            //     'query_builder' => function (EntityRepository $er) {
-            //         return $er->createQueryBuilder('u')
-            //             ->orderBy('u.nombre', 'ASC');
-            //     },
-            //     'choice_label' => 'nombre',
-            // ])
+
             ->add('exportable')
             ->add('exportable_', null, [
                 'mapped' => false,

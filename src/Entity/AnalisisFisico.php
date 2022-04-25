@@ -44,6 +44,10 @@ class AnalisisFisico
     #[ORM\Column(type: 'integer', nullable: true)]
     private $cascara;
 
+    #[ORM\OneToOne(targetEntity: Acopio::class, cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private $acopio;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -153,6 +157,18 @@ class AnalisisFisico
     public function setCascara(?int $cascara): self
     {
         $this->cascara = $cascara;
+
+        return $this;
+    }
+
+    public function getAcopio(): ?Acopio
+    {
+        return $this->acopio;
+    }
+
+    public function setAcopio(Acopio $acopio): self
+    {
+        $this->acopio = $acopio;
 
         return $this;
     }

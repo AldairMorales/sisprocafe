@@ -22,7 +22,8 @@
             {{ action.th('Certificacion', true) }}
             {{ action.th('Almacen', true) }}
             {{ action.th('Peso Neto', true) }}
-            {{ action.th('Peso Quintales', true) }}
+            {{ action.th('A-Fisico', true) }}
+            {{ action.th('A-Sensorial', true) }}
             {{ action.th('Activo', true, 'text-center') }}
             <th></th>
         </tr>
@@ -36,7 +37,8 @@
                 <td>{{ acopio.certificacion}}</td>
                 <td>{{ acopio.almacen }}</td>
                 <td>{{ acopio.pesoNeto}}</td>
-                <td>{{ acopio.PesoQuintales}}</td>
+                <td class="text-center">{{ acopio.analisisFisico | yesnocustom | raw }}</td>
+                <td class="text-center">{{ acopio.analisisSensorial | yesnocustom | raw }}</td>
                 <td class="text-center">{{ acopio.activo | yesnocustom | raw }}</td>
                 <td>
                     {% if access.has('view') %}

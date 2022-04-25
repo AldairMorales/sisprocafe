@@ -7,13 +7,15 @@
 
 namespace Pidia\Apps\Demo\Form;
 
+use Doctrine\ORM\EntityRepository;
 use Pidia\Apps\Demo\Entity\AnalisisSensorial;
+use Pidia\Apps\Demo\Entity\Acopio;
 use Pidia\Apps\Demo\Security\Security;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 
 
@@ -36,8 +38,15 @@ class AnalisisSensorialType extends AbstractType
                 'required' => false,
             ])
             ->add('certificacion')
-            ->add('tikect', ChoiceType::class, [
-                'mapped' => false,
+            ->add('acopio', EntityType::class, [
+                'class' => Acopio::class,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('acopio')
+                        ->where('acopio.analisis_Fisico = true')
+                        ->andWhere('acopio.analisis_Sensorial=false')
+                        ->orderBy('acopio.tikect', 'ASC');
+                },
+                'choice_label' => 'tikect',
             ])
 
             ->add('puntaje')

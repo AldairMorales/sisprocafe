@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Pidia\Apps\Demo\Entity\Traits\EntityTrait;
 use Pidia\Apps\Demo\Repository\AcopioRepository;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AcopioRepository::class)]
 #[HasLifecycleCallbacks]
@@ -59,6 +61,12 @@ class Acopio
 
     #[ORM\Column(type: 'text', nullable: true)]
     private $observaciones;
+
+    #[ORM\Column(type: 'boolean')]
+    private $analisis_Fisico = false;
+
+    #[ORM\Column(type: 'boolean')]
+    private $analisis_Sensorial = false;
 
     public function getId(): ?int
     {
@@ -224,5 +232,29 @@ class Acopio
     public function __toString(): string
     {
         return $this->getTikect() ?? '';
+    }
+
+    public function getAnalisisFisico(): ?bool
+    {
+        return $this->analisis_Fisico;
+    }
+
+    public function setAnalisisFisico(bool $analisis_Fisico): self
+    {
+        $this->analisis_Fisico = $analisis_Fisico;
+
+        return $this;
+    }
+
+    public function getAnalisisSensorial(): ?bool
+    {
+        return $this->analisis_Sensorial;
+    }
+
+    public function setAnalisisSensorial(bool $analisis_Sensorial): self
+    {
+        $this->analisis_Sensorial = $analisis_Sensorial;
+
+        return $this;
     }
 }
