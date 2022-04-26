@@ -5,12 +5,12 @@ namespace Pidia\Apps\Demo\Controller;
 use Pidia\Apps\Demo\Entity\AnalisisFisico;
 use Pidia\Apps\Demo\Form\AnalisisFisicoType;
 use Pidia\Apps\Demo\Manager\AnalisisFisicoManager;
+use Pidia\Apps\Demo\Repository\AcopioRepository;
 use Pidia\Apps\Demo\Security\Access;
 use Pidia\Apps\Demo\Util\Paginator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Pidia\Apps\Demo\Repository\AcopioRepository;
 
 #[Route('/admin/analisis/fisico')]
 class AnalisisFisicoController extends BaseController
@@ -64,7 +64,7 @@ class AnalisisFisicoController extends BaseController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $analisisFisico->setPropietario($this->getUser());
-
+            $manager->actualizarAcopio($analisisFisico);
             if ($manager->save($analisisFisico)) {
                 $this->addFlash('success', 'Registro creado!!!');
             } else {
@@ -95,11 +95,14 @@ class AnalisisFisicoController extends BaseController
     public function edit(Request $request, analisisFisico $analisisFisico, AnalisisFisicoManager $manager, AcopioRepository $repository): Response
     {
         $this->denyAccess(Access::EDIT, 'analisisFisico_index');
+        $acopioAnterior = $analisisFisico->getAcopio();
+
         $form = $this->createForm(AnalisisFisicoType::class, $analisisFisico);
         //$repository->actualizar_AnalisisFisico(false, $analisisFisico->getAcopio());
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $manager->actualizarAcopio($analisisFisico, $acopioAnterior);
             if ($manager->save($analisisFisico)) {
                 $this->addFlash('success', 'Registro actualizado!!!');
             } else {
@@ -122,7 +125,7 @@ class AnalisisFisicoController extends BaseController
     public function delete(Request $request, analisisFisico $analisisFisico, AnalisisFisicoManager $manager): Response
     {
         $this->denyAccess(Access::DELETE, 'analisisFisico_index');
-        if ($this->isCsrfTokenValid('delete' . $analisisFisico->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$analisisFisico->getId(), $request->request->get('_token'))) {
             $analisisFisico->changeActivo();
             if ($manager->save($analisisFisico)) {
                 $this->addFlash('success', 'Estado ha sido actualizado');
@@ -138,7 +141,7 @@ class AnalisisFisicoController extends BaseController
     public function deleteForever(Request $request, analisisFisico $analisisFisico, AnalisisFisicoManager $manager): Response
     {
         $this->denyAccess(Access::MASTER, 'analisisFisico_index', $analisisFisico);
-        if ($this->isCsrfTokenValid('delete_forever' . $analisisFisico->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete_forever'.$analisisFisico->getId(), $request->request->get('_token'))) {
             if ($manager->remove($analisisFisico)) {
                 $this->addFlash('warning', 'Registro eliminado');
             } else {
