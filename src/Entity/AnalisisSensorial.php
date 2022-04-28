@@ -2,9 +2,12 @@
 
 namespace Pidia\Apps\Demo\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Pidia\Apps\Demo\Repository\AnalisisSensorialRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Pidia\Apps\Demo\Entity\Traits\EntityTrait;
+use Symfony\Component\Validator\Constraints\Datetime;
 
 #[ORM\Entity(repositoryClass: AnalisisSensorialRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -63,9 +66,29 @@ class AnalisisSensorial
     #[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]
     private $dulzor;
 
-    #[ORM\OneToOne(targetEntity: Acopio::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(targetEntity: Acopio::class)]
     #[ORM\JoinColumn(nullable: false)]
     private $acopio;
+
+    #[ORM\ManyToMany(targetEntity: DetalleAtributos::class)]
+    #[ORM\JoinTable(name: 'analisissensorial_fragrancia')]
+    private $fragranciaCategoria;
+
+    #[ORM\ManyToMany(targetEntity: DetalleAtributos::class)]
+    #[ORM\JoinTable(name: 'analisissensorial_sabor')]
+    private  $saborCategorias;
+
+    #[ORM\ManyToMany(targetEntity: DetalleAtributos::class)]
+    #[ORM\JoinTable(name: 'analisissensorial_balance')]
+    private  $balanceCategorias;
+
+    public function __construct()
+    {
+        $this->fecha = new \DateTime();
+        $this->fragranciaCategoria = new ArrayCollection();
+        $this->saborCategorias = new ArrayCollection();
+        $this->balanceCategorias = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -261,6 +284,78 @@ class AnalisisSensorial
     public function setAcopio(Acopio $acopio): self
     {
         $this->acopio = $acopio;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|DetalleAtributos[]
+     */
+    public function getFragranciaCategoria(): Collection
+    {
+        return $this->fragranciaCategoria;
+    }
+
+    public function addFragranciaCategorium(DetalleAtributos $fragranciaCategorium): self
+    {
+        if (!$this->fragranciaCategoria->contains($fragranciaCategorium)) {
+            $this->fragranciaCategoria[] = $fragranciaCategorium;
+        }
+
+        return $this;
+    }
+
+    public function removeFragranciaCategorium(DetalleAtributos $fragranciaCategorium): self
+    {
+        $this->fragranciaCategoria->removeElement($fragranciaCategorium);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|DetalleAtributos[]
+     */
+    public function getSaborCategorias(): Collection
+    {
+        return $this->saborCategorias;
+    }
+
+    public function addSaborCategoria(DetalleAtributos $saborCategoria): self
+    {
+        if (!$this->saborCategorias->contains($saborCategoria)) {
+            $this->saborCategorias[] = $saborCategoria;
+        }
+
+        return $this;
+    }
+
+    public function removeSaborCategoria(DetalleAtributos $saborCategoria): self
+    {
+        $this->saborCategorias->removeElement($saborCategoria);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|DetalleAtributos[]
+     */
+    public function getBalanceCategorias(): Collection
+    {
+        return $this->balanceCategorias;
+    }
+
+    public function addBalanceCategoria(DetalleAtributos $balanceCategoria): self
+    {
+        if (!$this->balanceCategorias->contains($balanceCategoria)) {
+            $this->balanceCategorias[] = $balanceCategoria;
+        }
+
+        return $this;
+    }
+
+    public function removeBalanceCategoria(DetalleAtributos $balanceCategoria): self
+    {
+        $this->balanceCategorias->removeElement($balanceCategoria);
 
         return $this;
     }

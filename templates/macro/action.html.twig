@@ -700,13 +700,13 @@
     {% import _self as actions %}
     <div class="col-sm-11 form-group row mb-1 p-1  {{ class }} {{ actions.frm_errors_class(value) }}">
         {{ actions.frm_label(value,'col-sm-' ~ col ~ ' col-4') }}
-        
             <div id="{{id}}" class="col-sm-{{ 12-col }} col-6">
                 {{ form_widget(value, {attr: {class: 'form-control ' ~ class_widget ~ actions.frm_errors_class(value)} }) }}
                 {{ actions.frm_help(value) }}
                 {{ actions.frm_errors(value) }}
             </div>
     </div>
+    <br />
 {% endmacro %}
 
 {% macro frm_deploy_add_labels(section1,nombre,num=1) %}

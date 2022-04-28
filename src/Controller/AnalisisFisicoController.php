@@ -64,7 +64,7 @@ class AnalisisFisicoController extends BaseController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $analisisFisico->setPropietario($this->getUser());
-
+            $manager->actualizarAcopio($analisisFisico);
             if ($manager->save($analisisFisico)) {
                 $this->addFlash('success', 'Registro creado!!!');
             } else {
@@ -94,12 +94,13 @@ class AnalisisFisicoController extends BaseController
     #[Route(path: '/{id}/edit', name: 'analisisFisico_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, analisisFisico $analisisFisico, AnalisisFisicoManager $manager, AcopioRepository $repository): Response
     {
+        $acopioAnterior = $analisisFisico->getAcopio();
         $this->denyAccess(Access::EDIT, 'analisisFisico_index');
         $form = $this->createForm(AnalisisFisicoType::class, $analisisFisico);
-        //$repository->actualizar_AnalisisFisico(false, $analisisFisico->getAcopio());
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $manager->actualizarAcopio($analisisFisico, $acopioAnterior);
             if ($manager->save($analisisFisico)) {
                 $this->addFlash('success', 'Registro actualizado!!!');
             } else {

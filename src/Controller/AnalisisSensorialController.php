@@ -71,6 +71,7 @@ class AnalisisSensorialController extends BaseController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $analisisSensorial->setPropietario($this->getUser());
+            $manager->actualizarAcopio($analisisSensorial);
             if ($manager->save($analisisSensorial)) {
                 $this->addFlash('success', 'Registro creado!!!');
             } else {
@@ -100,10 +101,12 @@ class AnalisisSensorialController extends BaseController
     #[Route(path: '/{id}/edit', name: 'analisisSensorial_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, analisisSensorial $analisisSensorial, AnalisisSensorialManager $manager): Response
     {
+        $acopioAnterior = $analisisSensorial->getAcopio();
         $this->denyAccess(Access::EDIT, 'analisisSensorial_index');
         $form = $this->createForm(AnalisisSensorialType::class, $analisisSensorial);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $manager->actualizarAcopio($analisisSensorial, $acopioAnterior);
             if ($manager->save($analisisSensorial)) {
                 $this->addFlash('success', 'Registro actualizado!!!');
             } else {

@@ -17,6 +17,7 @@
         {{ action.thead_start() }}
         <tr>
             {{ action.th('Periodo', true) }}
+            {{ action.th('ticket', true) }}
             {{ action.th('Fecha', true) }}
             {{ action.th('Certificacion', true) }}
             {{ action.th('Puntaje', true) }} 
@@ -28,6 +29,7 @@
         {% for analisisSensorial in paginator.results %}
             <tr>
                 <td>{{ analisisSensorial.periodo}}</td>
+                <td>{{ analisisSensorial.acopio}}</td>
                 <td>{{ analisisSensorial.fecha ? analisisSensorial.fecha|date('Y-m-d') : ''}}</td>
                 <td>{{ analisisSensorial.certificacion }}</td>
                 <td>{{ analisisSensorial.puntaje }}</td>

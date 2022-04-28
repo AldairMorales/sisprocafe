@@ -75,4 +75,8 @@ class AtributosCatacion
 
         return $this;
     }
+    public function __ToString(): string
+    {
+        return $this->getNombre();
+    }
 }

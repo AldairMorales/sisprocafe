@@ -30,6 +30,8 @@ class AnalisisFisicoType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        /** @var AnalisisFisico $analisisFisico */
+        $analisisFisico = $builder->getData();
         $builder
             ->add('fecha', DateType::class, [
                 'widget' => 'single_text',
@@ -38,10 +40,19 @@ class AnalisisFisicoType extends AbstractType
             ->add('certificacion')
             ->add('acopio', EntityType::class, [
                 'class' => Acopio::class,
-                'query_builder' => function (EntityRepository $er) {
+                'query_builder' => function (EntityRepository $er) use ($analisisFisico) {
+                    if (null === $analisisFisico->getId()) {
+                        return $er->createQueryBuilder('acopio')
+                            ->where('acopio.analisis_Fisico = false')
+                            ->andWhere('acopio.activo=true')
+                            ->orderBy('acopio.tikect', 'ASC');
+                    }
                     return $er->createQueryBuilder('acopio')
                         ->where('acopio.analisis_Fisico = false')
                         ->andWhere('acopio.activo=true')
+                        ->OrWhere('acopio.id = :acopioId')
+                        ->setParameter('acopioId', $analisisFisico->getAcopio()?->getId())
+                        ->orderBy('acopio.tikect', 'ASC')
                         ->orderBy('acopio.tikect', 'ASC');
                 },
                 'choice_label' => 'tikect',

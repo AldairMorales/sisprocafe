@@ -44,9 +44,14 @@ class AnalisisFisico
     #[ORM\Column(type: 'integer', nullable: true)]
     private $cascara;
 
-    #[ORM\OneToOne(targetEntity: Acopio::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(targetEntity: Acopio::class)]
     #[ORM\JoinColumn(nullable: false)]
     private $acopio;
+
+    public function __construct()
+    {
+        $this->fecha = new \DateTime();
+    }
 
     public function getId(): ?int
     {

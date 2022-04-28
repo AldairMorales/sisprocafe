@@ -45,7 +45,13 @@
                         null,
                         1
                     ),
-                    null,
+                    action.frm_column(
+                        action.frm_column_field_select(form.fragranciaCategoria, '', '',2),
+                        null,
+                        null,
+                        null,
+                        1
+                    ),
                     null,
                     null,
                     null
@@ -83,7 +89,13 @@
                         null,
                         1
                     ),
-                    null
+                    action.frm_column(
+                        action.frm_column_field_select(form.saborCategorias, '', '',2),
+                        null,
+                        null,
+                        null,
+                        1
+                    ),
                 ),
                 '2 Etapa :',
                 3
@@ -128,13 +140,19 @@
                             1
                         ),
                         action.frm_column(
+                            action.frm_column_field_select(form.balanceCategorias, '', '',2),
+                            null,
+                            null,
+                            null,
+                            1
+                        ),
+                        action.frm_column(
                             action.frm_column_field(form.descripcion, '', 'js-rangeslider',2),
                             null,
                             null,
                             null,
                             1
                         ),
-                        null,
                         null,
                         null
                     )

@@ -68,6 +68,11 @@ class Acopio
     #[ORM\Column(type: 'boolean')]
     private $analisis_Sensorial = false;
 
+    public function __construct()
+    {
+        $this->fecha = new \DateTime();
+    }
+
     public function getId(): ?int
     {
         return $this->id;

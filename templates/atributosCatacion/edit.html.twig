@@ -24,13 +24,12 @@
 
 {% block _atributos_catacion_detalles_entry_widget %}
     {% import 'macro/action.html.twig' as actions %}
-
     {{ actions.frm_column(
-        actions.frm_column_field(form.nombre),
+        actions.frm_column_field(form.nombre,'','',4),
         null,
         null,
         null,
-        2
+        1
     )}}
     
 {% endblock %}

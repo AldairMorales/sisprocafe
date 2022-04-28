@@ -17,6 +17,7 @@
         {{ action.thead_start() }}
         <tr>
             {{ action.th('fecha', true) }}
+            {{ action.th('ticket', true) }}
             {{ action.th('dertificacion', true) }}
             {{ action.th('muestra', true) }}
             {{ action.th('exportable', true) }}
@@ -32,6 +33,7 @@
         {% for analisisFisico in paginator.results %}
             <tr>
                 <td>{{ analisisFisico.fecha ? analisisFisico.fecha|date('Y-m-d') : ''}}</td>
+                <td>{{ analisisFisico.acopio }}</td>
                 <td>{{ analisisFisico.certificacion }}</td>
                 <td>{{ analisisFisico.muestra}}</td>
                 <td>{{ analisisFisico.exportable}}</td>
