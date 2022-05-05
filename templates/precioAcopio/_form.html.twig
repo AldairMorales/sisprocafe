@@ -1,0 +1,23 @@
+{% import 'macro/action.html.twig' as action %}
+{{ action.frm_start(form) }}
+    {{ action.frm_column(
+        action.frm_column_field(form.precioBase, '','',3)
+    ) }}
+    {{ action.frm_column(
+        action.frm_column_field_collection(form.rendimiento, '', '','',3)
+    ) }}
+    {{ action.frm_column(
+        action.frm_column_field_collection(form.certificacionValor, '', '','',3),
+        null,
+        null,
+        null,
+        1
+    ) }}
+    {{ action.frm_column(
+        action.frm_column_btn(button_label|default('Guardar')),
+        null,
+        null,
+        null,
+        2
+    ) }}
+{{ action.frm_end(form) }}

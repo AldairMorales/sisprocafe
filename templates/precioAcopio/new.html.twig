@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+{% import 'macro/breadcrumb.html.twig' as breadcrumb %}
+{% import 'macro/action.html.twig' as action %}
+
+{% set _title = 'Precio Acopio' %}
+{% set _main_title = 'Nuevo' %}
+{% set _section =  'precioAcopio_index'%}
+
+{% block _breadcrumb %}
+    {{ breadcrumb.show2(_title,_section,'Nuevo') }}
+{% endblock %}
+
+{% block _main %}
+    {{ include('precioAcopio/_form.html.twig') }}
+{% endblock %}
+
+{% form_theme form _self %}
+
+{% block _precio_acopio_rendimiento_label %}
+{% endblock %}
+
+{% block _precio_acopio_rendimiento_entry_widget %}
+    {% import 'macro/action.html.twig' as actions %}
+    {{ actions.frm_column(
+        actions.frm_column_field(form.valor),
+        actions.frm_column_field(form.incremento)
+    )}}
+    
+{% endblock %}
+
+{% form_theme form _self %}
+
+{% block _precio_acopio_certificacionValor_label %}
+{% endblock %}
+
+{% block _precio_acopio_certificacionValor_entry_widget %}
+    
+        <script src="{{ asset('js/select2.js') }}"></script>
+        <script>
+            jQuery(document).ready(function() {
+                Select2();
+            });
+        </script>
+    {% import 'macro/action.html.twig' as actions %}
+    {{ actions.frm_column(
+        actions.frm_column_field_select(form.certificacion,'','',0),
+        actions.frm_column_field(form.valor),
+        actions.frm_column_field(form.diferencia)
+    )}}
+    
+{% endblock %}
+
+{% block _main_tools %}
+    {% include 'crud/_tools_ico.html.twig' %}
+{% endblock %}
+
+{% block _body_tools %}
+    {% include 'crud/_new_links_ico.html.twig' with {'route_base':'precioAcopio'} %}
+{% endblock %}
+
+{% block _body_tools_ico %}
+    {% include 'crud/_new_links_tool.html.twig' with {'route_base': 'precioAcopio'}  %}
+{% endblock %}
+
+{% block _main_footer %}
+    {% include 'crud/_new_links.html.twig' with {'route_base':'precioAcopio'} %}
+{% endblock %}
+
+{% block _stylesheets %}
+{% endblock %}
+
+{% block _javascripts %}
+    <script src="{{ asset('js/select2.js') }}"></script>
+    <script src="{{ asset('js/collection.js') }}"></script>
+    <script>
+        jQuery(document).ready(function() {
+            Select2();
+            Collection.init('#precio_acopio_rendimiento');
+            Collection.init('#precio_acopio_certificacionValor');
+        });
+    </script>
+{% endblock %}
