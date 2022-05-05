@@ -82,12 +82,16 @@ class AnalisisSensorial
     #[ORM\JoinTable(name: 'analisissensorial_balance')]
     private  $balanceCategorias;
 
+    #[ORM\OneToMany(mappedBy: 'analisisSensorial', targetEntity: SensorialUsuario::class, orphanRemoval: true)]
+    private $sensorialUsuarios;
+
     public function __construct()
     {
         $this->fecha = new \DateTime();
         $this->fragranciaCategoria = new ArrayCollection();
         $this->saborCategorias = new ArrayCollection();
         $this->balanceCategorias = new ArrayCollection();
+        $this->sensorialUsuarios = new ArrayCollection();
     }
 
 
@@ -356,6 +360,36 @@ class AnalisisSensorial
     public function removeBalanceCategoria(DetalleAtributos $balanceCategoria): self
     {
         $this->balanceCategorias->removeElement($balanceCategoria);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SensorialUsuario[]
+     */
+    public function getSensorialUsuarios(): Collection
+    {
+        return $this->sensorialUsuarios;
+    }
+
+    public function addSensorialUsuario(SensorialUsuario $sensorialUsuario): self
+    {
+        if (!$this->sensorialUsuarios->contains($sensorialUsuario)) {
+            $this->sensorialUsuarios[] = $sensorialUsuario;
+            $sensorialUsuario->setAnalisisSensorial($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSensorialUsuario(SensorialUsuario $sensorialUsuario): self
+    {
+        if ($this->sensorialUsuarios->removeElement($sensorialUsuario)) {
+            // set the owning side to null (unless already changed)
+            if ($sensorialUsuario->getAnalisisSensorial() === $this) {
+                $sensorialUsuario->setAnalisisSensorial(null);
+            }
+        }
 
         return $this;
     }

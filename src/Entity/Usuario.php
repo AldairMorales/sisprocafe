@@ -30,7 +30,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use EntityTrait;
-
     #[Id]
     #[GeneratedValue]
     #[Column(type: 'integer')]
@@ -62,6 +61,7 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->usuarioRoles = new ArrayCollection();
+        $this->sensorialUsuarios = new ArrayCollection();
     }
 
     public function getId(): ?int

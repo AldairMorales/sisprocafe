@@ -5,13 +5,14 @@ namespace Pidia\Apps\Demo\Controller;
 use Pidia\Apps\Demo\Entity\AnalisisSensorial;
 use Pidia\Apps\Demo\Form\AnalisisSensorialType;
 use Pidia\Apps\Demo\Manager\AnalisisSensorialManager;
-
+use Pidia\Apps\Demo\Repository\SensorialUsuarioRepository;
 use Pidia\Apps\Demo\Repository\AnalisisSensorialRepository;
 use Pidia\Apps\Demo\Security\Access;
 use Pidia\Apps\Demo\Util\Paginator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 #[Route('/admin/analisis/sensorial')]
 class AnalisisSensorialController extends BaseController
@@ -67,11 +68,13 @@ class AnalisisSensorialController extends BaseController
     {
         $this->denyAccess(Access::NEW, 'analisisSensorial_index');
         $analisisSensorial = new analisisSensorial();
+        $usuario = $this->getUser();
         $form = $this->createForm(AnalisisSensorialType::class, $analisisSensorial);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $analisisSensorial->setPropietario($this->getUser());
             $manager->actualizarAcopio($analisisSensorial);
+            $manager->insertarAnalisis_Usuario($analisisSensorial, $usuario);
             if ($manager->save($analisisSensorial)) {
                 $this->addFlash('success', 'Registro creado!!!');
             } else {
@@ -99,14 +102,23 @@ class AnalisisSensorialController extends BaseController
     }
 
     #[Route(path: '/{id}/edit', name: 'analisisSensorial_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, analisisSensorial $analisisSensorial, AnalisisSensorialManager $manager): Response
-    {
+    public function edit(
+        Request $request,
+        analisisSensorial $analisisSensorial,
+        AnalisisSensorialManager $manager,
+        SensorialUsuarioRepository $sensorialUsuarioRepository
+    ): Response {
         $acopioAnterior = $analisisSensorial->getAcopio();
+        $usuario = $this->getUser();
         $this->denyAccess(Access::EDIT, 'analisisSensorial_index');
         $form = $this->createForm(AnalisisSensorialType::class, $analisisSensorial);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $sensorialUsuario = $sensorialUsuarioRepository->buscarSensorialUsuario($analisisSensorial, $usuario);
+            $manager->insertarAnalisis_Usuario($analisisSensorial, $usuario, $sensorialUsuario);
             $manager->actualizarAcopio($analisisSensorial, $acopioAnterior);
+            $PromedioSensorial = $sensorialUsuarioRepository->promedioAnalisisSensorial($analisisSensorial);
+            $manager->actualizarAnalisiSensorial($analisisSensorial, $PromedioSensorial);
             if ($manager->save($analisisSensorial)) {
                 $this->addFlash('success', 'Registro actualizado!!!');
             } else {
@@ -144,8 +156,10 @@ class AnalisisSensorialController extends BaseController
     #[Route(path: '/{id}/delete', name: 'analisisSensorial_delete_forever', methods: ['POST'])]
     public function deleteForever(Request $request, analisisSensorial $analisisSensorial, AnalisisSensorialManager $manager): Response
     {
+        $acopioAnterior = $analisisSensorial->getAcopio();
         $this->denyAccess(Access::MASTER, 'analisisSensorial_index', $analisisSensorial);
         if ($this->isCsrfTokenValid('delete_forever' . $analisisSensorial->getId(), $request->request->get('_token'))) {
+            $manager->cambiarSensorialAcopio($acopioAnterior);
             if ($manager->remove($analisisSensorial)) {
                 $this->addFlash('warning', 'Registro eliminado');
             } else {

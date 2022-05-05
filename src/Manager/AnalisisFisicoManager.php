@@ -27,6 +27,9 @@ final class AnalisisFisicoManager extends BaseManager
         $this->entityManager->persist($acopio);
         if (null !== $acopioAnterior && $acopio->getId() !== $acopioAnterior->getId()) {
             $acopioAnterior->setAnalisisFisico(false);
+            if ($acopioAnterior->getAnalisisSensorial() === true) {
+                $acopioAnterior->setAnalisisSensorial(false);
+            }
             $this->entityManager->persist($acopioAnterior);
         }
     }
