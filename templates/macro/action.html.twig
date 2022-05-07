@@ -1025,18 +1025,18 @@
                     {% if value.vars.data %}
                         {% set contador = 0 %}
                         {% for i in 1..value.vars.data/2 %}
-                            <label class="css-control css-control-secondary css-switch mr-3">
-                                <input type="checkbox" class="css-control-input" checked>
-                                <span class="css-control-indicator"></span> Taza {{ i }}
+                            <label class="form-check form-switch form-check-custom form-check-solid float-start">
+                                <input type="checkbox" class="form-check-input" checked>
+                                <span class="form-check-label fw-bold text-muted"></span> Taza {{ i }}
                             </label>
                             {% set contador = i %}
                         {% endfor %}
                         {% if value.vars.data < 10 %}
                             {% set limit = (10-value.vars.data)/2 %}
                             {% for j in 1..limit %}
-                                <label class="css-control css-control-secondary css-switch">
-                                    <input type="checkbox" class="css-control-input">
-                                    <span class="css-control-indicator"></span> Taza {{ contador + j }}
+                                <label class="form-check form-switch form-check-custom form-check-solid float-start">
+                                    <input type="checkbox" class="form-check-input">
+                                    <span class="form-check-label fw-bold text-muted"></span> Taza {{ contador + j }}
                                 </label>
                             {% endfor %}
                         {% endif %}
@@ -1051,7 +1051,7 @@
                 $(document).ready(function () {
                     $('#{{ value.vars.id }}').prop('readOnly', true);
 
-                    $('#{{ value.vars.id }}_switch .css-control-input').on('click', function () {
+                    $('#{{ value.vars.id }}_switch .form-check-input').on('click', function () {
                         let increment = this.checked ? 2 : -2;
                         let val = parseInt($('#{{ value.vars.id }}').val());
                         $('#{{ value.vars.id }}').val(val + increment);
