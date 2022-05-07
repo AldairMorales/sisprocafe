@@ -150,11 +150,9 @@ class AcopioController extends BaseController
 
     #[Route('/busqueda/id/', name: 'acopio_busqueda_id')]
 
-    public function busqueda_id(Request $request, AcopioRepository $Repository): Response
+    public function busqueda_id(AcopioRepository $Repository): Response
     {
-
-        $id = $request->request->get('id');
-        $result = $Repository->Acopio_Id($id);
+        $result = $Repository->Acopio_Id();
         return $this->json($result);
     }
 }

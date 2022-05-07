@@ -65,15 +65,4 @@ class AcopioRepository extends ServiceEntityRepository
             ->setMaxResults(1)
             ->getResult();
     }
-    public function actualizar_AnalisisFisico(bool $ban, string $tikect): array
-    {
-        return $this->createQueryBuilder('acopio')
-            ->update('acopio')
-            ->set('acopio.analisis_Fisico', 'ban')
-            ->where('acopio.tikect=:tikect')
-            ->setParameter('ban', $ban)
-            ->setParameter('tikect', $tikect)
-            ->getQuery()
-            ->getResult();
-    }
 }

@@ -1242,8 +1242,8 @@
 {%- endblock attributes -%}
 
 {# ########## DISPLAY ################# #}
-{% macro tbl_start(class='table-striped',attributes='') %}
-<table class="table {{ class }} table-vcenter" {{ attributes }}>
+{% macro tbl_start(class='table-striped',attributes='',id='',) %}
+<table class="table {{ class }} table-vcenter" {{ attributes }} id="{{ id }}">
     {% endmacro %}
 
     {% macro tbl_end() %}

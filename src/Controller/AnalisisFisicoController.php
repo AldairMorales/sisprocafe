@@ -3,7 +3,6 @@
 namespace Pidia\Apps\Demo\Controller;
 
 use Pidia\Apps\Demo\Entity\AnalisisFisico;
-use Pidia\Apps\Demo\Form\AnalisisFisicoType;
 use Pidia\Apps\Demo\Manager\AnalisisFisicoManager;
 use Pidia\Apps\Demo\Security\Access;
 use Pidia\Apps\Demo\Util\Paginator;
@@ -35,9 +34,16 @@ class AnalisisFisicoController extends BaseController
     {
         $this->denyAccess(Access::EXPORT, 'analisisFisico_index');
         $headers = [
-            'nombre' => 'Nombre',
-            'alias' => 'Alisas',
-            'activo' => 'Activo',
+            'id' => 'id',
+            'fecha' => 'Fecha',
+            'certificacion' => 'Certificacion',
+            'exportable' => 'Exportable',
+            'bola' => 'Bola',
+            'segunda' => 'Segunda',
+            'humedad' => 'Humedad',
+            'descripcion' => 'Descripcion',
+            'cascara' => 'cascara',
+            'acopio' => 'Ticket'
         ];
         $params = Paginator::params($request->query->all());
         $objetos = $manager->repositorio()->filter($params, false);
@@ -45,9 +51,16 @@ class AnalisisFisicoController extends BaseController
         /** @var analisisFisico $objeto */
         foreach ($objetos as $objeto) {
             $item = [];
-            // $item['nombre'] = $objeto->getNombre();
-            // $item['alias'] = $objeto->getAlias();
-            // $item['activo'] = $objeto->activo();
+            $item['id'] = $objeto->getId();
+            $item['fecha'] = $objeto->getFecha();
+            $item['certificacion'] = $objeto->getCertificacion();
+            $item['exportable'] = $objeto->getExportable();
+            $item['bola'] = $objeto->getBola();
+            $item['segunda'] = $objeto->getSegunda();
+            $item['humedad'] = $objeto->getHumedad();
+            $item['descripcion'] = $objeto->getDescripcion();
+            $item['cascara'] = $objeto->getCascara();
+            $item['acopio'] = $objeto->getAcopio();
             $data[] = $item;
             unset($item);
         }

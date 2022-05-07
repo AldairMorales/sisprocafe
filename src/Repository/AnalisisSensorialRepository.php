@@ -60,11 +60,22 @@ class AnalisisSensorialRepository extends ServiceEntityRepository implements Bas
 
         return $queryBuilder;
     }
+
     public function AnalisisSensorial_Id(int $id): array
     {
         return $this->createQueryBuilder('analisisSensorial')
-            ->select(['analisisSensorial', 'config'])
-            ->join('analisisSensorial.config', 'config')
+            ->select([
+                'analisisSensorial.fragrancia',
+                'analisisSensorial.sabor',
+                'analisisSensorial.saborResidual',
+                'analisisSensorial.acidez',
+                'analisisSensorial.cuerpo',
+                'analisisSensorial.balance',
+                'analisisSensorial.puntajeCatador',
+                'analisisSensorial.uniformidad',
+                'analisisSensorial.tasaLimpia',
+                'analisisSensorial.dulzor'
+            ])
             ->where('analisisSensorial.id = :var')
             ->setParameter('var', $id)
             ->getQuery()

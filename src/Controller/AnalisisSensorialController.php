@@ -37,12 +37,12 @@ class AnalisisSensorialController extends BaseController
     {
         $this->denyAccess(Access::EXPORT, 'analisisSensorial_index');
         $headers = [
-            'nombre' => 'Nombre',
-            'tipoAnalisisSensorial' => 'Tipo AnalisisSensorial',
-            'direccion' => 'Direccion',
-            'empresa' => 'Empresa',
-            'direccion' => 'Direccion',
-            'activo' => 'Activo',
+            'id' => 'ID',
+            'periodo' => 'Periodo',
+            'certificacion' => 'Certificacion',
+            'puntaje' => 'Puntaje',
+            'descripcion' => 'Descripcion',
+            'acopio' => 'Ticket',
         ];
         $params = Paginator::params($request->query->all());
         $objetos = $manager->repositorio()->filter($params, false);
@@ -50,12 +50,12 @@ class AnalisisSensorialController extends BaseController
         /** @var analisisSensorial $objeto */
         foreach ($objetos as $objeto) {
             $item = [];
-            // $item['nombre'] = $objeto->getNombre();
-            // $item['tipoAnalisisSensorial'] = $objeto->getTipoAnalisisSensorial();
-            // $item['direccion'] = $objeto->getDireccion();
-            // $item['empresa'] = $objeto->getEmpresa();
-            // $item['direccion'] = $objeto->getDireccion();
-            // $item['activo'] = $objeto->activo();
+            $item['id'] = $objeto->getId();
+            $item['periodo'] = $objeto->getPeriodo();
+            $item['certificacion'] = $objeto->getCertificacion();
+            $item['puntaje'] = $objeto->getPuntaje();
+            $item['descripcion'] = $objeto->getDescripcion();
+            $item['acopio'] = $objeto->getAcopio();
             $data[] = $item;
             unset($item);
         }
@@ -169,12 +169,12 @@ class AnalisisSensorialController extends BaseController
 
         return $this->redirectToRoute('analisisSensorial_index');
     }
-    #[Route('/busqueda/id', name: 'analisisSensorial_busqueda_id')]
+    #[Route(path: '/id/busqueda', name: 'analisisSensorial_busqueda')]
 
-    public function busqueda_id(Request $request, AnalisisSensorialRepository $Repository): Response
+    public function id_busqueda(Request $request, AnalisisSensorialRepository $Repository): Response
     {
 
-        $id = $request->request->get('id');
+        $id = (int) $request->request->get('id');
         $result = $Repository->analisisSensorial_id($id);
         return $this->json($result);
     }

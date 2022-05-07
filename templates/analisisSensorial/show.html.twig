@@ -34,21 +34,19 @@
         {{ action.tbl_end() }}
     </div>
     <div class="col">
-        <canvas id="myChart" class="mh-400px"></canvas>
+        <canvas id="myChart" class="mh-420px"></canvas>
     </div>
 </div>
 {% endblock %}
 
 {% block _javascripts %}
-    <script src="{{ asset('js/notify.js') }}"></script>
     <script>
         
         let paths = window.location.pathname.split('/');
         let id = paths[paths.length-1];
-        var dataElement=[];
         $.ajax({
             type: 'POST',
-            url: '{{ path('analisisSensorial_busqueda_id') }}',
+            url: '{{ path('analisisSensorial_busqueda') }}',
             data: {
                 id: id,
             },
@@ -60,48 +58,62 @@
                     dataElement.push(result[0].acidez)
                     dataElement.push(result[0].cuerpo)
                     dataElement.push(result[0].balance)
-                    dataElement.push(result[0].uniformidad)                   
+                    dataElement.push(result[0].puntajeCatador)
+                    dataElement.push(result[0].uniformidad)
+                    dataElement.push(result[0].tasaLimpia)
+                    dataElement.push(result[0].dulzor)
                 } else {
-                    Notify.warning('No se encontro nombre para documento')
                 }
             }
         });
-        const ctx = document.getElementById('myChart').getContext('2d');
+        var dataElement=[];
+        var tabla=document.getElementsByTagName("td");
+        for (var i=5; i<15; i++){
+            dataElement.push(tabla[i].innerHTML);
+        }
         console.log(dataElement);
-
+        
+        const ctx = document.getElementById('myChart').getContext('2d');
         const data = {
-        labels: [
-            'Fragrancia',
-            'Sabor',
-            'SaborResidual',
-            'Acidez',
-            'Cuerpo',
-            'Balance',
-            'Uniformidad'
-        ],
-        datasets: [{
-            label: 'Conjunto de datos',
-            data: dataElement,//parseFloat(dataElement[0]), parseFloat(dataElement[1]), parseFloat(dataElement[2]), parseFloat(dataElement[3]),parseFloat(dataElement[4]),parseFloat(dataElement[5]), parseFloat(dataElement[6])],
-            fill: true,
-            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-            borderColor: 'rgb(255, 99, 132)',
-            pointBackgroundColor: 'rgb(255, 99, 132)',
-            pointBorderColor: '#fff',
-            pointHoverBackgroundColor: '#fff',
-            pointHoverBorderColor: 'rgb(255, 99, 132)'
-        }]
+            labels: [
+                'Fragrancia',
+                'Sabor',
+                'SaborResidual',
+                'Acidez',
+                'Cuerpo',
+                'Balance',
+                'puntajeCatador',
+                'Uniformidad',
+                'tasaLimpia',
+                'dulzor'
+            ],
+            datasets: [{
+                label: 'Conjunto de datos',
+                data: dataElement,
+                fill: true,
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgb(255, 99, 132)',
+                pointBackgroundColor: 'rgb(255, 99, 132)',
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: 'rgb(255, 99, 132)'
+            }]
         };
         // <block:config:0>
         const config = {
-        type: 'radar',
-        data: data,
-        options: {
-            elements: {
-                line: {
-                    borderWidth: 3
+            type: 'radar',
+            data: data,
+            options: {
+                scales: {
+                    r: {
+                        angleLines: {
+                            display: false
+                        },
+                        suggestedMin: 1,
+                        suggestedMax: 10
+                    }
                 }
-            }
-        },
+            },
         };
         const myChart = new Chart(ctx,config);
 
