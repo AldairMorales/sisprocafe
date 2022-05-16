@@ -47,6 +47,11 @@
                     {% if access.has('edit', acopio) %}
                         {{ action.btn_edit_link2_ico(path('acopio_edit', {'id': acopio.id})) }}
                     {% endif %}
+                    {% if acopio.analisisFisico  %}
+                        {% if access.has('edit',acopio) %}
+                            {{ action.btn_pago_link_ico(path('pagoAcopio_new', {'id': acopio.id})) }}
+                        {% endif %}
+                    {% endif %}
                 </td>
             </tr>
         {% else %}

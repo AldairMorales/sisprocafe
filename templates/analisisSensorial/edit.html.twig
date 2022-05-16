@@ -37,7 +37,6 @@
 
 {% block _javascripts %}
     <script src="{{ asset('js/select2.js') }}"></script>
-    <script src="{{ asset('js/collection.js') }} "></script>
     <script>
         jQuery(document).ready(function() {
             Select2();
@@ -80,11 +79,6 @@
                 var n6=$('#analisis_sensorial_puntajeCatador').val();
             }
 
-            if((n+n1+n2+n3+n4)!= ''){
-                $('#analisis_sensorial_puntaje').val(parseFloat(n)+parseFloat(n1)+parseFloat(n2)+parseFloat(n3)+parseFloat(n4));
-            }else{
-                $('#analisis_sensorial_puntaje').val(0);
-            }
             noUiSlider.create(slider,{
                 start: n,
                 connect: true,

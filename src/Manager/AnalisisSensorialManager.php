@@ -54,9 +54,6 @@ final class AnalisisSensorialManager extends BaseManager
         $sensorial_usuario->setCuerpo($sensorial->getCuerpo());
         $sensorial_usuario->setBalance($sensorial->getBalance());
         $sensorial_usuario->setPuntajeCatador($sensorial->getPuntajeCatador());
-        $sensorial_usuario->setUniformidad($sensorial->getUniformidad());
-        $sensorial_usuario->setTasaLimpia($sensorial->getTasaLimpia());
-        $sensorial_usuario->setDulzor($sensorial->getDulzor());
         $this->entityManager->persist($sensorial_usuario);
         $this->entityManager->flush($sensorial_usuario);
     }
@@ -65,8 +62,8 @@ final class AnalisisSensorialManager extends BaseManager
         if (null !== $PromedioSensorial) {
             $analisisSensorial->setPuntaje(sprintf("%.2f", $PromedioSensorial['fragrancia'] + $PromedioSensorial['sabor'] +
                 $PromedioSensorial['saborResidual'] + $PromedioSensorial['acidez'] + $PromedioSensorial['cuerpo'] +
-                $PromedioSensorial['balance'] + $PromedioSensorial['puntajeCatador'] + $PromedioSensorial['uniformidad'] +
-                $PromedioSensorial['tasaLimpia'] + $PromedioSensorial['dulzor']));
+                $PromedioSensorial['balance'] + $PromedioSensorial['puntajeCatador'] + $analisisSensorial->getUniformidad() +
+                $analisisSensorial->getTasaLimpia() + $analisisSensorial->getDulzor()));
             $analisisSensorial->setFragrancia($PromedioSensorial['fragrancia']);
             $analisisSensorial->setSabor($PromedioSensorial['sabor']);
             $analisisSensorial->setSaborResidual($PromedioSensorial['saborResidual']);
@@ -74,9 +71,6 @@ final class AnalisisSensorialManager extends BaseManager
             $analisisSensorial->setCuerpo($PromedioSensorial['cuerpo']);
             $analisisSensorial->setBalance($PromedioSensorial['balance']);
             $analisisSensorial->setPuntajeCatador($PromedioSensorial['puntajeCatador']);
-            $analisisSensorial->setUniformidad($PromedioSensorial['uniformidad']);
-            $analisisSensorial->setTasaLimpia($PromedioSensorial['tasaLimpia']);
-            $analisisSensorial->setDulzor($PromedioSensorial['dulzor']);
             $this->entityManager->persist($analisisSensorial);
         }
     }

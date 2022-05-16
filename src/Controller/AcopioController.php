@@ -3,14 +3,16 @@
 namespace Pidia\Apps\Demo\Controller;
 
 use Pidia\Apps\Demo\Entity\Acopio;
-use Pidia\Apps\Demo\Form\AcopioType;
-use Pidia\Apps\Demo\Manager\AcopioManager;
-use Pidia\Apps\Demo\Security\Access;
 use Pidia\Apps\Demo\Util\Paginator;
+use Pidia\Apps\Demo\Form\AcopioType;
+use Pidia\Apps\Demo\Security\Access;
+use Pidia\Apps\Demo\Manager\AcopioManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Pidia\Apps\Demo\Repository\AcopioRepository;
+use Pidia\Apps\Demo\Manager\AnalisisFisicoManager;
+use Pidia\Apps\Demo\Repository\AnalisisFisicoRepository;
 
 #[Route('/admin/acopio')]
 class AcopioController extends BaseController
@@ -92,6 +94,25 @@ class AcopioController extends BaseController
         return $this->render('acopio/show.html.twig', ['acopio' => $acopio]);
     }
 
+    #[Route(path: '/{id}/pago', name: 'acopio_pago', methods: ['GET'])]
+    public function pago(Request $request, Acopio $acopio, AnalisisFisicoRepository $Repository, AcopioManager $manager): Response
+    {
+        $this->denyAccess(Access::EDIT, 'acopio_index');
+        $analisisFisico = $Repository->buscarFisico($acopio->getId());
+        $formAcopio = $this->createForm(AcopioType::class, $acopio);
+
+        $formAcopio->handleRequest($request);
+        if ($formAcopio->isSubmitted() && $formAcopio->isValid()) {
+            if ($manager->save($acopio)) {
+                $this->addFlash('success', 'Registro actualizado!!!');
+            } else {
+                $this->addErrors($manager->errors());
+            }
+            return $this->redirectToRoute('acopio_index', ['id' => $acopio->getId()]);
+        }
+        return $this->render('acopio/pago.html.twig', ['analisisFisico' => $analisisFisico, 'acopio' =>  $acopio]);
+    }
+
     #[Route(path: '/{id}/edit', name: 'acopio_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Acopio $acopio, AcopioManager $manager): Response
     {
@@ -104,7 +125,6 @@ class AcopioController extends BaseController
             } else {
                 $this->addErrors($manager->errors());
             }
-
             return $this->redirectToRoute('acopio_index', ['id' => $acopio->getId()]);
         }
 

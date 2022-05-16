@@ -103,26 +103,26 @@
             action.frm_deploy_add_labels(
                 action.frm_add_section(
                     action.frm_column(
-                        action.frm_column_field_switch_custom(form.tasaLimpia),
+                        action.frm_column_field_add_Id(form.balance,'sensorial_balance', '', 'js-rangeslider',2),
                         null,
                         null,
                         null,
-                        2
+                        1
                     ),
                     action.frm_column(
-                        action.frm_column_field(form.uniformidad, '', 'js-rangeslider',5),
-                        null,
-                        null,
-                        null,
-                        2
-                    ),
+                        action.frm_column_field_switch_custom(form.tasaLimpia,'', '', 2),
+                        null, null, null, 1
                     
+                    ),
                     action.frm_column(
-                        action.frm_column_field(form.dulzor, '', 'js-rangeslider',5),
-                        null,
-                        null,
-                        null,
-                        2
+                        action.frm_column_field_switch_custom(form.uniformidad,'', '', 2),
+                        null, null, null, 1
+                    
+                    ),
+                    action.frm_column(
+                        action.frm_column_field_switch_custom(form.dulzor,'', '', 2),
+                        null, null, null, 1
+                    
                     ),
                     action.frm_add_section(
                         action.frm_column(

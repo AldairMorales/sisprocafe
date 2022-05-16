@@ -37,14 +37,6 @@ class SensorialUsuario
     #[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]
     private $puntajeCatador;
 
-    #[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]
-    private $uniformidad;
-
-    #[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]
-    private $tasaLimpia;
-
-    #[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]
-    private $dulzor;
 
     #[ORM\ManyToOne(targetEntity: Usuario::class)]
     #[ORM\JoinColumn(nullable: true)]
@@ -140,41 +132,6 @@ class SensorialUsuario
     public function setPuntajeCatador(?string $puntajeCatador): self
     {
         $this->puntajeCatador = $puntajeCatador;
-
-        return $this;
-    }
-
-    public function getUniformidad(): ?string
-    {
-        return $this->uniformidad;
-    }
-
-    public function setUniformidad(?string $uniformidad): self
-    {
-        $this->uniformidad = $uniformidad;
-
-        return $this;
-    }
-    public function getTasaLimpia(): ?string
-    {
-        return $this->tasaLimpia;
-    }
-
-    public function setTasaLimpia(?string $tasaLimpia): self
-    {
-        $this->tasaLimpia = $tasaLimpia;
-
-        return $this;
-    }
-
-    public function getDulzor(): ?string
-    {
-        return $this->dulzor;
-    }
-
-    public function setDulzor(?string $dulzor): self
-    {
-        $this->dulzor = $dulzor;
 
         return $this;
     }

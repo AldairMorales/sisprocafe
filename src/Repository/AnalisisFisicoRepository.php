@@ -7,12 +7,13 @@
 
 namespace Pidia\Apps\Demo\Repository;
 
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
+use Pidia\Apps\Demo\Entity\Acopio;
+use Pidia\Apps\Demo\Util\Paginator;
+use Pidia\Apps\Demo\Security\Security;
 use Doctrine\Persistence\ManagerRegistry;
 use Pidia\Apps\Demo\Entity\AnalisisFisico;
-use Pidia\Apps\Demo\Security\Security;
-use Pidia\Apps\Demo\Util\Paginator;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method AnalisisFisico|null find($id, $lockMode = null, $lockVersion = null)
@@ -59,5 +60,16 @@ class AnalisisFisicoRepository extends ServiceEntityRepository implements BaseRe
         //Paginator::queryTexts($queryBuilder, $params, ['analisisFisico.nombre']);
 
         return $queryBuilder;
+    }
+    /**
+     * @throws NonUniqueResultException
+     */
+    public function buscarFisico(int $idacopio): ?AnalisisFisico
+    {
+        $query = $this->createQueryBuilder('fisico')
+            ->where('fisico.acopio = :acopio')
+            ->setParameter('acopio', $idacopio)
+            ->setMaxResults(1);
+        return $query->getQuery()->getOneOrNullResult();
     }
 }

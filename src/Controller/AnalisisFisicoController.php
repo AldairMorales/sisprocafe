@@ -3,6 +3,9 @@
 namespace Pidia\Apps\Demo\Controller;
 
 use Pidia\Apps\Demo\Entity\AnalisisFisico;
+
+
+use Pidia\Apps\Demo\Form\AnalisisFisicoType;
 use Pidia\Apps\Demo\Manager\AnalisisFisicoManager;
 use Pidia\Apps\Demo\Security\Access;
 use Pidia\Apps\Demo\Util\Paginator;

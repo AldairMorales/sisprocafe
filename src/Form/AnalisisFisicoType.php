@@ -8,15 +8,17 @@
 namespace Pidia\Apps\Demo\Form;
 
 use Doctrine\ORM\EntityRepository;
-use Pidia\Apps\Demo\Entity\AnalisisFisico;
 use Pidia\Apps\Demo\Entity\Acopio;
+use Pidia\Apps\Demo\Form\Type\MeasureType;
 use Pidia\Apps\Demo\Security\Security;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Pidia\Apps\Demo\Entity\AnalisisFisico;
+
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 
 class AnalisisFisicoType extends AbstractType
@@ -65,29 +67,36 @@ class AnalisisFisicoType extends AbstractType
             ])
 
 
-            ->add('exportable')
-            ->add('exportable_', null, [
-                'mapped' => false,
+            ->add('exportable', null, [
                 'label' => 'Exportable % :',
             ])
-            ->add('bola')
+            ->add('exportable_', null, [
+                'label' => 'Exportable:',
+            ])
+            ->add('bola', null, [
+                'label' => 'Exportable % :',
+            ])
             ->add('bola_', null, [
-                'mapped' => false,
-                'label' => 'Bola % :',
+                'label' => 'Bola:',
             ])
-            ->add('segunda')
+            ->add('segunda', null, [
+                'label' => 'Exportable % :',
+            ])
             ->add('segunda_', null, [
-                'mapped' => false,
-                'label' => 'Segunda % :',
+                'label' => 'Segunda:',
             ])
-            ->add('cascara')
+            ->add('cascara', null, [
+                'label' => 'Exportable % :',
+            ])
             ->add('cascara_', null, [
-                'mapped' => false,
-                'label' => 'Cascara % :',
+                'label' => 'Cascara:',
             ])
-
             ->add('humedad')
-            ->add('descripcion');
+            ->add('descripcion')
+            ->add('tipo', MeasureType::class, [
+                'required' => false,
+                'mapped' => false,
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

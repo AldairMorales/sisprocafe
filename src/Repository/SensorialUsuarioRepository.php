@@ -83,10 +83,7 @@ class SensorialUsuarioRepository extends ServiceEntityRepository implements Base
                 'AVG(s_u.acidez) as acidez',
                 'AVG(s_u.cuerpo) as cuerpo',
                 'AVG(s_u.balance) as balance',
-                'AVG(s_u.puntajeCatador) as puntajeCatador',
-                'AVG(s_u.uniformidad) as uniformidad',
-                'AVG(s_u.tasaLimpia) as tasaLimpia',
-                'AVG(s_u.dulzor) as dulzor'
+                'AVG(s_u.puntajeCatador) as puntajeCatador'
             ])
             ->where('s_u.analisisSensorial = :sensorial')
             ->setParameter('sensorial', $analisisSensorial->getId())

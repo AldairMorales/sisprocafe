@@ -3,6 +3,9 @@ twig:
     globals:
         app_version: '1.0.0'
         default_results_per_page: '%default_results_per_page%'
+    form_themes:
+        - 'form/custom_types.html.twig'
+    
 
 when@test:
     twig:

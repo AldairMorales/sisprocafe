@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class AcopioType extends AbstractType
+class ModifiAcopioType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -25,10 +25,6 @@ class AcopioType extends AbstractType
                     'class' => Periodo::class,
                 ],
             )
-            ->add('fecha', DateType::class, [
-                'widget' => 'single_text',
-                'required' => false,
-            ])
             ->add(
                 'socio',
                 EntityType::class,
@@ -43,21 +39,9 @@ class AcopioType extends AbstractType
                     'class' => Certificacion::class,
                 ],
             )
-            ->add(
-                'almacen',
-                EntityType::class,
-                [
-                    'class' => Almacen::class,
-                ],
-            )
             ->add('tikect')
             ->add('pesoBruto')
-            ->add('cantidad')
-            ->add('taraPorSaco')
-            ->add('taraDeSacos')
-            ->add('pesoQuintales')
-            ->add('pesoNeto')
-            ->add('observaciones');
+            ->add('pesoQuintales');
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+{% import 'macro/breadcrumb.html.twig' as breadcrumb %}
+{% import 'macro/action.html.twig' as action %}
+{% import 'macro/pagination.html.twig' as pagination %}
+
+{% set _title = 'Acopio' %}
+{% set _main_title = 'Listado' %}
+{% set _section =  'pagoAcopio_index' %}
+
+{% block _breadcrumb %}
+    {{ breadcrumb.show(_title) }}
+{% endblock %}
+
+{% block _main %}
+    <div class="table-responsive">
+        {{ action.tbl_start() }}
+        {{ action.thead_start() }}
+        <tr>
+            {{ action.th('Fecha', true) }}
+            {{ action.th('Precio Base', true) }}
+            {{ action.th('Precio Final', true) }}
+            {{ action.th('estado', true) }}
+            {{ action.th('Activo', true, 'text-center') }}
+            <th></th>
+        </tr>
+        {{ action.thead_end() }}
+        {{ action.tbody_start() }}
+        {% for pagoAcopio in paginator.results %}
+            <tr>
+                <td>{{ pagoAcopio.fecha ? pagoAcopio.fecha|date('Y-m-d') : '' }}</td>
+                <td>{{ pagoAcopio.precioBase }}</td>
+                <td>{{ pagoAcopio.precioFinal }}</td>
+                <td>{{ pagoAcopio.estado}}</td>
+                <td class="text-center">{{ pagoAcopio.activo | yesnocustom | raw }}</td>
+                <td>
+                    {% if access.has('view') %}
+                        {{ action.btn_show_link2_ico(path('pagoAcopio_show', {'id': pagoAcopio.id})) }}
+                    {% endif %}
+                    {% if access.has('edit', pagoAcopio) %}
+                        {{ action.btn_edit_link2_ico(path('pagoAcopio_edit', {'id': pagoAcopio.id})) }}
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">No hay registros</td>
+            </tr>
+        {% endfor %}
+        {{ action.tbody_end() }}
+        {{ action.tbl_end() }}
+    </div>
+
+    {{ pagination.show(paginator, _section) }}
+{% endblock %}
+
+{% block _main_footer %}
+    {% include 'crud/_index_links.html.twig' with {'route_base': 'pagoAcopio'} %}
+{% endblock%}
+
+{% block _main_options %}
+    {% include 'crud/_index_filter.html.twig' %}
+{% endblock %}
+
+{% block _main_tools %}
+    {% include 'crud/_tools_ico.html.twig' %}
+{% endblock %}
+
+{% block _body_tools_ico %}
+    {% include 'crud/_index_links_tool.html.twig' with {'route_base': 'pagoAcopio'}  %}
+{% endblock %}
+
+{% block _body_tools %}
+    {% include 'crud/_index_links_ico.html.twig' with {'route_base': 'pagoAcopio'}  %}
+{% endblock %}
+
+{% block _stylesheets %}
+{% endblock %}
+
+{% block _javascripts %}
+{% endblock %}

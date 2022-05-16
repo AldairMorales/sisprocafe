@@ -1,0 +1,53 @@
+{% import 'macro/action.html.twig' as action %}
+{{ action.frm_start(form1) }}
+{{ action.frm_start(form) }}
+    <div class="row justify-content-around">
+        <div class="col-5">
+            <h1 class="text-primary bg-secondary.bg-gradient" >Acopio </h1>
+            <div class="v-line">
+                <hr>
+            </div> 
+            {{ action.frm_column(
+                action.frm_column_field_select(form1.periodo)
+            ) }}
+            {{ action.frm_column(
+                action.frm_column_field_select(form1.socio)
+            ) }}
+            {{ action.frm_column(
+                action.frm_column_field_select(form1.certificacion)
+            ) }}
+            {{ action.frm_column(
+                action.frm_column_field(form1.tikect,'','', 4,'disabled')
+            ) }}
+            {{ action.frm_column(
+                action.frm_column_field_add_select(form1.pesoBruto)
+            ) }}
+            {{ action.frm_column(
+                action.frm_column_field_add_select(form1.pesoQuintales)
+            ) }}
+        </div>
+        <div class="col-5">
+        One of two columns
+        </div>
+    </div>
+    {{ action.frm_column(
+        action.frm_column_field_date(form.fecha),null,null,null,2
+    ) }}
+
+    {{ action.frm_column(
+        action.frm_column_field_number(form.precioBase),
+        action.frm_column_field_number(form.precioFinal)
+    ) }}
+    {{ action.frm_column(
+        action.frm_column_field(form.descripcion),
+        action.frm_column_field_radio_inline(form.estado)
+    ) }}
+    {{ action.frm_column(
+        action.frm_column_btn(button_label|default('Finalizar')),
+        null,
+        null,
+        null,
+        2
+    ) }}
+{{ action.frm_end(form1) }}
+{{ action.frm_end(form) }}

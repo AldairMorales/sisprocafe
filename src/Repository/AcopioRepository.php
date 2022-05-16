@@ -4,10 +4,11 @@ namespace Pidia\Apps\Demo\Repository;
 
 use Doctrine\ORM\QueryBuilder;
 use Pidia\Apps\Demo\Entity\Acopio;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
-use Pidia\Apps\Demo\Security\Security;
 use Pidia\Apps\Demo\Util\Paginator;
+use Pidia\Apps\Demo\Security\Security;
+use Doctrine\Persistence\ManagerRegistry;
+use Pidia\Apps\Demo\Entity\AnalisisFisico;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Acopio|null find($id, $lockMode = null, $lockVersion = null)
@@ -64,5 +65,15 @@ class AcopioRepository extends ServiceEntityRepository
             ->getQuery()
             ->setMaxResults(1)
             ->getResult();
+    }
+    /**
+     * @throws NonUniqueResultException
+     */
+    public function buscarFisico(Acopio $acopio): ?AnalisisFisico
+    {
+        $query = $this->createQueryBuilder('fisico')
+            ->where('fisico.analisisFisico = :id')
+            ->setParameter('id', $acopio->getId());
+        return $query->getQuery()->getOneOrNullResult();
     }
 }

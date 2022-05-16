@@ -58,13 +58,13 @@ class AnalisisSensorial
     private $descripcion;
 
     #[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]
-    private $uniformidad;
+    private $uniformidad = 10;
 
     #[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]
-    private $tasaLimpia;
+    private $tasaLimpia = 10;
 
     #[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]
-    private $dulzor;
+    private $dulzor = 10;
 
     #[ORM\OneToOne(targetEntity: Acopio::class)]
     #[ORM\JoinColumn(nullable: false)]

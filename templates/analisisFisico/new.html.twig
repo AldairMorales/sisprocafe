@@ -40,26 +40,27 @@
             Select2();
             //let $acopio = $('#analisis_fisico_acopio_acopio');
             let muestraQuantity = $('#analisis_fisico_muestra');
-            let exportableQuantity = $('#analisis_fisico_exportable');
-            let segundaQuantity = $('#analisis_fisico_segunda');
-            let bolaQuantity = $('#analisis_fisico_bola');
-            let cascaraQuantity = $('#analisis_fisico_cascara');
+            let exportablePorcentaje = $('#analisis_fisico_exportable');
+            let segundaPorcentaje = $('#analisis_fisico_segunda');
+            let bolaPorcentaje = $('#analisis_fisico_bola');
+            let cascaraPorcentaje = $('#analisis_fisico_cascara');
 
             // temporales
-            let exportablePorcentaje = $('#analisis_fisico_exportable_');
-            let segundaPorcentaje = $('#analisis_fisico_segunda_');
-            let bolaPorcentaje = $('#analisis_fisico_bola_');
-            let cascaraPorcentaje = $('#analisis_fisico_cascara_');
+            let exportableQuantity = $('#analisis_fisico_exportable_');
+            let segundaQuantity = $('#analisis_fisico_segunda_');
+            let bolaQuantity = $('#analisis_fisico_bola_');
+            let cascaraQuantity = $('#analisis_fisico_cascara_');
+
+            
 
             function calculaCascara()
             {
-                exportablePorcentaje = $('#analisis_fisico_exportable_');
-                segundaPorcentaje = $('#analisis_fisico_segunda_');
-                bolaPorcentaje = $('#analisis_fisico_bola_');
-                cascaraPorcentaje = $('#analisis_fisico_cascara_');
+                exportablePorcentaje = $('#analisis_fisico_exportable');
+                segundaPorcentaje = $('#analisis_fisico_segunda');
+                bolaPorcentaje = $('#analisis_fisico_bola');
+                cascaraPorcentaje = $('#analisis_fisico_cascara');
                 let n=Number(exportableQuantity.val())+Number(segundaQuantity.val())+Number(bolaQuantity.val());
                 if(n < muestraQuantity.val()){
-                    
                     cascara = muestraQuantity.val() - exportableQuantity.val() - segundaQuantity.val() - bolaQuantity.val();
                     cascaraQuantity.val(cascara);
                 }else{
@@ -71,16 +72,16 @@
             function calculaPorcentaje()
             {
                 let result = exportableQuantity.val() * 100 / muestraQuantity.val();
-                exportablePorcentaje.val(result.toFixed(2)+'%')
+                exportablePorcentaje.val(result.toFixed(2))
 
                 result = segundaQuantity.val()*100  / muestraQuantity.val();
-                segundaPorcentaje.val(result.toFixed(2)+'%')
+                segundaPorcentaje.val(result.toFixed(2))
 
                 result = bolaQuantity.val()*100/ muestraQuantity.val();
-                bolaPorcentaje.val(result.toFixed(2)+'%')
+                bolaPorcentaje.val(result.toFixed(2))
 
                 result = cascaraQuantity.val()*100/ muestraQuantity.val();
-                cascaraPorcentaje.val(result.toFixed(2)+'%')
+                cascaraPorcentaje.val(result.toFixed(2))
             }
             $(document).on('change', '#analisis_fisico_muestra', function () {
                     let $this = $(this);
@@ -90,7 +91,7 @@
                 });
                 $('#analisis_fisico_muestra').trigger('change');
 
-                $(document).on('keyup', '#analisis_fisico_exportable, #analisis_fisico_segunda, #analisis_fisico_bola', function () {
+                $(document).on('keyup', '#analisis_fisico_exportable_, #analisis_fisico_segunda_, #analisis_fisico_bola_', function () {
                     calculaCascara();
                     calculaPorcentaje();
                 });

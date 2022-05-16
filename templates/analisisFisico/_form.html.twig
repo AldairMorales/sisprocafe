@@ -15,24 +15,28 @@
     )}}
     
     {{ action.frm_column(
-        action.frm_column_field_add_select(form.exportable),
-        action.frm_column_field(form.exportable_)
+        action.frm_column_field_add_select(form.exportable_),
+        action.frm_column_field(form.exportable)
     )}}
     {{ action.frm_column(
-        action.frm_column_field_add_select(form.bola),
-        action.frm_column_field(form.bola_)
+        action.frm_column_field_add_select(form.bola_),
+        action.frm_column_field(form.bola)
     ) }}
     {{ action.frm_column(
-        action.frm_column_field_add_select(form.segunda),
-        action.frm_column_field(form.segunda_)
+        action.frm_column_field_add_select(form.segunda_),
+        action.frm_column_field(form.segunda)
     ) }}
     {{ action.frm_column(
-        action.frm_column_field_add_select(form.cascara),
-        action.frm_column_field(form.cascara_)
+        action.frm_column_field_add_select(form.cascara_),
+        action.frm_column_field(form.cascara)
     ) }}
     {{ action.frm_column(
         action.frm_column_field_number(form.humedad),
         action.frm_column_field(form.descripcion)
+    ) }}
+    {{ action.frm_column(
+        action.frm_column_field(form.tipo)
+        ,null, null,null,2
     ) }}
     
     {{ action.frm_column(

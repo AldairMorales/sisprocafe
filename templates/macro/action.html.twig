@@ -87,6 +87,11 @@
     {{ actions.btn_link_ico(link,'fa fa-print','primary', attributes, 'lbl.print') }}
 {% endmacro %}
 
+{% macro btn_pago_link_ico(link, attributes='') %}
+    {% import _self as actions %}
+    {{ actions.btn_link_ico(link,'fa bi bi-check2-square fs-2x','succes', attributes, 'lbl.print') }}
+{% endmacro %}
+
 {% macro btn_export_link_ico(link, attributes='') %}
     {% import _self as actions %}
     {{ actions.btn_link_ico(link,'fa fa-download','dark btn-export', attributes, 'lbl.export') }}
@@ -732,12 +737,16 @@
 {% endmacro %}
 {#  #}
 
-{% macro frm_column_field(value, class='', class_widget='', col=4) %}
+{% macro frm_column_field(value, class='', class_widget='', col=4,disabled='') %}
     {% import _self as actions %}
     <div class="form-group row mb-1 p-1 {{ class }} {{ actions.frm_errors_class(value) }}">
         {{ actions.frm_label(value,'col-sm-' ~ col ~ ' col-4') }}
         <div class="col-sm-{{ 12-col }} col-8">
-            {{ form_widget(value, {attr: {class: 'form-control ' ~ class_widget ~ actions.frm_errors_class(value)} }) }}
+            {% if disabled != '' %}
+                {{ form_widget(value, {attr: {class: 'form-control' ~ class_widget ~ actions.frm_errors_class(value), 'disabled':disabled } }) }}
+            {% else %}
+                {{ form_widget(value, {attr: {class: 'form-control' ~ class_widget ~ actions.frm_errors_class(value) } }) }}
+            {% endif %}
             {{ actions.frm_help(value) }}
             {{ actions.frm_errors(value) }}
         </div>
@@ -1027,7 +1036,7 @@
                         {% for i in 1..value.vars.data/2 %}
                             <label class="form-check form-switch form-check-custom form-check-solid float-start">
                                 <input type="checkbox" class="form-check-input" checked>
-                                <span class="form-check-label fw-bold text-muted"></span> Taza {{ i }}
+                                <span class="form-check-label fw-bold text-muted"></span> Taza  {{ i }}
                             </label>
                             {% set contador = i %}
                         {% endfor %}
@@ -1036,7 +1045,7 @@
                             {% for j in 1..limit %}
                                 <label class="form-check form-switch form-check-custom form-check-solid float-start">
                                     <input type="checkbox" class="form-check-input">
-                                    <span class="form-check-label fw-bold text-muted"></span> Taza {{ contador + j }}
+                                    <span class="form-check-label fw-bold text-muted"></span> Taza     {{ contador + j}}
                                 </label>
                             {% endfor %}
                         {% endif %}
