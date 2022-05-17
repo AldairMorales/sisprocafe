@@ -1,11 +1,10 @@
 {% block measure_widget %}
         <div class="row">
             <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1">@</span>
+                <span class="input-group-text" id="basic-addon1"><i class="fa fa-balance-scale mb-3"></i></span>
                 {{ form_widget(form.valor, {attr: {class: 'form-control'}}) }}
                 {{ form_widget(form.unidad, {attr: {class: 'form-select'}}) }}
             </div>
             
         </div>
-        {{ form_widget(form.error)}}
 {% endblock %}

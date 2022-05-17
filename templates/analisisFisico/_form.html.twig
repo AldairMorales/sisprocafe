@@ -7,7 +7,7 @@
     ) }}
     {{ action.frm_column(
         action.frm_column_field_select(form.acopio),
-        action.frm_column_field_add_select(form.muestra)
+        action.frm_column_field_select(form.muestra)
         
     ) }}
     {{ action.frm_column(
@@ -15,28 +15,24 @@
     )}}
     
     {{ action.frm_column(
-        action.frm_column_field_add_select(form.exportable_),
-        action.frm_column_field(form.exportable)
+        action.frm_column_field(form.exportable),
+        action.frm_column_field(form.exportableP)
     )}}
     {{ action.frm_column(
-        action.frm_column_field_add_select(form.bola_),
-        action.frm_column_field(form.bola)
+        action.frm_column_field(form.bola),
+        action.frm_column_field(form.bolaP)
     ) }}
     {{ action.frm_column(
-        action.frm_column_field_add_select(form.segunda_),
-        action.frm_column_field(form.segunda)
+        action.frm_column_field(form.segunda),
+        action.frm_column_field(form.segundaP)
     ) }}
     {{ action.frm_column(
-        action.frm_column_field_add_select(form.cascara_),
-        action.frm_column_field(form.cascara)
+        action.frm_column_field(form.cascara),
+        action.frm_column_field(form.cascaraP)
     ) }}
     {{ action.frm_column(
         action.frm_column_field_number(form.humedad),
         action.frm_column_field(form.descripcion)
-    ) }}
-    {{ action.frm_column(
-        action.frm_column_field(form.tipo)
-        ,null, null,null,2
     ) }}
     
     {{ action.frm_column(

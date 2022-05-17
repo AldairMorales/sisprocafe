@@ -5,21 +5,24 @@ declare(strict_types=1);
 namespace Pidia\Apps\Demo\Entity\Type;
 
 use Doctrine\DBAL\Types\Type;
-use Doctrine\DBAL\platforms\AbstractPlatform;
+use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Pidia\Apps\Demo\Entity\ValueObject\Measure;
 
 final class MeasureDoctrineType extends Type
 {
     public const NAME = 'measure';
+
     public function getSQLDeclaration(array $column, AbstractPlatform $platform)
     {
         return $platform->getVarcharTypeDeclarationSQL($column);
     }
-    public function getName()
+    public function getName(): string
     {
         return self::NAME;
     }
+
     /** @param Measure $value */
+
     public function convertToDatabaseValue($value, AbstractPlatform $platform)
     {
         if (null === $value) {

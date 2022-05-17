@@ -42,25 +42,21 @@
             Select2();
             //let $acopio = $('#analisis_fisico_acopio_acopio');
             let muestraQuantity = $('#analisis_fisico_muestra');
-            let exportablePorcentaje = $('#analisis_fisico_exportable');
-            let segundaPorcentaje = $('#analisis_fisico_segunda');
-            let bolaPorcentaje = $('#analisis_fisico_bola');
-            let cascaraPorcentaje = $('#analisis_fisico_cascara');
-
+            let exportableQuantity = $('#analisis_fisico_exportable_valor');
+            let segundaQuantity = $('#analisis_fisico_segunda_valor');
+            let bolaQuantity = $('#analisis_fisico_bola_valor');
+            let cascaraQuantity = $('#analisis_fisico_cascara_valor');
             // temporales
-            let exportableQuantity = $('#analisis_fisico_exportable_');
-            let segundaQuantity = $('#analisis_fisico_segunda_');
-            let bolaQuantity = $('#analisis_fisico_bola_');
-            let cascaraQuantity = $('#analisis_fisico_cascara_');
-
-            
-
+            let exportablePorcentaje = $('#analisis_fisico_exportableP');
+            let segundaPorcentaje = $('#analisis_fisico_segundaP');
+            let bolaPorcentaje = $('#analisis_fisico_bolaP');
+            let cascaraPorcentaje = $('#analisis_fisico_cascaraP');
             function calculaCascara()
             {
-                exportablePorcentaje = $('#analisis_fisico_exportable');
-                segundaPorcentaje = $('#analisis_fisico_segunda');
-                bolaPorcentaje = $('#analisis_fisico_bola');
-                cascaraPorcentaje = $('#analisis_fisico_cascara');
+                exportablePorcentaje = $('#analisis_fisico_exportableP');
+                segundaPorcentaje = $('#analisis_fisico_segundaP');
+                bolaPorcentaje = $('#analisis_fisico_bolaP');
+                cascaraPorcentaje = $('#analisis_fisico_cascaraP');
                 let n=Number(exportableQuantity.val())+Number(segundaQuantity.val())+Number(bolaQuantity.val());
                 if(n < muestraQuantity.val()){
                     cascara = muestraQuantity.val() - exportableQuantity.val() - segundaQuantity.val() - bolaQuantity.val();
@@ -93,7 +89,7 @@
                 });
                 $('#analisis_fisico_muestra').trigger('change');
 
-                $(document).on('keyup', '#analisis_fisico_exportable_, #analisis_fisico_segunda_, #analisis_fisico_bola_', function () {
+                $(document).on('keyup', '#analisis_fisico_exportable_valor, #analisis_fisico_segunda_valor, #analisis_fisico_bola_valor', function () {
                     calculaCascara();
                     calculaPorcentaje();
                 });

@@ -4,7 +4,6 @@ namespace Pidia\Apps\Demo\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Pidia\Apps\Demo\Entity\Traits\EntityTrait;
-use Pidia\Apps\Demo\Entity\ValueObject\Measure;
 use Pidia\Apps\Demo\Repository\AnalisisFisicoRepository;
 
 #[ORM\Entity(repositoryClass: AnalisisFisicoRepository::class)]
@@ -27,17 +26,6 @@ class AnalisisFisico
     #[ORM\Column(type: 'integer')]
     private $muestra;
 
-    #[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]
-    private $exportable;
-
-    #[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]
-    private $bola;
-
-    #[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]
-    private $segunda;
-
-    #[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]
-    private $cascara;
 
     #[ORM\Column(type: 'integer', nullable: true)]
     private $humedad = 12;
@@ -49,19 +37,32 @@ class AnalisisFisico
     #[ORM\JoinColumn(nullable: false)]
     private $acopio;
 
-    #[ORM\Column(type: 'integer', nullable: true)]
-    private $exportable_;
+    #[ORM\Column(type: 'measure', nullable: true)]
+    private $exportable;
 
-    #[ORM\Column(type: 'integer', nullable: true)]
-    private $bola_;
+    #[ORM\Column(type: 'measure', nullable: true)]
+    private $segunda;
 
-    #[ORM\Column(type: 'integer', nullable: true)]
-    private $segunda_;
+    #[ORM\Column(type: 'measure', nullable: true)]
+    private $bola;
 
-    #[ORM\Column(type: 'integer', nullable: true)]
-    private $cascara_;
+    #[ORM\Column(type: 'measure', nullable: true)]
+    private $cascara;
 
-    private ?Measure $tipo = null;
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]
+    private $exportableP;
+
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]
+    private $segundaP;
+
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]
+    private $bolaP;
+
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]
+    private $cascaraP;
+
+
+
 
     public function __construct()
     {
@@ -109,42 +110,6 @@ class AnalisisFisico
         return $this;
     }
 
-    public function getExportable(): ?string
-    {
-        return $this->exportable;
-    }
-
-    public function setExportable(?string $exportable): self
-    {
-        $this->exportable = $exportable;
-
-        return $this;
-    }
-
-    public function getBola(): ?string
-    {
-        return $this->bola;
-    }
-
-    public function setBola(?string $bola): self
-    {
-        $this->bola = $bola;
-
-        return $this;
-    }
-
-    public function getSegunda(): ?string
-    {
-        return $this->segunda;
-    }
-
-    public function setSegunda(?string $segunda): self
-    {
-        $this->segunda = $segunda;
-
-        return $this;
-    }
-
     public function getHumedad(): ?int
     {
         return $this->humedad;
@@ -169,18 +134,6 @@ class AnalisisFisico
         return $this;
     }
 
-    public function getCascara(): ?string
-    {
-        return $this->cascara;
-    }
-
-    public function setCascara(?string $cascara): self
-    {
-        $this->cascara = $cascara;
-
-        return $this;
-    }
-
     public function getAcopio(): ?Acopio
     {
         return $this->acopio;
@@ -193,14 +146,98 @@ class AnalisisFisico
         return $this;
     }
 
-    public function getTipo(): ?Measure
+    public function getExportable()
     {
-        return $this->tipo;
+        return $this->exportable;
     }
 
-    public function setTipo(?Measure $tipo): self
+    public function setExportable($exportable): self
     {
-        $this->tipo = $tipo;
+        $this->exportable = $exportable;
+
+        return $this;
+    }
+
+    public function getSegunda()
+    {
+        return $this->segunda;
+    }
+
+    public function setSegunda($segunda): self
+    {
+        $this->segunda = $segunda;
+
+        return $this;
+    }
+
+    public function getBola()
+    {
+        return $this->bola;
+    }
+
+    public function setBola($bola): self
+    {
+        $this->bola = $bola;
+
+        return $this;
+    }
+
+    public function getCascara()
+    {
+        return $this->cascara;
+    }
+
+    public function setCascara($cascara): self
+    {
+        $this->cascara = $cascara;
+
+        return $this;
+    }
+
+    public function getExportableP(): ?string
+    {
+        return $this->exportableP;
+    }
+
+    public function setExportableP(?string $exportableP): self
+    {
+        $this->exportableP = $exportableP;
+
+        return $this;
+    }
+
+    public function getSegundaP(): ?string
+    {
+        return $this->segundaP;
+    }
+
+    public function setSegundaP(?string $segundaP): self
+    {
+        $this->segundaP = $segundaP;
+
+        return $this;
+    }
+
+    public function getBolaP(): ?string
+    {
+        return $this->bolaP;
+    }
+
+    public function setBolaP(?string $bolaP): self
+    {
+        $this->bolaP = $bolaP;
+
+        return $this;
+    }
+
+    public function getCascaraP(): ?string
+    {
+        return $this->cascaraP;
+    }
+
+    public function setCascaraP(?string $cascaraP): self
+    {
+        $this->cascaraP = $cascaraP;
 
         return $this;
     }
