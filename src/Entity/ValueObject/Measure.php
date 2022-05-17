@@ -5,6 +5,8 @@ declare(strict_types=1);
 
 namespace Pidia\Apps\Demo\Entity\ValueObject;
 
+
+
 final class Measure
 {
     public function __construct(private  float  $valor, private  string $unidad)
