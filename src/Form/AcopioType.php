@@ -2,16 +2,17 @@
 
 namespace Pidia\Apps\Demo\Form;
 
+use Pidia\Apps\Demo\Entity\Socio;
 use Pidia\Apps\Demo\Entity\Acopio;
 use Pidia\Apps\Demo\Entity\Almacen;
-use Pidia\Apps\Demo\Entity\Certificacion;
 use Pidia\Apps\Demo\Entity\Periodo;
-use Pidia\Apps\Demo\Entity\Socio;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Pidia\Apps\Demo\Entity\Certificacion;
+use Pidia\Apps\Demo\Form\Type\MeasureType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class AcopioType extends AbstractType
 {
@@ -51,12 +52,24 @@ class AcopioType extends AbstractType
                 ],
             )
             ->add('tikect')
-            ->add('pesoBruto')
-            ->add('cantidad')
+            ->add('pesoBruto', MeasureType::class, [
+                'required' => false,
+            ])
+            ->add('cantidad', MeasureType::class, [
+                'category' => 'envase',
+                'required' => false,
+            ])
             ->add('taraPorSaco')
-            ->add('taraDeSacos')
-            ->add('pesoQuintales')
-            ->add('pesoNeto')
+            ->add('taraDeSacos', MeasureType::class, [
+                'required' => false,
+
+            ])
+            ->add('pesoQuintales', MeasureType::class, [
+                'required' => false,
+            ])
+            ->add('pesoNeto', MeasureType::class, [
+                'required' => false,
+            ])
             ->add('observaciones');
     }
 

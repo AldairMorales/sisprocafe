@@ -41,23 +41,8 @@ class Acopio
     #[ORM\Column(type: 'string', length: 9)]
     private $tikect;
 
-    #[ORM\Column(type: 'integer')]
-    private $pesoBruto;
-
-    #[ORM\Column(type: 'integer')]
-    private $cantidad;
-
     #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
-    private $taraPorSaco;
-
-    #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
-    private $taraDeSacos;
-
-    #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
-    private $pesoQuintales;
-
-    #[ORM\Column(type: 'decimal', precision: 10, scale: '0')]
-    private $pesoNeto;
+    private $taraPorSaco = 0.25;
 
     #[ORM\Column(type: 'text', nullable: true)]
     private $observaciones;
@@ -67,6 +52,21 @@ class Acopio
 
     #[ORM\Column(type: 'boolean')]
     private $analisis_Sensorial = false;
+
+    #[ORM\Column(type: 'measure', nullable: true)]
+    private $pesoBruto;
+
+    #[ORM\Column(type: 'measure', nullable: true)]
+    private $cantidad;
+
+    #[ORM\Column(type: 'measure', nullable: true)]
+    private $taraDeSacos;
+
+    #[ORM\Column(type: 'measure', nullable: true)]
+    private $pesoQuintales;
+
+    #[ORM\Column(type: 'measure', nullable: true)]
+    private $pesoNeto;
 
     public function __construct()
     {
@@ -150,30 +150,6 @@ class Acopio
         return $this;
     }
 
-    public function getPesoBruto(): ?int
-    {
-        return $this->pesoBruto;
-    }
-
-    public function setPesoBruto(int $pesoBruto): self
-    {
-        $this->pesoBruto = $pesoBruto;
-
-        return $this;
-    }
-
-    public function getCantidad(): ?int
-    {
-        return $this->cantidad;
-    }
-
-    public function setCantidad(int $cantidad): self
-    {
-        $this->cantidad = $cantidad;
-
-        return $this;
-    }
-
     public function getTaraPorSaco(): ?string
     {
         return $this->taraPorSaco;
@@ -182,42 +158,6 @@ class Acopio
     public function setTaraPorSaco(string $taraPorSaco): self
     {
         $this->taraPorSaco = $taraPorSaco;
-
-        return $this;
-    }
-
-    public function getTaraDeSacos(): ?string
-    {
-        return $this->taraDeSacos;
-    }
-
-    public function setTaraDeSacos(string $taraDeSacos): self
-    {
-        $this->taraDeSacos = $taraDeSacos;
-
-        return $this;
-    }
-
-    public function getPesoQuintales(): ?string
-    {
-        return $this->pesoQuintales;
-    }
-
-    public function setPesoQuintales(string $pesoQuintales): self
-    {
-        $this->pesoQuintales = $pesoQuintales;
-
-        return $this;
-    }
-
-    public function getPesoNeto(): ?string
-    {
-        return $this->pesoNeto;
-    }
-
-    public function setPesoNeto(string $pesoNeto): self
-    {
-        $this->pesoNeto = $pesoNeto;
 
         return $this;
     }
@@ -259,6 +199,66 @@ class Acopio
     public function setAnalisisSensorial(bool $analisis_Sensorial): self
     {
         $this->analisis_Sensorial = $analisis_Sensorial;
+
+        return $this;
+    }
+
+    public function getPesoBruto()
+    {
+        return $this->pesoBruto;
+    }
+
+    public function setPesoBruto($pesoBruto): self
+    {
+        $this->pesoBruto = $pesoBruto;
+
+        return $this;
+    }
+
+    public function getCantidad()
+    {
+        return $this->cantidad;
+    }
+
+    public function setCantidad($cantidad): self
+    {
+        $this->cantidad = $cantidad;
+
+        return $this;
+    }
+
+    public function getTaraDeSacos()
+    {
+        return $this->taraDeSacos;
+    }
+
+    public function setTaraDeSacos($taraDeSacos): self
+    {
+        $this->taraDeSacos = $taraDeSacos;
+
+        return $this;
+    }
+
+    public function getPesoQuintales()
+    {
+        return $this->pesoQuintales;
+    }
+
+    public function setPesoQuintales($pesoQuintales): self
+    {
+        $this->pesoQuintales = $pesoQuintales;
+
+        return $this;
+    }
+
+    public function getPesoNeto()
+    {
+        return $this->pesoNeto;
+    }
+
+    public function setPesoNeto($pesoNeto): self
+    {
+        $this->pesoNeto = $pesoNeto;
 
         return $this;
     }

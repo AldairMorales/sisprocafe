@@ -20,4 +20,8 @@ final class Measure
     {
         return $this->unidad;
     }
+    public function __ToString(): string
+    {
+        return $this->valor . '';
+    }
 }

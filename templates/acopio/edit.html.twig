@@ -39,7 +39,62 @@
     <script src="{{ asset('js/select2.js') }}"></script>
     <script>
         jQuery(document).ready(function() {
+
             Select2();
+            let $tikect = $('#acopio_tikect')
+            let $pesoBruto = $('#acopio_pesoBruto_valor')
+            let $cantidadTara = $('#acopio_cantidad_valor')
+            let $taraPorSaco = $('#acopio_taraPorSaco')
+            let $taraDeSacos = $('#acopio_taraDeSacos_valor')
+            let $pesoQuintal = $('#acopio_pesoQuintales_valor')
+            let $pesoNeto = $('#acopio_pesoNeto_valor')
+            let $merma =0.0;
+            function calculaTara()
+            {
+                if ($taraPorSaco.val()) {
+                    let tara = parseFloat($cantidadTara.val()) * parseFloat($taraPorSaco.val());
+                    $taraDeSacos.val(tara.toFixed(2));
+                }
+            }
+
+            function calculaPesoNeto()
+            {
+                if ($pesoBruto.val() && $taraDeSacos.val()) {
+                    //let merma = $merma.val() ? parseFloat($merma.val()) : 0.00;
+                    let neto = parseFloat($pesoBruto.val()) - parseFloat($taraDeSacos.val()) - $merma;
+                    neto = neto.toFixed(2);
+                    $pesoNeto.val(neto);
+                    let quintales = neto/55.2;
+                    $pesoQuintal.val(Math.floor(quintales *100)/100);
+                }
+            }
+            let e = Swal.mixin( {
+                buttonsStyling: !1,
+                target: "#page-container",
+                customClass: {
+                    confirmButton: "btn btn-success m-1",
+                    cancelButton: "btn btn-danger m-1",
+                    input: "form-control"
+                }
+            });
+            function validarPeso()
+            {
+                if(!($pesoBruto.val() && $cantidadTara.val()!=0)) {
+                    return;
+                }
+
+                if(($pesoBruto.val() > $cantidadTara.val() * 80)) {
+                    e.fire("Peso bruto excesivo", "El peso no cumple lo estimado de 80 kilos por saco", "error");
+                }
+            }
+
+            $(document).on('keyup', '#acopio_pesoBruto_valor, #acopio_cantidad_valor', function () {
+                calculaTara();
+                calculaPesoNeto();
+                validarPeso();
+            });
+
+
         });
     </script>
 {% endblock %}

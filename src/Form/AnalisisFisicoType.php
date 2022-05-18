@@ -10,7 +10,6 @@ namespace Pidia\Apps\Demo\Form;
 use Doctrine\ORM\EntityRepository;
 use Pidia\Apps\Demo\Entity\Acopio;
 use Pidia\Apps\Demo\Security\Security;
-use Pidia\Apps\Demo\Entity\UnidadMedida;
 use Symfony\Component\Form\AbstractType;
 use Pidia\Apps\Demo\Entity\AnalisisFisico;
 

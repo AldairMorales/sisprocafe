@@ -40,16 +40,13 @@
 
             Select2();
             let $tikect = $('#acopio_tikect')
-            let $pesoBruto = $('#acopio_pesoBruto')
-            let $cantidadTara = $('#acopio_cantidad')
+            let $pesoBruto = $('#acopio_pesoBruto_valor')
+            let $cantidadTara = $('#acopio_cantidad_valor')
             let $taraPorSaco = $('#acopio_taraPorSaco')
-            let $taraDeSacos = $('#acopio_taraDeSacos')
-            let $pesoQuintal = $('#acopio_pesoQuintales')
-            let $pesoNeto = $('#acopio_pesoNeto')
+            let $taraDeSacos = $('#acopio_taraDeSacos_valor')
+            let $pesoQuintal = $('#acopio_pesoQuintales_valor')
+            let $pesoNeto = $('#acopio_pesoNeto_valor')
             let $merma =0.0;
-            $taraPorSaco.prop('readOnly', true);
-            $tikect.prop('readOnly',true);
-            $taraPorSaco.val(0.25);
             if(!isNaN($cantidadTara.val())){
                 $cantidadTara.val(0);
             }
@@ -108,16 +105,16 @@
             });
             function validarPeso()
             {
-                if(!($pesoBruto.val() && $cantidadTara.val())) {
+                if(!($pesoBruto.val() && $cantidadTara.val()!=0)) {
                     return;
                 }
 
-                if(!($pesoBruto.val() > $cantidadTara.val()) * 80) {
+                if(($pesoBruto.val() > $cantidadTara.val() * 80)) {
                     e.fire("Peso bruto excesivo", "El peso no cumple lo estimado de 80 kilos por saco", "error");
                 }
             }
 
-            $(document).on('keyup', '#acopio_pesoBruto, #acopio_cantidad', function () {
+            $(document).on('keyup', '#acopio_pesoBruto_valor, #acopio_cantidad_valor', function () {
                 calculaTara();
                 calculaPesoNeto();
                 validarPeso();

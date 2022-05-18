@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Pidia\Apps\Demo\Entity\Type;
 
-use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Types\StringType;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Pidia\Apps\Demo\Entity\ValueObject\Measure;
 
-final class MeasureDoctrineType extends Type
+final class MeasureDoctrineType extends StringType
 {
     public const NAME = 'measure';
 
