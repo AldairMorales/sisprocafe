@@ -2,9 +2,9 @@
 {% import 'macro/breadcrumb.html.twig' as breadcrumb %}
 {% import 'macro/action.html.twig' as action %}
 
-{% set _title = 'Acopio' %}
+{% set _title = 'Pago Acopio' %}
 {% set _main_title = 'Editar' %}
-{% set _section =  'acopio_index'%}
+{% set _section =  'pagoAcopio_index'%}
 
 {% block _breadcrumb %}
     {{ breadcrumb.show2(_title, _section, 'Editar') }}
@@ -12,7 +12,7 @@
 
 {% block _main %}
 
-    {{ include('acopio/_form.html.twig', {'button_label': 'Actualizar'}) }}
+    {{ include('pagoAcopio/_form.html.twig', {'button_label': 'Actualizar'}) }}
 
 {% endblock %}
 
@@ -20,16 +20,14 @@
     {% include 'crud/_tools_ico.html.twig' %}
 {% endblock %}
 
-{% block _body_tools %}
-    {% include 'crud/_edit_links_ico.html.twig' with {'route_base':'acopio','entity': acopio} %}
-{% endblock %}
+
 
 {% block _body_tools_ico %}
-    {% include 'crud/_edit_links_tool.html.twig' with {'route_base':'acopio','entity': acopio} %}
+    {% include 'crud/_edit_links_tool.html.twig' with {'route_base':'pagoAcopio','entity': pagoAcopio} %}
 {% endblock %}
 
 {% block _main_footer %}
-    {% include 'crud/_edit_links.html.twig' with {'route_base':'acopio','entity': acopio} %}
+    {% include 'crud/new_edit_links.html.twig' with {'route_base':'pagoAcopio','entity': pagoAcopio} %}
 {% endblock %}
 
 {% block _stylesheets %}

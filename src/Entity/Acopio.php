@@ -68,6 +68,10 @@ class Acopio
     #[ORM\Column(type: 'measure', nullable: true)]
     private $pesoNeto;
 
+    #[ORM\ManyToOne(targetEntity: Parametro::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private $estado;
+
     public function __construct()
     {
         $this->fecha = new \DateTime();
@@ -259,6 +263,18 @@ class Acopio
     public function setPesoNeto($pesoNeto): self
     {
         $this->pesoNeto = $pesoNeto;
+
+        return $this;
+    }
+
+    public function getEstado(): ?Parametro
+    {
+        return $this->estado;
+    }
+
+    public function setEstado(?Parametro $estado): self
+    {
+        $this->estado = $estado;
 
         return $this;
     }

@@ -406,7 +406,7 @@
     {% import _self as actions %}
     <div class="form-group  row {{ class }}">
         {{ actions.frm_label(value) }}
-        <div class="{{ _class_horizontal_widget }}">
+        <div class="">
                 <span class="m-bootstrap-switch m-bootstrap-switch--pill">
                     {{ form_widget(value, {attr: {'class': '' ~ class_widget, 'data-switch': 'true', 'data-on-color':'success', 'data-on-text':'SI', 'data-off-text': 'NO' } }) }}
                 </span>

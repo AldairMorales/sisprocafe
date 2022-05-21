@@ -4,19 +4,22 @@ namespace Pidia\Apps\Demo\Controller;
 
 use Pidia\Apps\Demo\Entity\Acopio;
 use Pidia\Apps\Demo\Util\Paginator;
-use Pidia\Apps\Demo\Form\AcopioType;
 use Pidia\Apps\Demo\Security\Access;
 use Pidia\Apps\Demo\Entity\PagoAcopio;
+use Pidia\Apps\Demo\Entity\PrecioAcopio;
 use Pidia\Apps\Demo\Form\PagoAcopioType;
-use Pidia\Apps\Demo\Entity\AnalisisFisico;
 use Pidia\Apps\Demo\Form\ModifiAcopioType;
+use Pidia\Apps\Demo\Manager\AcopioManager;
 use Symfony\Component\HttpFoundation\Request;
 use Pidia\Apps\Demo\Manager\PagoAcopioManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Pidia\Apps\Demo\Manager\AnalisisFisicoManager;
+use Pidia\Apps\Demo\Manager\PrecioAcopioManager;
+use Pidia\Apps\Demo\Repository\RendimientoRepository;
+use Pidia\Apps\Demo\Repository\AnalisisFisicoRepository;
+use Pidia\Apps\Demo\Repository\CertificacionValorRepository;
 
-#[Route('/admin/pago/acopio')]
+#[Route('/admin/pago')]
 class PagoAcopioController extends BaseController
 {
     #[Route(path: '/', name: 'pagoAcopio_index', defaults: ['page' => '1'], methods: ['GET'])]
@@ -57,19 +60,37 @@ class PagoAcopioController extends BaseController
         return $manager->export($data, $headers, 'Reporte', 'pagoAcopio');
     }
 
-    #[Route(path: '/new', name: 'pagoAcopio_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ?Acopio $acopio, PagoAcopioManager $manager, AnalisisFisicoManager $FisicoManager): Response
-    {
+    #[Route(path: '/new/acopio{id}', name: 'pagoAcopio_new', methods: ['GET', 'POST'])]
+    public function new(
+        Request $request,
+        Acopio $acopio,
+        AcopioManager $acopioManager,
+        PagoAcopioManager $manager,
+        AnalisisFisicoRepository $fisicoRepository,
+        PrecioAcopioManager $precioAcopioManager,
+        RendimientoRepository $rendimientoRepository,
+        CertificacionValorRepository $certificacionValorRepository
+    ): Response {
         $this->denyAccess(Access::EDIT, 'acopio_index');
         $this->denyAccess(Access::NEW, 'pagoAcopio_index');
         $pagoAcopio = new pagoAcopio();
-        //$acopio = $manager->repositorio()->filter(['id' => 5]);
-        $entityManager = $manager->manager();
-        $acopio = $entityManager->getRepository(Acopio::class)->find(4);
+        $analisisFisico = $fisicoRepository->findOneBy(['acopio' => $acopio->getId()]);
+        $precioAcopio = $precioAcopioManager->manager()->getRepository(PrecioAcopio::class)->find(1);
+        $rendimiento = $rendimientoRepository->findOneBy(['valor' => round($analisisFisico->getExportableP())]);
+        $certificacionValor = $certificacionValorRepository->findOneBy(['certificacion' => $analisisFisico->getCertificacion()]);
+        $precioFinal = $precioAcopio->getPrecioBase()  + $rendimiento->getValor() + $certificacionValor->getValor();
+        $pagoFinal = $precioFinal * $acopio->getPesoQuintales()->valor();
+        $pagoAcopio->setPrecioBase($precioAcopio->getPrecioBase());
+        $pagoAcopio->setPrecioFinal($precioFinal);
+        $pagoAcopio->setPagoAcopio($pagoFinal);
+        $pagoAcopio->setAcopio($acopio);
         $form = $this->createForm(PagoAcopioType::class, $pagoAcopio);
         $form1 = $this->createForm(ModifiAcopioType::class, $acopio);
-        $analisisFisico = $FisicoManager->manager()->getRepository(AnalisisFisico::class)->find($acopio->getId());
+
+        /*logica para precio final*/
+
         $form1->handleRequest($request);
+
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $pagoAcopio->setAcopio($acopio);
@@ -104,7 +125,9 @@ class PagoAcopioController extends BaseController
     {
         $this->denyAccess(Access::EDIT, 'pagoAcopio_index');
         $form = $this->createForm(PagoAcopioType::class, $pagoAcopio);
+        $form1 = $this->createForm(ModifiAcopioType::class, $pagoAcopio->getAcopio());
         $form->handleRequest($request);
+        $form1->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             if ($manager->save($pagoAcopio)) {
                 $this->addFlash('success', 'Registro actualizado!!!');
@@ -120,6 +143,7 @@ class PagoAcopioController extends BaseController
             [
                 'pagoAcopio' => $pagoAcopio,
                 'form' => $form->createView(),
+                'form1' => $form1->createView(),
             ]
         );
     }

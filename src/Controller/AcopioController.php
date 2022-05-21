@@ -6,7 +6,9 @@ use Pidia\Apps\Demo\Entity\Acopio;
 use Pidia\Apps\Demo\Util\Paginator;
 use Pidia\Apps\Demo\Form\AcopioType;
 use Pidia\Apps\Demo\Security\Access;
+use Pidia\Apps\Demo\Entity\Parametro;
 use Pidia\Apps\Demo\Manager\AcopioManager;
+use Pidia\Apps\Demo\Manager\ParametroManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -59,13 +61,15 @@ class AcopioController extends BaseController
     }
 
     #[Route(path: '/new', name: 'acopio_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, AcopioManager $manager): Response
+    public function new(Request $request, AcopioManager $manager, ParametroManager $Parametermanager): Response
     {
         $this->denyAccess(Access::NEW, 'acopio_index');
         $acopio = new Acopio();
+        $parametro = $Parametermanager->manager()->getRepository(Parametro::class)->findOneBy(['alias' => 'PROCESO']);
         $form = $this->createForm(AcopioType::class, $acopio);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $acopio->setEstado($parametro);
             $acopio->setPropietario($this->getUser());
             if ($manager->save($acopio)) {
                 $this->addFlash('success', 'Registro creado!!!');

@@ -29,12 +29,16 @@ class PagoAcopio
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
     private $descripcion;
 
-    #[ORM\Column(type: 'boolean', nullable: true)]
-    private $estado;
-
     #[ORM\OneToOne(targetEntity: Acopio::class, cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: true)]
     private $acopio;
+
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]
+    private $pagoAcopio;
+
+    #[ORM\ManyToOne(targetEntity: Parametro::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private $estadoPago;
 
     public function __construct()
     {
@@ -94,18 +98,6 @@ class PagoAcopio
         return $this;
     }
 
-    public function getEstado(): ?bool
-    {
-        return $this->estado;
-    }
-
-    public function setEstado(?bool $estado): self
-    {
-        $this->estado = $estado;
-
-        return $this;
-    }
-
     public function getAcopio(): ?Acopio
     {
         return $this->acopio;
@@ -114,6 +106,30 @@ class PagoAcopio
     public function setAcopio(?Acopio $acopio): self
     {
         $this->acopio = $acopio;
+
+        return $this;
+    }
+
+    public function getPagoAcopio(): ?string
+    {
+        return $this->pagoAcopio;
+    }
+
+    public function setPagoAcopio(?string $pagoAcopio): self
+    {
+        $this->pagoAcopio = $pagoAcopio;
+
+        return $this;
+    }
+
+    public function getEstadoPago(): ?Parametro
+    {
+        return $this->estadoPago;
+    }
+
+    public function setEstadoPago(?Parametro $estadoPago): self
+    {
+        $this->estadoPago = $estadoPago;
 
         return $this;
     }

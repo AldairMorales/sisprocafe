@@ -20,7 +20,7 @@
             {{ action.th('Ticket', true) }}
             {{ action.th('Socio', true) }}
             {{ action.th('Certificacion', true) }}
-            {{ action.th('Almacen', true) }}
+            {{ action.th('Estado', true,'text-center') }}
             {{ action.th('Peso Neto', true) }}
             {{ action.th('A-Fisico', true) }}
             {{ action.th('A-Sensorial', true) }}
@@ -35,7 +35,15 @@
                 <td>{{ acopio.tikect }}</td>
                 <td>{{ acopio.socio}}</td>
                 <td>{{ acopio.certificacion}}</td>
-                <td>{{ acopio.almacen }}</td>
+                <td class="text-center"> 
+                    {% if acopio.estado.alias == 'PROCESO' %}
+                        <span class="badge bg-warning text-dark">{{acopio.estado}}</span>
+                    {% elseif acopio.estado.alias == 'ACEPTADO' %}
+                        <span class="badge bg-success">{{acopio.estado}}</span>
+                    {% elseif acopio.estado.alias == 'ANULADO' %}
+                        <span class="badge bg-danger">{{acopio.estado}}</span>
+                    {% endif %} 
+                </td>
                 <td>{{ acopio.pesoNeto}}</td>
                 <td class="text-center">{{ acopio.analisisFisico | yesnocustom | raw }}</td>
                 <td class="text-center">{{ acopio.analisisSensorial | yesnocustom | raw }}</td>

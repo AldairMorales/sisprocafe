@@ -3,7 +3,7 @@
 {% import 'macro/action.html.twig' as action %}
 {% import 'macro/pagination.html.twig' as pagination %}
 
-{% set _title = 'Acopio' %}
+{% set _title = 'Pago Acopio' %}
 {% set _main_title = 'Listado' %}
 {% set _section =  'pagoAcopio_index' %}
 
@@ -17,9 +17,11 @@
         {{ action.thead_start() }}
         <tr>
             {{ action.th('Fecha', true) }}
+            {{ action.th('Ticket', true) }}
             {{ action.th('Precio Base', true) }}
             {{ action.th('Precio Final', true) }}
-            {{ action.th('estado', true) }}
+            {{ action.th('Pago Acopio', true) }}
+            {{ action.th('Estado', true, 'text-center') }}
             {{ action.th('Activo', true, 'text-center') }}
             <th></th>
         </tr>
@@ -28,9 +30,17 @@
         {% for pagoAcopio in paginator.results %}
             <tr>
                 <td>{{ pagoAcopio.fecha ? pagoAcopio.fecha|date('Y-m-d') : '' }}</td>
+                <td>{{ pagoAcopio.acopio }}</td>
                 <td>{{ pagoAcopio.precioBase }}</td>
                 <td>{{ pagoAcopio.precioFinal }}</td>
-                <td>{{ pagoAcopio.estado}}</td>
+                <td>{{ pagoAcopio.pagoAcopio }}</td>
+                <td class="text-center"> 
+                    {% if pagoAcopio.estadoPago.alias == 'ACEPTADO' %}
+                        <span class="badge bg-success">{{pagoAcopio.estadoPago}}</span>
+                    {% elseif pagoAcopio.estadoPago.alias == 'ANULADO' %}
+                        <span class="badge bg-danger">{{pagoAcopio.estadoPago}}</span>
+                    {% endif %} 
+                </td>
                 <td class="text-center">{{ pagoAcopio.activo | yesnocustom | raw }}</td>
                 <td>
                     {% if access.has('view') %}
@@ -53,9 +63,6 @@
     {{ pagination.show(paginator, _section) }}
 {% endblock %}
 
-{% block _main_footer %}
-    {% include 'crud/_index_links.html.twig' with {'route_base': 'pagoAcopio'} %}
-{% endblock%}
 
 {% block _main_options %}
     {% include 'crud/_index_filter.html.twig' %}
@@ -69,9 +76,7 @@
     {% include 'crud/_index_links_tool.html.twig' with {'route_base': 'pagoAcopio'}  %}
 {% endblock %}
 
-{% block _body_tools %}
-    {% include 'crud/_index_links_ico.html.twig' with {'route_base': 'pagoAcopio'}  %}
-{% endblock %}
+
 
 {% block _stylesheets %}
 {% endblock %}

@@ -32,13 +32,6 @@ class ModifiAcopioType extends AbstractType
                     'class' => Socio::class,
                 ],
             )
-            ->add(
-                'certificacion',
-                EntityType::class,
-                [
-                    'class' => Certificacion::class,
-                ],
-            )
             ->add('tikect')
             ->add('pesoBruto')
             ->add('pesoQuintales');
