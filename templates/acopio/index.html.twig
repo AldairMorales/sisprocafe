@@ -56,8 +56,10 @@
                         {{ action.btn_edit_link2_ico(path('acopio_edit', {'id': acopio.id})) }}
                     {% endif %}
                     {% if acopio.analisisFisico  %}
-                        {% if access.has('edit',acopio) %}
-                            {{ action.btn_pago_link_ico(path('pagoAcopio_new', {'id': acopio.id})) }}
+                        {% if acopio.estado.alias == 'PROCESO' %}
+                            {% if access.has('edit',acopio) %}
+                                {{ action.btn_pago_link_ico(path('pagoAcopio_new', {'id': acopio.id})) }}
+                            {% endif %}
                         {% endif %}
                     {% endif %}
                 </td>
@@ -76,7 +78,7 @@
 
 {% block _main_footer %}
     {% include 'crud/_index_links.html.twig' with {'route_base': 'acopio'} %}
-{% endblock%}
+{% endblock %}
 
 {% block _main_options %}
     {% include 'crud/_index_filter.html.twig' %}
@@ -92,6 +94,7 @@
 
 {% block _body_tools %}
     {% include 'crud/_index_links_ico.html.twig' with {'route_base': 'acopio'}  %}
+    
 {% endblock %}
 
 {% block _stylesheets %}

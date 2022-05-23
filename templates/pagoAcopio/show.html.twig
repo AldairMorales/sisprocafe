@@ -4,7 +4,7 @@
 
 {% set _title = 'Acopio' %}
 {% set _main_title = 'Mostrar' %}
-{% set _section =  'acopio_index'%}
+{% set _section =  'pagoAcopio_index'%}
 
 {% block _breadcrumb %}
     {{ breadcrumb.show2(_title, _section, 'Mostrar') }}
@@ -12,28 +12,25 @@
 
 {% block _main %}
     {{ action.tbl_start() }}
-    {{ action.tbl_tr('Fecha',acopio.fecha) }}
-    {{ action.tbl_tr('Ticket',acopio.tikect) }}
-    {{ action.tbl_tr('Socio',acopio.socio) }}
-    {{ action.tbl_tr('Certificacion',acopio.certificacion) }}
-    {{ action.tbl_tr('Almacen',acopio.almacen) }}
-    {% include 'crud/_show_info.html.twig' with {'entity': acopio} %}
+    {{ action.tbl_tr('Fecha',pagoAcopio.fecha) }}
+    {{ action.tbl_tr('Ticket',pagoAcopio.acopio) }}
+    {{ action.tbl_tr('Precio Base',pagoAcopio.precioBase) }}
+    {{ action.tbl_tr('Precio Final',pagoAcopio.precioFinal) }}
+    {{ action.tbl_tr('Descripcion',pagoAcopio.descripcion) }}
+    {% include 'crud/_show_info.html.twig' with {'entity': pagoAcopio} %}
     {{ action.tbl_end() }}
 
 {% endblock %}
 
 {% block _main_footer %}
-    {% include 'crud/_show_links.html.twig' with {'route_base':'acopio','entity': acopio} %}
+    {% include 'crud/new_show_links.html.twig' with {'route_base':'pagoAcopio','entity': pagoAcopio} %}
 {% endblock %}
 
 {% block _main_tools %}
     {% include 'crud/_tools_ico.html.twig' %}
 {% endblock %}
 
-{% block _body_tools %}
-    {% include 'crud/_show_links_ico.html.twig' with {'route_base':'acopio','entity': acopio} %}
-{% endblock %}
 
 {% block _body_tools_ico %}
-    {% include 'crud/_show_links_tool.html.twig' with {'route_base':'acopio','entity': acopio} %}
+    {% include 'crud/_show_links_tool.html.twig' with {'route_base':'pagoAcopio','entity': pagoAcopio} %}
 {% endblock %}

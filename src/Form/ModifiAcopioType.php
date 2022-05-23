@@ -33,7 +33,7 @@ class ModifiAcopioType extends AbstractType
                 ],
             )
             ->add('tikect')
-            ->add('pesoBruto')
+            ->add('pesoNeto')
             ->add('pesoQuintales');
     }
 

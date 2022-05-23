@@ -109,7 +109,7 @@
 
 {% macro btn_delete_form(link, token) %}
     <form method="post" action="{{ link }}" onsubmit="return confirm('Seguro de eliminar este registro?');"
-          style="display: inline">
+        style="display: inline">
         <input type="hidden" name="_method" value="DELETE">
         <input type="hidden" name="_token" value="{{ token }}">
         <button class="js-swal-confirm btn btn-sm btn-light-danger">

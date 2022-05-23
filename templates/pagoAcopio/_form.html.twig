@@ -16,13 +16,10 @@
                 action.frm_column_field(form1.tikect)
             ) }}
             {{ action.frm_column(
-                action.frm_column_field(form1.pesoBruto)
+                action.frm_column_field(form1.pesoNeto)
             ) }}
             {{ action.frm_column(
                 action.frm_column_field(form1.pesoQuintales)
-            ) }}
-            {{ action.frm_column(
-                action.frm_column_btn(button_label|default('Actualizar Acopio'))
             ) }}
             {{ action.frm_end(form1) }}
         </div>
@@ -31,6 +28,20 @@
             <div class="v-line">
                 <hr>
             </div> 
+            {{ action.frm_start(form2) }}
+            {{ action.frm_column(
+                action.frm_column_field_select(form2.certificacion)
+            ) }}
+            {{ action.frm_column(
+                action.frm_column_field_select(form2.acopio)
+            ) }}
+            {{ action.frm_column(
+                action.frm_column_field(form2.muestra)
+            ) }}
+            {{ action.frm_column(
+                action.frm_column_field(form2.exportableP)
+            ) }}
+            {{ action.frm_end(form2) }}
         </div>
     </div>
     <br />
