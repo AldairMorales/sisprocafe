@@ -49,7 +49,7 @@ class SocioType extends AbstractType
             ])
             ->add('conyugueNombre')
             ->add('conyugueDocumento')
-            ->add('foto', FileType::class)
+//            ->add('foto', FileType::class)
             ->add('ruc')
             ->add('estadoRuc', ChoiceType::class, [
                 'choices' => [

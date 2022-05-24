@@ -3,17 +3,17 @@
 namespace Pidia\Apps\Demo\Controller;
 
 use Pidia\Apps\Demo\Entity\Acopio;
-use Pidia\Apps\Demo\Util\Paginator;
-use Pidia\Apps\Demo\Form\AcopioType;
-use Pidia\Apps\Demo\Security\Access;
 use Pidia\Apps\Demo\Entity\Parametro;
+use Pidia\Apps\Demo\Form\AcopioType;
 use Pidia\Apps\Demo\Manager\AcopioManager;
 use Pidia\Apps\Demo\Manager\ParametroManager;
+use Pidia\Apps\Demo\Repository\AcopioRepository;
+use Pidia\Apps\Demo\Repository\AnalisisFisicoRepository;
+use Pidia\Apps\Demo\Security\Access;
+use Pidia\Apps\Demo\Util\Paginator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Pidia\Apps\Demo\Repository\AcopioRepository;
-use Pidia\Apps\Demo\Repository\AnalisisFisicoRepository;
 
 #[Route('/admin/acopio')]
 class AcopioController extends BaseController
@@ -89,7 +89,7 @@ class AcopioController extends BaseController
         );
     }
 
-    #[Route(path: '/{id}', name: 'acopio_show', methods: ['GET'])]
+    #[Route(path: '/{id<\d+>}', name: 'acopio_show', methods: ['GET'])]
     public function show(Acopio $acopio): Response
     {
         $this->denyAccess(Access::VIEW, 'acopio_index');
@@ -106,7 +106,7 @@ class AcopioController extends BaseController
         return $this->render('acopio/report.html.twig', ['acopio' => $acopio]);
     }
 
-    #[Route(path: '/{id}/pago', name: 'acopio_pago', methods: ['GET'])]
+    #[Route(path: '/{id<\d+>}/pago', name: 'acopio_pago', methods: ['GET'])]
     public function pago(Request $request, Acopio $acopio, AnalisisFisicoRepository $Repository, AcopioManager $manager): Response
     {
         $this->denyAccess(Access::EDIT, 'acopio_index');
@@ -120,12 +120,14 @@ class AcopioController extends BaseController
             } else {
                 $this->addErrors($manager->errors());
             }
+
             return $this->redirectToRoute('acopio_index', ['id' => $acopio->getId()]);
         }
-        return $this->render('acopio/pago.html.twig', ['analisisFisico' => $analisisFisico, 'acopio' =>  $acopio]);
+
+        return $this->render('acopio/pago.html.twig', ['analisisFisico' => $analisisFisico, 'acopio' => $acopio]);
     }
 
-    #[Route(path: '/{id}/edit', name: 'acopio_edit', methods: ['GET', 'POST'])]
+    #[Route(path: '/{id<\d+>}/edit', name: 'acopio_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Acopio $acopio, AcopioManager $manager): Response
     {
         $this->denyAccess(Access::EDIT, 'acopio_index');
@@ -137,6 +139,7 @@ class AcopioController extends BaseController
             } else {
                 $this->addErrors($manager->errors());
             }
+
             return $this->redirectToRoute('acopio_index', ['id' => $acopio->getId()]);
         }
 
@@ -149,11 +152,11 @@ class AcopioController extends BaseController
         );
     }
 
-    #[Route(path: '/{id}', name: 'acopio_delete', methods: ['POST'])]
+    #[Route(path: '/{id<\d+>}', name: 'acopio_delete', methods: ['POST'])]
     public function delete(Request $request, Acopio $acopio, AcopioManager $manager): Response
     {
         $this->denyAccess(Access::DELETE, 'acopio_index');
-        if ($this->isCsrfTokenValid('delete' . $acopio->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$acopio->getId(), $request->request->get('_token'))) {
             $acopio->changeActivo();
             if ($manager->save($acopio)) {
                 $this->addFlash('success', 'Estado ha sido actualizado');
@@ -165,11 +168,11 @@ class AcopioController extends BaseController
         return $this->redirectToRoute('acopio_index');
     }
 
-    #[Route(path: '/{id}/delete', name: 'acopio_delete_forever', methods: ['POST'])]
+    #[Route(path: '/{id<\d+>}/delete', name: 'acopio_delete_forever', methods: ['POST'])]
     public function deleteForever(Request $request, Acopio $acopio, AcopioManager $manager): Response
     {
         $this->denyAccess(Access::MASTER, 'acopio_index', $acopio);
-        if ($this->isCsrfTokenValid('delete_forever' . $acopio->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete_forever'.$acopio->getId(), $request->request->get('_token'))) {
             if ($manager->remove($acopio)) {
                 $this->addFlash('warning', 'Registro eliminado');
             } else {
@@ -181,10 +184,10 @@ class AcopioController extends BaseController
     }
 
     #[Route('/busqueda/id/', name: 'acopio_busqueda_id')]
-
     public function busqueda_id(AcopioRepository $Repository): Response
     {
         $result = $Repository->Acopio_Id();
+
         return $this->json($result);
     }
 }

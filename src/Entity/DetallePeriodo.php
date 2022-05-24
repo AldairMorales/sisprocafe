@@ -44,8 +44,8 @@ class DetallePeriodo
     #[ORM\Column(type: 'string', length: 8)]
     private $moneda;
 
-    #[ORM\OneToMany(mappedBy: 'detallePeriodo', targetEntity: Certificacion::class)]
-    private $certificaciones;
+//    #[ORM\OneToMany(mappedBy: 'detallePeriodo', targetEntity: Certificacion::class)]
+//    private $certificaciones;
 
     #[ORM\ManyToOne(targetEntity: Periodo::class, inversedBy: 'detalles')]
     #[ORM\JoinColumn(nullable: false)]
@@ -53,7 +53,7 @@ class DetallePeriodo
 
     public function __construct()
     {
-        $this->certificaciones = new ArrayCollection();
+//        $this->certificaciones = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -157,35 +157,35 @@ class DetallePeriodo
         return $this;
     }
 
-    /**
-     * @return Collection|Certificacion[]
-     */
-    public function getCertificaciones(): Collection
-    {
-        return $this->certificaciones;
-    }
+//    /**
+//     * @return Collection|Certificacion[]
+//     */
+//    public function getCertificaciones(): Collection
+//    {
+//        return $this->certificaciones;
+//    }
 
-    public function addCertificacione(Certificacion $certificacione): self
-    {
-        if (!$this->certificaciones->contains($certificacione)) {
-            $this->certificaciones[] = $certificacione;
-            $certificacione->setDetallePeriodo($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCertificacione(Certificacion $certificacione): self
-    {
-        if ($this->certificaciones->removeElement($certificacione)) {
-            // set the owning side to null (unless already changed)
-            if ($certificacione->getDetallePeriodo() === $this) {
-                $certificacione->setDetallePeriodo(null);
-            }
-        }
-
-        return $this;
-    }
+//    public function addCertificacione(Certificacion $certificacione): self
+//    {
+//        if (!$this->certificaciones->contains($certificacione)) {
+//            $this->certificaciones[] = $certificacione;
+//            $certificacione->setDetallePeriodo($this);
+//        }
+//
+//        return $this;
+//    }
+//
+//    public function removeCertificacione(Certificacion $certificacione): self
+//    {
+//        if ($this->certificaciones->removeElement($certificacione)) {
+//            // set the owning side to null (unless already changed)
+//            if ($certificacione->getDetallePeriodo() === $this) {
+//                $certificacione->setDetallePeriodo(null);
+//            }
+//        }
+//
+//        return $this;
+//    }
 
     public function getPeriodo(): ?Periodo
     {

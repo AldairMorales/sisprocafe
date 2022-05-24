@@ -2,10 +2,12 @@
 
 namespace Pidia\Apps\Demo\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Pidia\Apps\Demo\Entity\Traits\EntityTrait;
 use Pidia\Apps\Demo\Repository\SocioRepository;
-use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 #[ORM\Entity(repositoryClass: SocioRepository::class)]
 #[HasLifecycleCallbacks]
@@ -20,6 +22,14 @@ class Socio
     #[ORM\Column(type: 'date')]
     private $fechaIngreso;
 
+    /**
+     * @Assert\Length(
+     *      min = 10,
+     *      max = 16,
+     *      minMessage = "Your first name must be at least {{ limit }} characters long",
+     *      maxMessage = "Your first name cannot be longer than {{ limit }} characters"
+     * )
+     */
     #[ORM\Column(type: 'string', length: 16)]
     private $codigo;
 
@@ -32,6 +42,9 @@ class Socio
     #[ORM\Column(type: 'string', length: 30)]
     private $apellidoMaterno;
 
+//    /**
+//     * @Assert\Regex("/^[0-9]+$/")
+//     */
     #[ORM\Column(type: 'string', length: 15)]
     private $numeroDocumento;
 
@@ -281,5 +294,23 @@ class Socio
         $this->tipoDocumento = $tipoDocumento;
 
         return $this;
+    }
+
+    /**
+     * @Assert\Callback
+     */
+    public function validate(ExecutionContextInterface $context, $payload)
+    {
+        if ('DNI' === $this->getTipoDocumento() && 8 !== strlen($this->getNumeroDocumento())) {
+            $context->buildViolation('Numero de dni erroneo')
+                ->atPath('numeroDocumento')
+                ->addViolation();
+        }
+
+        if ('RUC' === $this->getTipoDocumento() && 11 !== strlen($this->getNumeroDocumento())) {
+            $context->buildViolation('Numero de ruc erroneo')
+                ->atPath('numeroDocumento')
+                ->addViolation();
+        }
     }
 }
