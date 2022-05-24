@@ -97,6 +97,15 @@ class AcopioController extends BaseController
         return $this->render('acopio/show.html.twig', ['acopio' => $acopio]);
     }
 
+    #[Route(path: '/report', name: 'acopio_report', methods: ['GET'])]
+    public function report(?Acopio $acopio): Response
+    {
+        $this->denyAccess(Access::LIST, 'acopio_index');
+        $acopio = null;
+
+        return $this->render('acopio/report.html.twig', ['acopio' => $acopio]);
+    }
+
     #[Route(path: '/{id}/pago', name: 'acopio_pago', methods: ['GET'])]
     public function pago(Request $request, Acopio $acopio, AnalisisFisicoRepository $Repository, AcopioManager $manager): Response
     {
