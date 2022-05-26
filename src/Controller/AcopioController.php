@@ -3,17 +3,18 @@
 namespace Pidia\Apps\Demo\Controller;
 
 use Pidia\Apps\Demo\Entity\Acopio;
-use Pidia\Apps\Demo\Entity\Parametro;
+use Pidia\Apps\Demo\Util\Paginator;
 use Pidia\Apps\Demo\Form\AcopioType;
+use Pidia\Apps\Demo\Security\Access;
+use Pidia\Apps\Demo\Entity\Parametro;
 use Pidia\Apps\Demo\Manager\AcopioManager;
 use Pidia\Apps\Demo\Manager\ParametroManager;
-use Pidia\Apps\Demo\Repository\AcopioRepository;
-use Pidia\Apps\Demo\Repository\AnalisisFisicoRepository;
-use Pidia\Apps\Demo\Security\Access;
-use Pidia\Apps\Demo\Util\Paginator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Pidia\Apps\Demo\Repository\AcopioRepository;
+use Pidia\Apps\Demo\Repository\EmpresaRepository;
+use Pidia\Apps\Demo\Repository\AnalisisFisicoRepository;
 
 #[Route('/admin/acopio')]
 class AcopioController extends BaseController
@@ -97,13 +98,41 @@ class AcopioController extends BaseController
         return $this->render('acopio/show.html.twig', ['acopio' => $acopio]);
     }
 
-    #[Route(path: '/report', name: 'acopio_report', methods: ['GET'])]
-    public function report(?Acopio $acopio): Response
+    #[Route(path: '/report/dia', name: 'acopio_report_dia', methods: ['GET'])]
+    public function report_dia(AcopioRepository $acopioRepository, EmpresaRepository $empresaRepository): Response
     {
         $this->denyAccess(Access::LIST, 'acopio_index');
-        $acopio = null;
+        $Object = new \DateTime();
+        $fecha_actual = $Object->format("Y-m-d");
+        $diaAnterior = date("Y-m-d", strtotime($fecha_actual . "- 1 days"));
+        $acopios = $acopioRepository->reportePorCliente($diaAnterior);
+        $empresa = $empresaRepository->find(1);
+        return $this->render('acopio/report.html.twig', ['acopios' => $acopios, 'empresa' => $empresa]);
+    }
 
-        return $this->render('acopio/report.html.twig', ['acopio' => $acopio]);
+    #[Route(path: '/report/semana', name: 'acopio_report_semana', methods: ['GET'])]
+    public function report_semana(AcopioRepository $acopioRepository, EmpresaRepository $empresaRepository): Response
+    {
+        $this->denyAccess(Access::LIST, 'acopio_index');
+        $Object = new \DateTime();
+        $fecha_actual = $Object->format("Y-m-d");
+
+        $semanaAnterior = date("Y-m-d", strtotime($fecha_actual . "- 1 week"));
+        $acopios = $acopioRepository->reportePorCliente($semanaAnterior);
+        $empresa = $empresaRepository->find(1);
+        return $this->render('acopio/report.html.twig', ['acopios' => $acopios, 'empresa' => $empresa]);
+    }
+
+    #[Route(path: '/report/mes', name: 'acopio_report_mes', methods: ['GET'])]
+    public function report_mes(AcopioRepository $acopioRepository, EmpresaRepository $empresaRepository): Response
+    {
+        $this->denyAccess(Access::LIST, 'acopio_index');
+        $Object = new \DateTime();
+        $fecha_actual = $Object->format("Y-m-d");
+        $mesAnterior = date("d-m-Y", strtotime($fecha_actual . "- 1 month"));
+        $acopios = $acopioRepository->reportePorCliente($mesAnterior);
+        $empresa = $empresaRepository->find(1);
+        return $this->render('acopio/report.html.twig', ['acopios' => $acopios, 'empresa' => $empresa]);
     }
 
     #[Route(path: '/{id<\d+>}/pago', name: 'acopio_pago', methods: ['GET'])]
@@ -156,7 +185,7 @@ class AcopioController extends BaseController
     public function delete(Request $request, Acopio $acopio, AcopioManager $manager): Response
     {
         $this->denyAccess(Access::DELETE, 'acopio_index');
-        if ($this->isCsrfTokenValid('delete'.$acopio->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $acopio->getId(), $request->request->get('_token'))) {
             $acopio->changeActivo();
             if ($manager->save($acopio)) {
                 $this->addFlash('success', 'Estado ha sido actualizado');
@@ -172,7 +201,7 @@ class AcopioController extends BaseController
     public function deleteForever(Request $request, Acopio $acopio, AcopioManager $manager): Response
     {
         $this->denyAccess(Access::MASTER, 'acopio_index', $acopio);
-        if ($this->isCsrfTokenValid('delete_forever'.$acopio->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete_forever' . $acopio->getId(), $request->request->get('_token'))) {
             if ($manager->remove($acopio)) {
                 $this->addFlash('warning', 'Registro eliminado');
             } else {

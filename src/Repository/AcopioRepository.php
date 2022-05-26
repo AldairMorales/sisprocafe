@@ -52,7 +52,7 @@ class AcopioRepository extends ServiceEntityRepository
 
         $this->security->configQuery($queryBuilder, true);
 
-        Paginator::queryTexts($queryBuilder, $params, ['acopio.tara']);
+        Paginator::queryTexts($queryBuilder, $params, ['acopio.fecha', 'acopio.tikect', 'acopio.pesoNeto']);
 
         return $queryBuilder;
     }
@@ -75,5 +75,13 @@ class AcopioRepository extends ServiceEntityRepository
             ->where('fisico.analisisFisico = :id')
             ->setParameter('id', $acopio->getId());
         return $query->getQuery()->getOneOrNullResult();
+    }
+
+    public function reportePorCliente(string $anterior): ?array
+    {
+        $query = $this->createQueryBuilder('acopio')
+            ->where('acopio.fecha > :fechaAnterior')
+            ->setParameter('fechaAnterior', $anterior);
+        return $query->getQuery()->getResult();
     }
 }

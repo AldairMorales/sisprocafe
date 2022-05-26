@@ -62,9 +62,9 @@
     {{ actions.btn_link('lbl.import',link,'fa fa-upload','primary btn-import', attributes) }}
 {% endmacro %}
 
-{% macro btn_report_link(link, attributes='') %}
+{% macro btn_report_link(link, attributes='',label='Report') %}
     {% import _self as actions %}
-    {{ actions.btn_link('lbl.report',link,'fa fa-print','info btn-report', attributes) }}
+    {{ actions.btn_link(label,link,'fa fa-print','info btn-report', attributes) }}
 {% endmacro %}
 
 {% macro btn_list_link_ico(link, attributes='') %}

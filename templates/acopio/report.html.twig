@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+{% import 'macro/breadcrumb.html.twig' as breadcrumb %}
+{% import 'macro/action.html.twig' as action %}
+{% import 'macro/pagination.html.twig' as pagination %}
+
+{% set _title = 'Report' %}
+{% set _main_title = 'Report' %}
+{% set _section =  'acopio_index' %}
+
+{% block _breadcrumb %}
+    {{ breadcrumb.show(_title) }}
+{% endblock %}
+
+{% block _main %}
+<div id="imprimir" class="border border-gray-500 border-active active ">
+    <br>
+    <div class="position-relative p-10 mb-4">
+            <img src="https://acortar.link/zwYcPG" class="rounded float-start" width="100">
+        
+        {# <p class="text-center">Reportes SISPROCAFFE</p> #}
+            <img src="https://acortar.link/zwYcPG" class="rounded float-end" width="100">
+        
+        
+    </div>
+    <h1><p class="text-center">Reportes SISPROCAFFE</p></h1>
+    <br/>
+    <div class="p-10 mb-4">
+        {{ action.tbl_start() }}
+        {{ action.tbl_tr('Nombre',empresa.nombre) }}
+        {{ action.tbl_tr('Rud',empresa.ruc) }}
+        {{ action.tbl_tr('Direccion',empresa.direccion) }}
+        {{ action.tbl_tr('Gmail',empresa.gmail) }}
+        {{ action.tbl_end() }}
+    </div>
+    <div class="table-responsive p-10 mb-1">
+        {{ action.tbl_start() }}
+        {{ action.thead_start() }}
+        <tr>
+            {{ action.th('Fecha', true) }}
+            {{ action.th('Ticket', true) }}
+            {{ action.th('Socio', true) }}
+            {{ action.th('Certificacion', true) }}
+            {{ action.th('Estado', true,'text-center') }}
+            {{ action.th('Peso Neto', true) }}
+            {{ action.th('A-Fisico', true) }}
+            {{ action.th('A-Sensorial', true) }}
+        </tr>
+        {{ action.thead_end() }}
+        {{ action.tbody_start() }}
+
+        {% for acopio in acopios %}
+            <tr>
+                <td>{{ acopio.fecha ? acopio.fecha | date('Y-m-d') : '' }}</td>
+                <td>{{ acopio.tikect }}</td>
+                <td>{{ acopio.socio}}</td>
+                <td>{{ acopio.certificacion}}</td>
+                <td class="text-center"> 
+                    {% if acopio.estado.alias == 'PROCESO' %}
+                        <span class="badge bg-warning text-dark">{{acopio.estado}}</span>
+                    {% elseif acopio.estado.alias == 'ACEPTADO' %}
+                        <span class="badge bg-success">{{acopio.estado}}</span>
+                    {% elseif acopio.estado.alias == 'ANULADO' %}
+                        <span class="badge bg-danger">{{acopio.estado}}</span>
+                    {% endif %} 
+                </td>
+                <td>{{ acopio.pesoNeto}}</td>
+                <td class="text-center">{{ acopio.analisisFisico | yesnocustom | raw }}</td>
+                <td class="text-center">{{ acopio.analisisSensorial | yesnocustom | raw }}</td>
+            </tr>
+        {% endfor %} 
+        {{ action.tbody_end() }}
+        {{ action.tbl_end() }}
+    </div>
+</div>
+{% endblock %}
+
+{% block _main_footer %}
+    {% include 'crud/_new_links.html.twig' with {'route_base':'acopio'} %}
+    <button class="btn btn-outline-info" onclick="imprimirElemento()">Imprimir</button>
+{% endblock %}
+
+{% block _stylesheets %}
+{% endblock %}
+
+{% block _javascripts %}
+
+    <script >
+        function imprimirElemento(){
+            $('#kt_header').hide();
+            $('#card-footer').hide();
+            print();
+            $('#kt_header').show();
+            $('#card-footer').show();
+        }
+    </script>
+{% endblock %}
