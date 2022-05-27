@@ -3,33 +3,36 @@
 namespace Pidia\Apps\Demo\Controller;
 
 use Pidia\Apps\Demo\Entity\Acopio;
-use Pidia\Apps\Demo\Util\Paginator;
-use Pidia\Apps\Demo\Form\AcopioType;
-use Pidia\Apps\Demo\Security\Access;
 use Pidia\Apps\Demo\Entity\Parametro;
+use Pidia\Apps\Demo\Form\AcopioType;
 use Pidia\Apps\Demo\Manager\AcopioManager;
 use Pidia\Apps\Demo\Manager\ParametroManager;
+use Pidia\Apps\Demo\Repository\AcopioRepository;
+use Pidia\Apps\Demo\Repository\AnalisisFisicoRepository;
+use Pidia\Apps\Demo\Repository\CertificacionRepository;
+use Pidia\Apps\Demo\Repository\EmpresaRepository;
+use Pidia\Apps\Demo\Security\Access;
+use Pidia\Apps\Demo\Util\Paginator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Pidia\Apps\Demo\Repository\AcopioRepository;
-use Pidia\Apps\Demo\Repository\EmpresaRepository;
-use Pidia\Apps\Demo\Repository\AnalisisFisicoRepository;
 
 #[Route('/admin/acopio')]
 class AcopioController extends BaseController
 {
     #[Route(path: '/', name: 'acopio_index', defaults: ['page' => '1'], methods: ['GET'])]
     #[Route(path: '/page/{page<[1-9]\d*>}', name: 'acopio_index_paginated', methods: ['GET'])]
-    public function index(Request $request, int $page, AcopioManager $manager): Response
+    public function index(Request $request, int $page, AcopioManager $manager, CertificacionRepository $certificacionRepository): Response
     {
         $this->denyAccess(Access::LIST, 'acopio_index');
-        $paginator = $manager->list($request->query->all(), $page);
+
+        $paginator = $manager->listPaginated($request->query->all(), $page);
 
         return $this->render(
             'acopio/index.html.twig',
             [
                 'paginator' => $paginator,
+                'certificaciones' => $certificacionRepository->findAll(),
             ]
         );
     }
@@ -103,10 +106,11 @@ class AcopioController extends BaseController
     {
         $this->denyAccess(Access::LIST, 'acopio_index');
         $Object = new \DateTime();
-        $fecha_actual = $Object->format("Y-m-d");
-        $diaAnterior = date("Y-m-d", strtotime($fecha_actual . "- 1 days"));
+        $fecha_actual = $Object->format('Y-m-d');
+        $diaAnterior = date('Y-m-d', strtotime($fecha_actual.'- 1 days'));
         $acopios = $acopioRepository->reportePorCliente($diaAnterior);
         $empresa = $empresaRepository->find(1);
+
         return $this->render('acopio/report.html.twig', ['acopios' => $acopios, 'empresa' => $empresa]);
     }
 
@@ -115,11 +119,12 @@ class AcopioController extends BaseController
     {
         $this->denyAccess(Access::LIST, 'acopio_index');
         $Object = new \DateTime();
-        $fecha_actual = $Object->format("Y-m-d");
+        $fecha_actual = $Object->format('Y-m-d');
 
-        $semanaAnterior = date("Y-m-d", strtotime($fecha_actual . "- 1 week"));
+        $semanaAnterior = date('Y-m-d', strtotime($fecha_actual.'- 1 week'));
         $acopios = $acopioRepository->reportePorCliente($semanaAnterior);
         $empresa = $empresaRepository->find(1);
+
         return $this->render('acopio/report.html.twig', ['acopios' => $acopios, 'empresa' => $empresa]);
     }
 
@@ -128,10 +133,11 @@ class AcopioController extends BaseController
     {
         $this->denyAccess(Access::LIST, 'acopio_index');
         $Object = new \DateTime();
-        $fecha_actual = $Object->format("Y-m-d");
-        $mesAnterior = date("d-m-Y", strtotime($fecha_actual . "- 1 month"));
+        $fecha_actual = $Object->format('Y-m-d');
+        $mesAnterior = date('d-m-Y', strtotime($fecha_actual.'- 1 month'));
         $acopios = $acopioRepository->reportePorCliente($mesAnterior);
         $empresa = $empresaRepository->find(1);
+
         return $this->render('acopio/report.html.twig', ['acopios' => $acopios, 'empresa' => $empresa]);
     }
 
@@ -185,7 +191,7 @@ class AcopioController extends BaseController
     public function delete(Request $request, Acopio $acopio, AcopioManager $manager): Response
     {
         $this->denyAccess(Access::DELETE, 'acopio_index');
-        if ($this->isCsrfTokenValid('delete' . $acopio->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$acopio->getId(), $request->request->get('_token'))) {
             $acopio->changeActivo();
             if ($manager->save($acopio)) {
                 $this->addFlash('success', 'Estado ha sido actualizado');
@@ -201,7 +207,7 @@ class AcopioController extends BaseController
     public function deleteForever(Request $request, Acopio $acopio, AcopioManager $manager): Response
     {
         $this->denyAccess(Access::MASTER, 'acopio_index', $acopio);
-        if ($this->isCsrfTokenValid('delete_forever' . $acopio->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete_forever'.$acopio->getId(), $request->request->get('_token'))) {
             if ($manager->remove($acopio)) {
                 $this->addFlash('warning', 'Registro eliminado');
             } else {

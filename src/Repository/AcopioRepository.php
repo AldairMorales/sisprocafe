@@ -2,13 +2,13 @@
 
 namespace Pidia\Apps\Demo\Repository;
 
-use Doctrine\ORM\QueryBuilder;
-use Pidia\Apps\Demo\Entity\Acopio;
-use Pidia\Apps\Demo\Util\Paginator;
-use Pidia\Apps\Demo\Security\Security;
-use Doctrine\Persistence\ManagerRegistry;
-use Pidia\Apps\Demo\Entity\AnalisisFisico;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
+use Doctrine\Persistence\ManagerRegistry;
+use Pidia\Apps\Demo\Entity\Acopio;
+use Pidia\Apps\Demo\Entity\AnalisisFisico;
+use Pidia\Apps\Demo\Security\Security;
+use Pidia\Apps\Demo\Util\Paginator;
 
 /**
  * @method Acopio|null find($id, $lockMode = null, $lockVersion = null)
@@ -47,15 +47,36 @@ class AcopioRepository extends ServiceEntityRepository
     private function filterQuery(array $params): QueryBuilder
     {
         $queryBuilder = $this->createQueryBuilder('acopio')
-            ->select(['acopio', 'config'])
+            ->select(['acopio', 'certificacion', 'config'])
+            ->join('acopio.certificacion', 'certificacion')
+            ->join('acopio.socio', 'socio')
             ->join('acopio.config', 'config');
+
+        if (isset($params['certificacionId']) && '' !== $params['certificacionId']) {
+            $queryBuilder
+                ->andWhere('certificacion.id = :certificacionId')
+                ->setParameter('certificacionId', $params['certificacionId']);
+        }
+
+        if (isset($params['fechaInicio']) && '' !== $params['fechaInicio']) {
+            $queryBuilder
+                ->andWhere('acopio.fecha >= :fechaInicio')
+                ->setParameter('fechaInicio', $params['fechaInicio']);
+        }
+
+        if (isset($params['fechaFinal']) && '' !== $params['fechaFinal']) {
+            $queryBuilder
+                ->andWhere('acopio.fecha <= :fechaFinal')
+                ->setParameter('fechaFinal', $params['fechaFinal']);
+        }
 
         $this->security->configQuery($queryBuilder, true);
 
-        Paginator::queryTexts($queryBuilder, $params, ['acopio.fecha', 'acopio.tikect', 'acopio.pesoNeto']);
+        Paginator::queryTexts($queryBuilder, $params, ['acopio.tikect', 'socio.nombres', 'socio.apellidoPaterno', 'socio.apellidoMaterno']);
 
         return $queryBuilder;
     }
+
     public function Acopio_Id(): array
     {
         return $this->createQueryBuilder('acopio')
@@ -66,6 +87,7 @@ class AcopioRepository extends ServiceEntityRepository
             ->setMaxResults(1)
             ->getResult();
     }
+
     /**
      * @throws NonUniqueResultException
      */
@@ -74,6 +96,7 @@ class AcopioRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('fisico')
             ->where('fisico.analisisFisico = :id')
             ->setParameter('id', $acopio->getId());
+
         return $query->getQuery()->getOneOrNullResult();
     }
 
@@ -82,6 +105,7 @@ class AcopioRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('acopio')
             ->where('acopio.fecha > :fechaAnterior')
             ->setParameter('fechaAnterior', $anterior);
+
         return $query->getQuery()->getResult();
     }
 }
