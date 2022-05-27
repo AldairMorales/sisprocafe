@@ -4,13 +4,14 @@ namespace Pidia\Apps\Demo\Form;
 
 use Pidia\Apps\Demo\Entity\Producto;
 use Symfony\Component\Form\AbstractType;
-use Pidia\Apps\Demo\Entity\DetallePeriodo;
+use Pidia\Apps\Demo\Entity\Certificacion;
 use Pidia\Apps\Demo\Form\Type\MeasureType;
+use Pidia\Apps\Demo\Entity\DetalleTraslado;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class DetallePeriodoType extends AbstractType
+class DetalleTrasladoType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -22,19 +23,26 @@ class DetallePeriodoType extends AbstractType
                     'class' => Producto::class,
                 ],
             )
-            ->add('humedadInicial')
-            ->add('tara', MeasureType::class, [
+            ->add(
+                'certificacion',
+                EntityType::class,
+                [
+                    'class' => Certificacion::class,
+                ],
+            )
+            ->add('peso', MeasureType::class, [
                 'required' => false,
             ])
-            ->add('muestra', MeasureType::class, [
+            ->add('cantidad', MeasureType::class, [
                 'required' => false,
+                'category' => 'envase',
             ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => DetallePeriodo::class,
+            'data_class' => DetalleTraslado::class,
         ]);
     }
 }

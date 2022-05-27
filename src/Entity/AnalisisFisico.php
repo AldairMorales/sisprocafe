@@ -23,7 +23,7 @@ class AnalisisFisico
     #[ORM\JoinColumn(nullable: false)]
     private $certificacion;
 
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: 'measure', nullable: true)]
     private $muestra;
 
 
@@ -98,12 +98,12 @@ class AnalisisFisico
         return $this;
     }
 
-    public function getMuestra(): ?int
+    public function getMuestra()
     {
         return $this->muestra;
     }
 
-    public function setMuestra(int $muestra): self
+    public function setMuestra($muestra): self
     {
         $this->muestra = $muestra;
 

@@ -14,7 +14,11 @@
         action.frm_column_field_date(form.fechaFinal)
     ) }}
     {{ action.frm_column(
-        action.frm_column_field(form.detalles)
+        action.frm_column_field(form.detalles, '','',2),
+        null,
+        null,
+        null,
+        1
     ) }}
     {{ action.frm_column(
         action.frm_column_btn(button_label|default('Guardar')),

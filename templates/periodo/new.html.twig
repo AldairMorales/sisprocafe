@@ -14,6 +14,30 @@
     {{ include('periodo/_form.html.twig') }}
 {% endblock %}
 
+{% form_theme form _self %}
+
+{% block _periodo_detalles_label %}
+{% endblock %}
+
+{% block _periodo_detalles_entry_widget %}
+    {% import 'macro/action.html.twig' as actions %}
+    <script src="{{ asset('js/select2.js') }}"></script>
+    <script>
+        jQuery(document).ready(function() {
+            Select2();
+        });
+    </script>
+    {{ actions.frm_column(
+        actions.frm_column_field_select(form.producto),
+        actions.frm_column_field(form.humedadInicial)
+    )}}
+    {{ actions.frm_column(
+        actions.frm_column_field(form.tara),
+        actions.frm_column_field(form.muestra)
+    )}}
+    
+{% endblock %}
+
 {% block _main_tools %}
     {% include 'crud/_tools_ico.html.twig' %}
 {% endblock %}
@@ -34,17 +58,14 @@
 {% endblock %}
 
 {% block _javascripts %}
+    <script src="{{ asset('js/select2.js') }}"></script>
     <script src="{{ asset('js/collection.js') }}"></script>
     <script>
         jQuery(document).ready(function() {
             Collection.init('#periodo_detalles');
-        });
-    </script>
-    <script src="{{ asset('js/select2.js') }}"></script>
-    <script>
-        jQuery(document).ready(function() {
             Select2();
         });
     </script>
+
 
 {% endblock %}

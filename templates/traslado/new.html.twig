@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+{% import 'macro/breadcrumb.html.twig' as breadcrumb %}
+{% import 'macro/action.html.twig' as action %}
+
+{% set _title = 'Traslado' %}
+{% set _main_title = 'Nuevo' %}
+{% set _section =  'traslado_index'%}
+
+{% block _breadcrumb %}
+    {{ breadcrumb.show2(_title,_section,'Nuevo') }}
+{% endblock %}
+
+{% block _main %}
+    {{ include('traslado/_form.html.twig') }}
+{% endblock %}
+
+
+
+{% form_theme form _self %}
+
+{% block _traslado_detalleTraslado_label %}
+{% endblock %}
+
+{% block _traslado_detalleTraslado_entry_widget %}
+    {% import 'macro/action.html.twig' as actions %}
+    <script src="{{ asset('js/select2.js') }}"></script>
+    <script>
+        jQuery(document).ready(function() {
+            Select2();
+        });
+    </script>
+    {{ actions.frm_column(
+        actions.frm_column_field_select(form.producto),
+        actions.frm_column_field_select(form.certificacion)
+    )}}
+    {{ actions.frm_column(
+        actions.frm_column_field(form.peso),
+        actions.frm_column_field(form.cantidad)
+    )}}
+    
+{% endblock %}
+
+{% block _main_tools %}
+    {% include 'crud/_tools_ico.html.twig' %}
+{% endblock %}
+
+{% block _body_tools %}
+    {% include 'crud/_new_links_ico.html.twig' with {'route_base':'traslado'} %}
+{% endblock %}
+
+{% block _body_tools_ico %}
+    {% include 'crud/_new_links_tool.html.twig' with {'route_base': 'traslado'}  %}
+{% endblock %}
+
+{% block _main_footer %}
+    {% include 'crud/_new_links.html.twig' with {'route_base':'traslado'} %}
+{% endblock %}
+
+{% block _stylesheets %}
+{% endblock %}
+
+{% block _javascripts %}
+    <script src="{{ asset('js/select2.js') }}"></script>
+    <script src="{{ asset('js/collection.js') }}"></script>
+    <script>
+        jQuery(document).ready(function() {
+            Select2();
+            Collection.init('#traslado_detalleTraslado');
+
+            function pad(n, width, z) { 
+                z = z || '0'; 
+                n = n + ''; 
+                return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+            }
+            let $numeroGuia= $('#traslado_numeroGuia');
+            $.ajax({
+                type: 'POST',
+                url: '{{ path('ultimo_traslado_id') }}',
+                success: function (result) {
+                    if (result) {
+                        if (result.length>0){
+                            console.log(result)
+                            let cadena=result[0].numeroGuia
+                            let num = parseInt(cadena.substring(6,9))+1
+                            $numeroGuia.val("TRAS_" + pad(num, 4))
+                        }else{
+                            let cod="TRAS-0001"
+                            $numeroGuia.val(cod)
+                        }
+                        
+                    } else {
+                        
+                        
+                    }
+                }
+            });
+        });
+    </script>
+{% endblock %}

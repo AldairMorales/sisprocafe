@@ -59,11 +59,8 @@ class AnalisisFisicoType extends AbstractType
                 },
                 'choice_label' => 'tikect',
             ])
-            ->add('muestra', ChoiceType::class, [
-                'choices' => [
-                    '300' => 300,
-                    '400' => 400,
-                ],
+            ->add('muestra', MeasureType::class, [
+                'required' => false,
             ])
             ->add('exportable', MeasureType::class, [
                 'required' => false,

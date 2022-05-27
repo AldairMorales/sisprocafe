@@ -44,12 +44,9 @@ class DetallePeriodoRepository extends ServiceEntityRepository implements BaseRe
     {
         $queryBuilder = $this->createQueryBuilder('detalle_periodo')
             ->select(['detalle_periodo', 'config'])
-            ->join('detalle_periodo.config', 'config')
-        ;
+            ->join('detalle_periodo.config', 'config');
 
         $this->security->configQuery($queryBuilder, true);
-
-        Paginator::queryTexts($queryBuilder, $params, ['detalle_periodo.tara', 'detalle_periodo.tara']);
 
         return $queryBuilder;
     }

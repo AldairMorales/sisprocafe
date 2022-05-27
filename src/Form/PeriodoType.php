@@ -35,6 +35,7 @@ class PeriodoType extends AbstractType
             ->add('detalles', CollectionType::class, [
                 'entry_type' => DetallePeriodoType::class,
                 'entry_options' => ['label' => false],
+                'label' => 'Detalle Producto',
                 'allow_add' => true,
             ]);
     }

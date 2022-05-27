@@ -23,29 +23,14 @@ class DetallePeriodo
     #[ORM\JoinColumn(nullable: false)]
     private $producto;
 
-    #[ORM\Column(type: 'string', length: 30)]
-    private $acciones;
-
-    #[ORM\Column(type: 'string', length: 15)]
+    #[ORM\Column(type: 'measure', nullable: true)]
     private $tara;
 
     #[ORM\Column(type: 'string', length: 15)]
     private $humedadInicial;
 
-    #[ORM\Column(type: 'string', length: 15)]
+    #[ORM\Column(type: 'measure', nullable: true)]
     private $muestra;
-
-    #[ORM\Column(type: 'string', length: 10)]
-    private $unidadMedida;
-
-    #[ORM\Column(type: 'string', length: 10)]
-    private $envase;
-
-    #[ORM\Column(type: 'string', length: 8)]
-    private $moneda;
-
-//    #[ORM\OneToMany(mappedBy: 'detallePeriodo', targetEntity: Certificacion::class)]
-//    private $certificaciones;
 
     #[ORM\ManyToOne(targetEntity: Periodo::class, inversedBy: 'detalles')]
     #[ORM\JoinColumn(nullable: false)]
@@ -53,7 +38,7 @@ class DetallePeriodo
 
     public function __construct()
     {
-//        $this->certificaciones = new ArrayCollection();
+        //        $this->certificaciones = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -73,24 +58,12 @@ class DetallePeriodo
         return $this;
     }
 
-    public function getAcciones(): ?string
-    {
-        return $this->acciones;
-    }
-
-    public function setAcciones(string $acciones): self
-    {
-        $this->acciones = $acciones;
-
-        return $this;
-    }
-
-    public function getTara(): ?string
+    public function getTara()
     {
         return $this->tara;
     }
 
-    public function setTara(string $tara): self
+    public function setTara($tara): self
     {
         $this->tara = $tara;
 
@@ -109,83 +82,17 @@ class DetallePeriodo
         return $this;
     }
 
-    public function getMuestra(): ?string
+    public function getMuestra()
     {
         return $this->muestra;
     }
 
-    public function setMuestra(string $muestra): self
+    public function setMuestra($muestra): self
     {
         $this->muestra = $muestra;
 
         return $this;
     }
-
-    public function getUnidadMedida(): ?string
-    {
-        return $this->unidadMedida;
-    }
-
-    public function setUnidadMedida(string $unidadMedida): self
-    {
-        $this->unidadMedida = $unidadMedida;
-
-        return $this;
-    }
-
-    public function getEnvase(): ?string
-    {
-        return $this->envase;
-    }
-
-    public function setEnvase(string $envase): self
-    {
-        $this->envase = $envase;
-
-        return $this;
-    }
-
-    public function getMoneda(): ?string
-    {
-        return $this->moneda;
-    }
-
-    public function setMoneda(string $moneda): self
-    {
-        $this->moneda = $moneda;
-
-        return $this;
-    }
-
-//    /**
-//     * @return Collection|Certificacion[]
-//     */
-//    public function getCertificaciones(): Collection
-//    {
-//        return $this->certificaciones;
-//    }
-
-//    public function addCertificacione(Certificacion $certificacione): self
-//    {
-//        if (!$this->certificaciones->contains($certificacione)) {
-//            $this->certificaciones[] = $certificacione;
-//            $certificacione->setDetallePeriodo($this);
-//        }
-//
-//        return $this;
-//    }
-//
-//    public function removeCertificacione(Certificacion $certificacione): self
-//    {
-//        if ($this->certificaciones->removeElement($certificacione)) {
-//            // set the owning side to null (unless already changed)
-//            if ($certificacione->getDetallePeriodo() === $this) {
-//                $certificacione->setDetallePeriodo(null);
-//            }
-//        }
-//
-//        return $this;
-//    }
 
     public function getPeriodo(): ?Periodo
     {
@@ -197,10 +104,5 @@ class DetallePeriodo
         $this->periodo = $periodo;
 
         return $this;
-    }
-
-    public function __toString()
-    {
-        return $this->getMoneda();
     }
 }

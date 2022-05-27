@@ -2,9 +2,9 @@
 {% import 'macro/breadcrumb.html.twig' as breadcrumb %}
 {% import 'macro/action.html.twig' as action %}
 
-{% set _title = 'Periodo' %}
+{% set _title = 'Traslado' %}
 {% set _main_title = 'Editar' %}
-{% set _section =  'periodo_index'%}
+{% set _section =  'traslado_index'%}
 
 {% block _breadcrumb %}
     {{ breadcrumb.show2(_title, _section, 'Editar') }}
@@ -12,16 +12,16 @@
 
 {% block _main %}
 
-    {{ include('periodo/_form.html.twig', {'button_label': 'Actualizar'}) }}
+    {{ include('traslado/_form.html.twig', {'button_label': 'Actualizar'}) }}
 
 {% endblock %}
 
 {% form_theme form _self %}
 
-{% block _periodo_detalles_label %}
+{% block _traslado_detalleTraslado_label %}
 {% endblock %}
 
-{% block _periodo_detalles_entry_widget %}
+{% block _traslado_detalleTraslado_entry_widget %}
     {% import 'macro/action.html.twig' as actions %}
     <script src="{{ asset('js/select2.js') }}"></script>
     <script>
@@ -31,11 +31,11 @@
     </script>
     {{ actions.frm_column(
         actions.frm_column_field_select(form.producto),
-        actions.frm_column_field(form.humedadInicial)
+        actions.frm_column_field_select(form.certificacion)
     )}}
     {{ actions.frm_column(
-        actions.frm_column_field(form.tara),
-        actions.frm_column_field(form.muestra)
+        actions.frm_column_field(form.peso),
+        actions.frm_column_field(form.cantidad)
     )}}
     
 {% endblock %}
@@ -45,15 +45,15 @@
 {% endblock %}
 
 {% block _body_tools %}
-    {% include 'crud/_edit_links_ico.html.twig' with {'route_base':'periodo','entity': periodo} %}
+    {% include 'crud/_edit_links_ico.html.twig' with {'route_base':'traslado','entity': traslado} %}
 {% endblock %}
 
 {% block _body_tools_ico %}
-    {% include 'crud/_edit_links_tool.html.twig' with {'route_base':'periodo','entity': periodo} %}
+    {% include 'crud/_edit_links_tool.html.twig' with {'route_base':'traslado','entity': traslado} %}
 {% endblock %}
 
 {% block _main_footer %}
-    {% include 'crud/_edit_links.html.twig' with {'route_base':'periodo','entity': periodo} %}
+    {% include 'crud/_edit_links.html.twig' with {'route_base':'traslado','entity': traslado} %}
 {% endblock %}
 
 {% block _stylesheets %}
@@ -64,8 +64,8 @@
     <script src="{{ asset('js/collection.js') }}"></script>
     <script>
         jQuery(document).ready(function() {
-            Collection.init('#periodo_detalles');
             Select2();
+            Collection.init('#traslado_detalleTraslado');
         });
     </script>
 {% endblock %}
